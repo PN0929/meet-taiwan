@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiences - Meet Taiwan 遇見台灣</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 2rem;
+            font-weight: 500;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .experiences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .experience-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .experience-card .image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .experience-card .content {
+            padding: 1.5rem;
+        }
+        
+        .experience-card .title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+        
+        .experience-card .subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .experience-card .description {
+            color: #555;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .experience-card .meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .experience-card .tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: #e7f3ff;
+            color: #0066cc;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .experience-card .status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: #fff3cd;
+            color: #856404;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .experience-card .btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .experience-card .btn:hover {
+            background: #5568d3;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Authentic Taiwan Experiences</h1>
+        <p>真實的台灣體驗</p>
+    </header>
+
+    <nav class="nav">
+        <a href="index.html">← Back to Home</a>
+    </nav>
+
+    <div class="disclaimer">
+        <strong>ℹ️ Independent Information Platform</strong><br>
+        We provide curated information and contact details. Please reach out to organizations directly to arrange your visit.
+        We can help with translation and booking assistance if needed.<br>
+        我們提供策展資訊與聯絡方式。請直接聯繫主辦單位安排參訪。如需翻譯或預約協助,我們可以幫忙。
+    </div>
+
+    <div class="container">
+        <div class="intro">
+            <h2>🌟 Curated Experiences</h2>
+            <p>Each experience is carefully researched and documented to help you connect with Taiwan's authentic culture.</p>
+            <p style="margin-top: 0.5rem; color: #666;">
+                每個體驗都經過仔細研究與記錄,協助您與台灣真實的文化連結。
+            </p>
+        </div>
+
+        <div id="loading" class="loading">
+            載入體驗中... Loading experiences...
+        </div>
+
+        <div id="experiences" class="experiences-grid">
+            <!-- 體驗卡片會在這裡動態生成 -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Meet Taiwan 遇見台灣</p>
+        <p style="margin-top: 1rem; opacity: 0.7;">
+            Independent Information Platform
+        </p>
+    </footer>
+
+    <script>
+        // Google Sheets 公開連結 (CSV 格式)
+        const SHEET_ID = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
+        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+
+        // Emoji 對應不同分類
+        const categoryEmojis = {
+            '飲食文化': '🍜',
+            '社區生活': '🏘️',
+            '建築藝術': '🏛️',
+            '傳統工藝': '🎨',
+            '環境生態': '🌱',
+            '農村生活': '🌾',
+            '其他': '📍'
+        };
+
+        // Emoji 對應地區
+        const regionEmojis = {
+            '北台灣': '🏙️',
+            '中台灣': '🏔️',
+            '南臺灣': '🌴',
+            '花東': '🌊',
+            '離島': '🏝️'
+        };
+
+        // 載入並顯示體驗
+        async function loadExperiences() {
+            try {
+                const response = await fetch(SHEET_URL);
+                const csvText = await response.text();
+                
+                // 解析 CSV
+                const rows = parseCSV(csvText);
+                
+                // 移除標題列
+                const headers = rows[0];
+                const data = rows.slice(1);
+                
+                // 轉換成物件陣列
+                const experiences = data.map(row => {
+                    const obj = {};
+                    headers.forEach((header, index) => {
+                        obj[header] = row[index] || '';
+                    });
+                    return obj;
+                }).filter(exp => exp['Status'] === '已發布' || exp['Status'] === '草稿');
+                
+                // 顯示體驗
+                displayExperiences(experiences);
+                
+            } catch (error) {
+                console.error('載入失敗:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p style="color: #dc3545;">載入體驗時發生錯誤 Error loading experiences</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                        請確認 Google Sheets 已設為「知道連結的任何人都可以查看」<br>
+                        Please ensure the Google Sheet is set to "Anyone with the link can view"
+                    </p>
+                `;
+            }
+        }
+
+        // 簡單的 CSV 解析器
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            return lines.map(line => {
+                const values = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        values.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                values.push(current.trim());
+                
+                return values;
+            });
+        }
+
+        // 顯示體驗卡片
+        function displayExperiences(experiences) {
+            const container = document.getElementById('experiences');
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'none';
+            
+            if (experiences.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; grid-column: 1/-1;">
+                        <p style="font-size: 1.2rem; color: #666;">目前尚無體驗資料</p>
+                        <p style="color: #999;">No experiences available yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            experiences.forEach(exp => {
+                const card = createExperienceCard(exp);
+                container.appendChild(card);
+            });
+        }
+
+        // 建立體驗卡片
+        function createExperienceCard(exp) {
+            const card = document.createElement('div');
+            card.className = 'experience-card';
+            
+            // 優先顯示分類 emoji,沒有的話顯示地區 emoji
+            const emoji = categoryEmojis[exp['主要分類']] || regionEmojis[exp['地區']] || '📍';
+            
+            card.innerHTML = `
+                <div class="image">${emoji}</div>
+                <div class="content">
+                    <div class="title">${exp['體驗名稱(中)']}</div>
+                    ${exp['體驗名稱(英)'] ? `<div class="subtitle">${exp['體驗名稱(英)']}</div>` : ''}
+                    <div class="description">${exp['一句話描述(中)'] || '深度文化體驗'}</div>
+                    <div class="meta">
+                        ${exp['地區'] ? `<span class="tag">📍 ${exp['地區']}</span>` : ''}
+                        ${exp['主要分類'] ? `<span class="tag">${exp['主要分類']}</span>` : ''}
+                        ${exp['難度'] ? `<span class="tag">⭐ ${exp['難度']}</span>` : ''}
+                    </div>
+                    <div class="meta">
+                        <span class="status">🚧 ${exp['Status'] || '準備中'}</span>
+                    </div>
+                    ${exp['詳細內容Doc'] ? `
+                        <a href="${exp['詳細內容Doc']}" target="_blank" class="btn">
+                            查看詳細資訊 View Details →
+                        </a>
+                    ` : `
+                        <span style="color: #999; font-size: 0.9rem;">詳細資訊準備中...</span>
+                    `}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // 頁面載入時執行
+        window.addEventListener('DOMContentLoaded', loadExperiences);
+    </script>
+</body>
+</html>
