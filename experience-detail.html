@@ -657,91 +657,104 @@
             `;
         }
 
-        function displayMap(exp) {
-            const mapSection = document.getElementById('mapSection');
-            
-            if (exp['Google Maps']) {
-                // 從 Google Maps 連結提取嵌入用的 URL
-                let embedUrl = '';
-                
-                if (exp['Google Maps'].includes('google.com/maps')) {
-                    // 如果是完整的 Google Maps 連結,轉換成嵌入格式
-                    if (exp['Google Maps'].includes('place/')) {
-                        // 提取地點資訊
-                        const placeMatch = exp['Google Maps'].match(/place\/([^\/]+)/);
-                        if (placeMatch) {
-                            embedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(placeMatch[1])}`;
-                        }
-                    } else if (exp['Google Maps'].includes('@')) {
-                        // 如果有座標
-                        const coordMatch = exp['Google Maps'].match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
-                        if (coordMatch) {
-                            embedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${coordMatch[1]},${coordMatch[2]}`;
-                        }
-                    }
-                }
-                
-                // 如果還是沒有 embedUrl,用地址搜尋
-                if (!embedUrl && exp['地址']) {
-                    embedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(exp['地址'])}`;
-                }
-                
-                if (embedUrl) {
-                    mapSection.innerHTML = `
-                        <div class="map-container">
-                            <h2>🗺️ 位置 Location</h2>
-                            <iframe
-                                src="${embedUrl}"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-                            <div style="padding: 1rem 2rem; background: #f8f9fa;">
-                                <p style="margin: 0;">
-                                    <a href="${exp['Google Maps']}" target="_blank" style="color: #0066cc; text-decoration: none;">
-                                        📍 在 Google Maps 中開啟 Open in Google Maps →
-                                    </a>
-                                </p>
-                                ${exp['地址'] ? `<p style="margin: 0.5rem 0 0 0; color: #666;">📮 ${exp['地址']}</p>` : ''}
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    // 顯示連結但不嵌入地圖
-                    mapSection.innerHTML = `
-                        <div class="map-container">
-                            <h2>🗺️ 位置 Location</h2>
-                            <div class="map-placeholder">
-                                <p>
-                                    <a href="${exp['Google Maps']}" target="_blank" style="color: #667eea; text-decoration: none; font-size: 1.1rem;">
-                                        📍 在 Google Maps 中查看 View on Google Maps →
-                                    </a>
-                                </p>
-                                ${exp['地址'] ? `<p style="margin-top: 1rem; color: #666;">📮 ${exp['地址']}</p>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }
-            } else if (exp['地址']) {
-                // 只有地址沒有 Maps 連結
-                const embedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(exp['地址'])}`;
-                
-                mapSection.innerHTML = `
-                    <div class="map-container">
-                        <h2>🗺️ 位置 Location</h2>
-                        <iframe
-                            src="${embedUrl}"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                        <div style="padding: 1rem 2rem; background: #f8f9fa;">
-                            <p style="margin: 0; color: #666;">📮 ${exp['地址']}</p>
-                        </div>
+function displayMap(exp) {
+    const mapSection = document.getElementById('mapSection');
+    
+    if (exp['Google Maps']) {
+        let mapsUrl = exp['Google Maps'];
+        
+        // 如果是短網址,顯示連結但先不嵌入
+        if (mapsUrl.includes('maps.app.goo.gl') || mapsUrl.includes('goo.gl')) {
+            mapSection.innerHTML = `
+                <div class="map-container">
+                    <h2>🗺️ 位置 Location</h2>
+                    <div class="map-placeholder">
+                        <p style="margin-bottom: 1rem;">
+                            <a href="${mapsUrl}" target="_blank" 
+                               style="display: inline-block; padding: 1rem 2rem; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-size: 1.1rem;">
+                                📍 在 Google Maps 中查看 View on Google Maps →
+                            </a>
+                        </p>
+                        ${exp['地址'] ? `<p style="color: #666; font-size: 1.05rem;">📮 ${exp['地址']}</p>` : ''}
                     </div>
-                `;
+                </div>
+            `;
+            return;
+        }
+        
+        // 處理完整的 Google Maps 網址
+        let embedUrl = '';
+        
+        if (mapsUrl.includes('google.com/maps')) {
+            // 嘗試從網址中提取座標
+            const coordMatch = mapsUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+            if (coordMatch) {
+                const lat = coordMatch[1];
+                const lng = coordMatch[2];
+                embedUrl = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
+            } else if (exp['地址']) {
+                // 用地址搜尋
+                embedUrl = `https://www.google.com/maps?q=${encodeURIComponent(exp['地址'])}&output=embed`;
             }
         }
+        
+        if (embedUrl) {
+            mapSection.innerHTML = `
+                <div class="map-container">
+                    <h2>🗺️ 位置 Location</h2>
+                    <iframe
+                        src="${embedUrl}"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div style="padding: 1rem 2rem; background: #f8f9fa;">
+                        <p style="margin: 0;">
+                            <a href="${mapsUrl}" target="_blank" style="color: #0066cc; text-decoration: none;">
+                                📍 在 Google Maps 中開啟 Open in Google Maps →
+                            </a>
+                        </p>
+                        ${exp['地址'] ? `<p style="margin: 0.5rem 0 0 0; color: #666;">📮 ${exp['地址']}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        } else {
+            // 無法嵌入,只顯示連結
+            mapSection.innerHTML = `
+                <div class="map-container">
+                    <h2>🗺️ 位置 Location</h2>
+                    <div class="map-placeholder">
+                        <p>
+                            <a href="${mapsUrl}" target="_blank" 
+                               style="display: inline-block; padding: 1rem 2rem; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-size: 1.1rem;">
+                                📍 在 Google Maps 中查看 View on Google Maps →
+                            </a>
+                        </p>
+                        ${exp['地址'] ? `<p style="margin-top: 1rem; color: #666; font-size: 1.05rem;">📮 ${exp['地址']}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+    } else if (exp['地址']) {
+        // 只有地址沒有 Maps 連結
+        const embedUrl = `https://www.google.com/maps?q=${encodeURIComponent(exp['地址'])}&output=embed`;
+        
+        mapSection.innerHTML = `
+            <div class="map-container">
+                <h2>🗺️ 位置 Location</h2>
+                <iframe
+                    src="${embedUrl}"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <div style="padding: 1rem 2rem; background: #f8f9fa;">
+                    <p style="margin: 0; color: #666;">📮 ${exp['地址']}</p>
+                </div>
+            </div>
+        `;
+    }
+}
 
         function displayContact(exp) {
             const contactSection = document.getElementById('contactSection');
