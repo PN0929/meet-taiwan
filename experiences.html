@@ -69,6 +69,63 @@
             text-align: center;
         }
         
+        /* 篩選器樣式 */
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .filters h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+        
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .filter-results {
+            text-align: center;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
         .loading {
             text-align: center;
             padding: 3rem;
@@ -144,6 +201,13 @@
             color: #0066cc;
             border-radius: 20px;
             font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .experience-card .tag:hover {
+            background: #0066cc;
+            color: white;
         }
         
         .experience-card .status {
@@ -176,6 +240,12 @@
             padding: 2rem;
             margin-top: 4rem;
         }
+        
+        @media (max-width: 768px) {
+            .experiences-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -204,6 +274,27 @@
             </p>
         </div>
 
+        <!-- 篩選器 -->
+        <div class="filters">
+            <h3>🔍 篩選體驗 Filter Experiences</h3>
+            
+            <div class="filter-group">
+                <label>地區 Region:</label>
+                <div class="filter-buttons" id="regionFilters">
+                    <button class="filter-btn active" data-type="region" data-value="all">全部 All</button>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <label>分類 Category:</label>
+                <div class="filter-buttons" id="categoryFilters">
+                    <button class="filter-btn active" data-type="category" data-value="all">全部 All</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-results" id="filterResults"></div>
+
         <div id="loading" class="loading">
             載入體驗中... Loading experiences...
         </div>
@@ -225,7 +316,7 @@
         const SHEET_ID = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-        // Emoji 對應不同分類
+        // Emoji 對應
         const categoryEmojis = {
             '飲食文化': '🍜',
             '社區生活': '🏘️',
@@ -236,7 +327,6 @@
             '其他': '📍'
         };
 
-        // Emoji 對應地區
         const regionEmojis = {
             '北台灣': '🏙️',
             '中台灣': '🏔️',
@@ -245,21 +335,24 @@
             '離島': '🏝️'
         };
 
-        // 載入並顯示體驗
+        // 全域變數
+        let allExperiences = [];
+        let currentFilters = {
+            region: 'all',
+            category: 'all'
+        };
+
+        // 載入體驗
         async function loadExperiences() {
             try {
                 const response = await fetch(SHEET_URL);
                 const csvText = await response.text();
                 
-                // 解析 CSV
                 const rows = parseCSV(csvText);
-                
-                // 移除標題列
                 const headers = rows[0];
                 const data = rows.slice(1);
                 
-                // 轉換成物件陣列
-                const experiences = data.map(row => {
+                allExperiences = data.map(row => {
                     const obj = {};
                     headers.forEach((header, index) => {
                         obj[header] = row[index] || '';
@@ -267,22 +360,100 @@
                     return obj;
                 }).filter(exp => exp['Status'] === '已發布' || exp['Status'] === '草稿');
                 
-                // 顯示體驗
-                displayExperiences(experiences);
+                // 建立篩選器按鈕
+                createFilterButtons();
+                
+                // 顯示所有體驗
+                displayExperiences(allExperiences);
                 
             } catch (error) {
                 console.error('載入失敗:', error);
                 document.getElementById('loading').innerHTML = `
                     <p style="color: #dc3545;">載入體驗時發生錯誤 Error loading experiences</p>
                     <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
-                        請確認 Google Sheets 已設為「知道連結的任何人都可以查看」<br>
-                        Please ensure the Google Sheet is set to "Anyone with the link can view"
+                        請確認 Google Sheets 已設為「知道連結的任何人都可以查看」
                     </p>
                 `;
             }
         }
 
-        // 簡單的 CSV 解析器
+        // 建立篩選按鈕
+        function createFilterButtons() {
+            // 收集所有地區
+            const regions = [...new Set(allExperiences.map(exp => exp['地區']).filter(r => r))];
+            const regionContainer = document.getElementById('regionFilters');
+            
+            regions.forEach(region => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.dataset.type = 'region';
+                btn.dataset.value = region;
+                btn.textContent = `${regionEmojis[region] || '📍'} ${region}`;
+                btn.onclick = () => handleFilterClick('region', region, btn);
+                regionContainer.appendChild(btn);
+            });
+
+            // 收集所有分類
+            const categories = [...new Set(allExperiences.map(exp => exp['主要分類']).filter(c => c))];
+            const categoryContainer = document.getElementById('categoryFilters');
+            
+            categories.forEach(category => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.dataset.type = 'category';
+                btn.dataset.value = category;
+                btn.textContent = `${categoryEmojis[category] || '📍'} ${category}`;
+                btn.onclick = () => handleFilterClick('category', category, btn);
+                categoryContainer.appendChild(btn);
+            });
+        }
+
+        // 處理篩選點擊
+        function handleFilterClick(type, value, clickedBtn) {
+            // 更新按鈕狀態
+            const container = type === 'region' ? document.getElementById('regionFilters') : document.getElementById('categoryFilters');
+            container.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            clickedBtn.classList.add('active');
+
+            // 更新篩選條件
+            currentFilters[type] = value;
+
+            // 篩選並顯示
+            filterAndDisplay();
+        }
+
+        // 篩選並顯示
+        function filterAndDisplay() {
+            let filtered = allExperiences;
+
+            // 地區篩選
+            if (currentFilters.region !== 'all') {
+                filtered = filtered.filter(exp => exp['地區'] === currentFilters.region);
+            }
+
+            // 分類篩選
+            if (currentFilters.category !== 'all') {
+                filtered = filtered.filter(exp => exp['主要分類'] === currentFilters.category);
+            }
+
+            // 更新結果顯示
+            updateFilterResults(filtered.length);
+
+            // 顯示體驗
+            displayExperiences(filtered);
+        }
+
+        // 更新篩選結果文字
+        function updateFilterResults(count) {
+            const resultsDiv = document.getElementById('filterResults');
+            if (currentFilters.region === 'all' && currentFilters.category === 'all') {
+                resultsDiv.textContent = '';
+            } else {
+                resultsDiv.textContent = `找到 ${count} 個體驗 Found ${count} experiences`;
+            }
+        }
+
+        // CSV 解析
         function parseCSV(csv) {
             const lines = csv.split('\n');
             return lines.map(line => {
@@ -292,7 +463,6 @@
                 
                 for (let i = 0; i < line.length; i++) {
                     const char = line[i];
-                    
                     if (char === '"') {
                         inQuotes = !inQuotes;
                     } else if (char === ',' && !inQuotes) {
@@ -303,7 +473,6 @@
                     }
                 }
                 values.push(current.trim());
-                
                 return values;
             });
         }
@@ -314,12 +483,13 @@
             const loading = document.getElementById('loading');
             
             loading.style.display = 'none';
+            container.innerHTML = '';
             
             if (experiences.length === 0) {
                 container.innerHTML = `
                     <div style="text-align: center; padding: 3rem; grid-column: 1/-1;">
-                        <p style="font-size: 1.2rem; color: #666;">目前尚無體驗資料</p>
-                        <p style="color: #999;">No experiences available yet</p>
+                        <p style="font-size: 1.2rem; color: #666;">沒有符合條件的體驗</p>
+                        <p style="color: #999;">No experiences match your filters</p>
                     </div>
                 `;
                 return;
@@ -336,7 +506,6 @@
             const card = document.createElement('div');
             card.className = 'experience-card';
             
-            // 優先顯示分類 emoji,沒有的話顯示地區 emoji
             const emoji = categoryEmojis[exp['主要分類']] || regionEmojis[exp['地區']] || '📍';
             
             card.innerHTML = `
@@ -346,8 +515,8 @@
                     ${exp['體驗名稱(英)'] ? `<div class="subtitle">${exp['體驗名稱(英)']}</div>` : ''}
                     <div class="description">${exp['一句話描述(中)'] || '深度文化體驗'}</div>
                     <div class="meta">
-                        ${exp['地區'] ? `<span class="tag">📍 ${exp['地區']}</span>` : ''}
-                        ${exp['主要分類'] ? `<span class="tag">${exp['主要分類']}</span>` : ''}
+                        ${exp['地區'] ? `<span class="tag" onclick="filterByRegion('${exp['地區']}')" title="點擊查看所有${exp['地區']}體驗">📍 ${exp['地區']}</span>` : ''}
+                        ${exp['主要分類'] ? `<span class="tag" onclick="filterByCategory('${exp['主要分類']}')" title="點擊查看所有${exp['主要分類']}體驗">${exp['主要分類']}</span>` : ''}
                         ${exp['難度'] ? `<span class="tag">⭐ ${exp['難度']}</span>` : ''}
                     </div>
                     <div class="meta">
@@ -364,6 +533,45 @@
             `;
             
             return card;
+        }
+
+        // 點擊標籤篩選
+        function filterByRegion(region) {
+            currentFilters.region = region;
+            
+            // 更新按鈕狀態
+            const container = document.getElementById('regionFilters');
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.value === region) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // 捲動到篩選器
+            document.querySelector('.filters').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            filterAndDisplay();
+        }
+
+        function filterByCategory(category) {
+            currentFilters.category = category;
+            
+            // 更新按鈕狀態
+            const container = document.getElementById('categoryFilters');
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.value === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // 捲動到篩選器
+            document.querySelector('.filters').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            filterAndDisplay();
         }
 
         // 頁面載入時執行
