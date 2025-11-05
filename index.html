@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meet Taiwan 遇見台灣 - Find Your People in Taiwan</title>
+    <title>Local Friends Taiwan - Your local friend in Taiwan | 台灣在地友</title>
+    <meta name="description" content="Connect with real Taiwanese locals for authentic experiences. Not tours, just friends.">
     <style>
         * {
             margin: 0;
@@ -16,6 +17,7 @@
             line-height: 1.6;
             color: #2D6A4F;
             background: #F7F5F2;
+            overflow-x: hidden;
         }
         
         /* 浮動導覽列 */
@@ -30,6 +32,8 @@
             border-radius: 30px;
             box-shadow: 0 4px 20px rgba(45, 106, 79, 0.2);
             border: 2px solid #2D6A4F;
+            opacity: 0;
+            animation: fadeInLeft 1s ease forwards 0.5s;
         }
         
         .floating-nav a {
@@ -49,7 +53,7 @@
         }
         
         .floating-nav a:hover {
-            transform: scale(1.1);
+            transform: scale(1.15);
             background: linear-gradient(135deg, #40916C, #52B788);
         }
         
@@ -80,26 +84,85 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            animation: fadeInUp 0.5s ease;
         }
         
-        .header {
-            background: linear-gradient(135deg, #2D6A4F 0%, #40916C 100%);
-            color: white;
-            padding: 4rem 2rem;
+        /* Hero Section - 全螢幕背景 */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            background: linear-gradient(
+                rgba(45, 106, 79, 0.6),
+                rgba(45, 106, 79, 0.6)
+            ), url('images/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
         }
         
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
+        .hero-content {
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
             font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        .header .subtitle {
-            font-size: 1.5rem;
+        .hero .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
             opacity: 0.95;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         
+        .hero .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+        
+        .hero .cta-button {
+            display: inline-block;
+            padding: 1.3rem 3.5rem;
+            background: linear-gradient(135deg, #F4845F, #F4A261);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(244, 132, 95, 0.4);
+            animation: pulse 2s ease infinite;
+        }
+        
+        .hero .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(244, 132, 95, 0.6);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s ease infinite;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        /* 免責聲明 */
         .disclaimer {
             background: white;
             border-left: 5px solid #E9C46A;
@@ -120,101 +183,219 @@
             padding: 2rem;
         }
         
-        .intro {
+        /* 開場文案區塊 */
+        .intro-section {
             background: white;
-            padding: 3rem 2rem;
-            border-radius: 15px;
-            margin: 3rem 0;
-            border: 3px solid #2D6A4F;
-            box-shadow: 0 4px 20px rgba(45, 106, 79, 0.15);
+            padding: 5rem 2rem;
+            text-align: center;
         }
         
-        .intro h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .intro-section .intro-content {
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .intro-section .intro-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .intro-section h2 {
+            font-size: 2.8rem;
             color: #2D6A4F;
+            margin-bottom: 2rem;
             font-weight: bold;
         }
         
-        .intro p {
-            font-size: 1.2rem;
+        .intro-section p {
+            font-size: 1.4rem;
             color: #333;
-            line-height: 1.8;
+            line-height: 2;
+            margin-bottom: 1.5rem;
         }
         
+        .intro-section .highlight {
+            color: #F4845F;
+            font-weight: bold;
+        }
+        
+        /* 價值主張卡片 */
         .values {
+            padding: 5rem 2rem;
+            background: #F7F5F2;
+        }
+        
+        .values h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2D6A4F;
+            margin-bottom: 3rem;
+            font-weight: bold;
+        }
+        
+        .values-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin: 3rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .value-card {
             background: white;
             text-align: center;
-            padding: 2.5rem;
+            padding: 3rem 2rem;
             border-radius: 15px;
             border: 3px solid #E9C46A;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(233, 196, 106, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .value-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .value-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 30px rgba(233, 196, 106, 0.4);
+            transform: translateY(-15px);
+            box-shadow: 0 10px 40px rgba(233, 196, 106, 0.4);
             border-color: #F4845F;
         }
         
         .value-card .emoji {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            display: block;
         }
         
         .value-card h3 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             color: #2D6A4F;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
         }
         
         .value-card p {
             color: #555;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
         }
         
-        .cta-section {
+        /* 圖文交錯區塊 */
+        .feature-section {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-section.reverse {
+            flex-direction: row-reverse;
             background: white;
-            padding: 3rem;
+        }
+        
+        .feature-image {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        
+        .feature-section.reverse .feature-image {
+            transform: translateX(50px);
+        }
+        
+        .feature-image.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .feature-image img {
+            width: 100%;
             border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(45, 106, 79, 0.2);
+        }
+        
+        .feature-text {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease 0.2s;
+        }
+        
+        .feature-section.reverse .feature-text {
+            transform: translateX(-50px);
+        }
+        
+        .feature-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .feature-text h2 {
+            font-size: 2.5rem;
+            color: #2D6A4F;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .feature-text p {
+            font-size: 1.3rem;
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+        
+        /* CTA 區塊 */
+        .cta-section {
+            position: relative;
+            padding: 8rem 2rem;
             text-align: center;
-            margin: 3rem 0;
-            border: 3px solid #2D6A4F;
-            box-shadow: 0 4px 20px rgba(45, 106, 79, 0.15);
+            background: linear-gradient(
+                rgba(45, 106, 79, 0.85),
+                rgba(45, 106, 79, 0.85)
+            ), url('images/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
         }
         
         .cta-section h2 {
-            color: #2D6A4F;
+            font-size: 3rem;
             margin-bottom: 1.5rem;
-            font-size: 2rem;
             font-weight: bold;
+        }
+        
+        .cta-section p {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
         }
         
         .cta-section .btn {
             display: inline-block;
-            padding: 1.2rem 3rem;
+            padding: 1.3rem 3.5rem;
             background: linear-gradient(135deg, #F4845F, #F4A261);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
-            font-size: 1.3rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(244, 132, 95, 0.3);
+            font-size: 1.4rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(244, 132, 95, 0.4);
         }
         
         .cta-section .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(244, 132, 95, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(244, 132, 95, 0.6);
         }
         
         .footer {
@@ -222,7 +403,6 @@
             color: white;
             text-align: center;
             padding: 3rem 2rem;
-            margin-top: 4rem;
         }
         
         .footer a {
@@ -233,6 +413,53 @@
         
         .footer a:hover {
             text-decoration: underline;
+        }
+        
+        /* 動畫 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translate(-50px, -50%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(0, -50%);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 20px rgba(244, 132, 95, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 30px rgba(244, 132, 95, 0.6);
+            }
+            100% {
+                box-shadow: 0 4px 20px rgba(244, 132, 95, 0.4);
+            }
         }
         
         /* 手機版適配 */
@@ -255,28 +482,54 @@
                 height: 50px;
             }
             
-            .header h1 {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .intro-section h2 {
                 font-size: 2rem;
             }
             
-            .header .subtitle {
-                font-size: 1.2rem;
+            .intro-section p {
+                font-size: 1.1rem;
             }
             
-            .intro h2 {
-                font-size: 1.8rem;
-            }
-            
-            .intro p {
-                font-size: 1rem;
-            }
-            
-            .values {
+            .values-grid {
                 grid-template-columns: 1fr;
             }
             
-            .container {
-                padding: 1rem;
+            .feature-section {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 3rem 1rem;
+            }
+            
+            .feature-section.reverse {
+                flex-direction: column;
+            }
+            
+            .feature-text h2 {
+                font-size: 1.8rem;
+            }
+            
+            .feature-text p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-section p {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -293,90 +546,157 @@
     <!-- 回頂按鈕 -->
     <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
-    <header class="header" id="home">
-        <h1>Meet Taiwan 遇見台灣</h1>
-        <p class="subtitle">Find Your People in Taiwan</p>
-    </header>
+    <!-- Hero Section - 全螢幕背景 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>LOCAL FRIENDS TAIWAN</h1>
+            <p class="subtitle">台灣在地友</p>
+            <p class="tagline">Your local friend in Taiwan<br>你在台灣的在地朋友</p>
+            <a href="experiences.html" class="cta-button">探索體驗 Explore Experiences</a>
+        </div>
+        <div class="scroll-indicator" onclick="document.querySelector('.intro-section').scrollIntoView({behavior: 'smooth'})">
+            ↓
+        </div>
+    </section>
 
-    <div class="disclaimer">
-        <strong>ℹ️ Independent Information Platform 獨立資訊平台</strong><br>
-        We are a curated information platform, not an official booking site. 
-        Contact details are provided for you to reach organizations directly.<br>
-        我們是獨立的資訊整理平台,非官方預訂網站。我們提供聯絡資訊供您直接聯繫主辦單位。
-    </div>
-
-    <div class="container">
-        <section class="intro">
-            <h2>🌟 Connect with Real Taiwan</h2>
+    <!-- 開場文案 -->
+    <section class="intro-section">
+        <div class="intro-content">
+            <h2>Tired of tourist traps and scripted tours?</h2>
+            <h2>厭倦了觀光客路線和制式導覽？</h2>
             <p>
-                Meet Taiwan is an independent platform dedicated to connecting travelers 
-                with authentic local experiences in Taiwan. We curate meaningful cultural 
-                connections - from community meals to traditional crafts, from indigenous 
-                culture to social initiatives.
+                We connect you with real Taiwanese locals for authentic experiences you won't find in any guidebook.
             </p>
-            <p style="margin-top: 1rem;">
-                遇見台灣是一個獨立平台,致力於連結旅客與台灣真實的在地體驗。
-                我們策展有意義的文化連結——從社區聚餐到傳統工藝,從原住民文化到社會倡議。
+            <p>
+                我們連結你與台灣在地朋友來一場最難忘的體驗，<br>
+                這是旅遊書上找不到的真實台灣。
             </p>
-        </section>
+            <p style="margin-top: 2rem; font-size: 1.5rem;">
+                Cook with neighborhood aunties. Learn crafts from artisans. Join community gatherings. 
+                <span class="highlight">Experience Taiwan like a local, not a tourist.</span>
+            </p>
+            <p style="font-size: 1.5rem;">
+                和社區阿姨一起做菜；跟工藝師傅學手藝。<br>
+                再來參加在地聚會吧。<span class="highlight">像台灣人一樣生活，不是觀光客。</span>
+            </p>
+        </div>
+    </section>
 
-        <section class="values">
+    <!-- 價值主張 -->
+    <section class="values">
+        <h2>Why Choose Local Friends?</h2>
+        <div class="values-grid">
             <div class="value-card">
-                <div class="emoji">👥</div>
+                <span class="emoji">👥</span>
                 <h3>Real People</h3>
-                <p>不是導遊,是你在台灣的朋友<br>Not tour guides, but your local friends</p>
+                <p>真實的人</p>
+                <p>Not tour guides—your local friends<br>不是導遊,是你的在地朋友</p>
             </div>
             <div class="value-card">
-                <div class="emoji">🤝</div>
+                <span class="emoji">🤝</span>
                 <h3>Meaningful Connections</h3>
-                <p>深度交流,而非走馬看花<br>Deep exchange, not just sightseeing</p>
+                <p>有意義的連結</p>
+                <p>Deep connections, not just sightseeing<br>深度連結,而非走馬看花</p>
             </div>
             <div class="value-card">
-                <div class="emoji">💝</div>
+                <span class="emoji">💝</span>
                 <h3>Support Communities</h3>
-                <p>直接支持在地社群<br>Directly support local communities</p>
+                <p>支持在地社群</p>
+                <p>Directly support local communities<br>你的參與直接支持在地社群</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="cta-section" id="about">
-            <h2>🚀 開始探索台灣</h2>
-            <p style="margin-bottom: 2rem; font-size: 1.2rem; color: #555;">
-                準備好與台灣在地人連結了嗎?<br>
-                Ready to connect with real Taiwan?
-            </p>
-            <a href="experiences.html" class="btn">
-                探索體驗 Explore Experiences →
-            </a>
-        </section>
-
-        <section class="intro" style="margin-top: 3rem;">
-            <h2>📖 Our Approach 我們的方式</h2>
+    <!-- 圖文區塊 1 -->
+    <section class="feature-section">
+        <div class="feature-image">
+            <img src="images/section-1.jpg" alt="Taiwan local experience">
+        </div>
+        <div class="feature-text">
+            <h2>不只是觀光，是生活</h2>
+            <h2>Not Just Sightseeing, It's Living</h2>
             <p>
-                <strong>We are NOT:</strong> A booking platform, standardized tours, 
-                commercial packages<br>
-                <strong>我們不是:</strong> 預訂平台、標準化行程、商業套裝
+                像搭上一班慢火車，我們帶你進入台灣的日常節奏。
+                不趕行程，不拍網紅照，只是真實地與在地人相處，
+                聽他們的故事，分享他們的日常。
             </p>
-            <p style="margin-top: 1.5rem;">
-                <strong>We ARE:</strong> Information curators, cultural bridges, 
-                connecting travelers with real people<br>
-                <strong>我們是:</strong> 資訊策展者、文化橋樑,連結旅客與真實的人
+            <p>
+                Like boarding a slow train, we bring you into Taiwan's daily rhythm. 
+                No rushed schedules, no influencer photos—just authentic time with locals, 
+                hearing their stories and sharing their everyday lives.
             </p>
-        </section>
-    </div>
+        </div>
+    </section>
+
+    <!-- 圖文區塊 2 -->
+    <section class="feature-section reverse">
+        <div class="feature-image">
+            <img src="images/section-2.jpg" alt="Taiwan culture and tradition">
+        </div>
+        <div class="feature-text">
+            <h2>傳統與現代交織</h2>
+            <h2>Where Tradition Meets Today</h2>
+            <p>
+                從百年廟宇到街角咖啡廳，從傳統市場到創新工坊。
+                台灣在地朋友帶你看見文化的多元面貌，
+                理解這座島嶼如何在傳統與現代之間找到平衡。
+            </p>
+            <p>
+                From century-old temples to corner cafes, from traditional markets to 
+                innovative workshops. Your local friends show you Taiwan's cultural diversity 
+                and how this island balances tradition with modernity.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA 區塊 -->
+    <section class="cta-section" id="about">
+        <h2>你的台灣朋友在等你</h2>
+        <h2>Your Local Friend is Waiting</h2>
+        <p>準備好與台灣在地人連結了嗎？<br>Ready to connect with real Taiwan?</p>
+        <a href="experiences.html" class="btn">開始探索 Start Exploring →</a>
+    </section>
 
     <footer class="footer" id="contact">
-        <p style="font-size: 1.3rem; margin-bottom: 1rem;"><strong>Meet Taiwan 遇見台灣</strong></p>
-        <p style="margin-top: 0.5rem;">
+        <p style="font-size: 1.3rem; margin-bottom: 1rem;"><strong>Local Friends Taiwan 台灣在地友</strong></p>
+        <p>Your local friend in Taiwan | 你在台灣的在地朋友</p>
+        <p style="margin-top: 1rem;">
             <a href="https://github.com/PN0929/meet-taiwan" target="_blank">
                 📂 GitHub Project
             </a>
         </p>
         <p style="margin-top: 1.5rem; opacity: 0.9; font-size: 1rem;">
-            © 2024 Meet Taiwan. Independent Information Platform.
+            © 2024 Local Friends Taiwan. Independent Information Platform.
         </p>
     </footer>
 
     <script>
+        // 滾動動畫
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // 觀察所有需要動畫的元素
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll(
+                '.intro-content, .value-card, .feature-image, .feature-text'
+            );
+            
+            animatedElements.forEach((el, index) => {
+                el.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(el);
+            });
+        });
+
         // 回頂按鈕
         window.addEventListener('scroll', function() {
             const backToTop = document.querySelector('.back-to-top');
