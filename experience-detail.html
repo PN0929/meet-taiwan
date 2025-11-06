@@ -17,7 +17,7 @@
             color: #2D6A4F;
             background: #F7F5F2;
         }
-        
+
         /* 浮動導覽列 */
         .floating-nav {
             position: fixed;
@@ -52,7 +52,7 @@
             transform: scale(1.1);
             background: linear-gradient(135deg, #40916C, #52B788);
         }
-        
+
         /* 回頂按鈕 */
         .back-to-top {
             position: fixed;
@@ -81,14 +81,14 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        /* ✅ 照片輪播區 */
+        /* ✅ 照片輪播區（5 項修改完成） */
         .photo-gallery {
             width: 100%;
             max-width: 1200px;
@@ -101,7 +101,7 @@
         .photo-gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0;
+            gap: 0; /* 無縫拼接 */
         }
 
         .photo-gallery-item {
@@ -116,13 +116,13 @@
         .photo-gallery-item img {
             width: 100%;
             height: auto;
-            aspect-ratio: auto;
             object-fit: contain;
             transition: transform 0.5s ease;
+            display: block;
         }
 
         .photo-gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         /* ✅ 綠色遮罩 */
@@ -141,7 +141,7 @@
             opacity: 1;
         }
 
-        /* ✅ 如果沒有照片，顯示品牌色背景 */
+        /* ✅ 無照片時顯示品牌色背景 */
         #photoGallery:empty {
             display: flex;
             align-items: center;
@@ -153,18 +153,27 @@
             border-radius: 15px;
         }
 
-        /* 單張照片時樣式 */
+        /* 單張照片樣式 */
         .photo-gallery-grid.single-photo {
             grid-template-columns: 1fr;
-        }
-
-        .photo-gallery-grid.single-photo .photo-gallery-item {
-            height: auto;
         }
 
         /* 兩張照片樣式 */
         .photo-gallery-grid.two-photos {
             grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* ✅ 手機版可滑動、無按鈕 */
+        @media (max-width: 768px) {
+            .photo-gallery-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+            }
+            .photo-gallery-item {
+                flex: 0 0 100%;
+                scroll-snap-align: center;
+            }
         }
 
         .header-section {
@@ -176,48 +185,28 @@
             box-shadow: 0 4px 20px rgba(233, 196, 106, 0.2);
             animation: fadeInUp 0.8s ease;
         }
-        
+
         .header-section h1 {
             font-size: 2.8rem;
             color: #2D6A4F;
             margin-bottom: 0.5rem;
             font-weight: bold;
         }
-        
-        .header-section .subtitle {
-            font-size: 1.5rem;
-            color: #666;
-            margin-bottom: 2rem;
-        }
-        
-        .header-section .description {
-            font-size: 1.3rem;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
 
-        /* ✅ 手機版無按鈕，可滑動 */
-        @media (max-width: 768px) {
-            .photo-gallery-grid {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-            }
-            .photo-gallery-item {
-                flex: 0 0 100%;
-                scroll-snap-align: center;
-                height: auto;
-            }
-        }
-
-        /* 其他樣式省略（保持不變）... */
         .footer {
             background: linear-gradient(135deg, #2D6A4F, #40916C);
             color: white;
             text-align: center;
             padding: 2rem;
             margin-top: 4rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 5rem 2rem;
+            font-size: 1.5rem;
+            color: #2D6A4F;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -237,26 +226,16 @@
         載入體驗資訊中... Loading experience details...
     </div>
 
-    <div id="content" style="display: none;">
+    <div id="content" style="display:none;">
         <!-- ✅ 照片輪播區 -->
-        <div class="photo-gallery" id="photoGallery">
-            <!-- 照片會在這裡動態生成 -->
-        </div>
+        <div class="photo-gallery" id="photoGallery"></div>
 
         <div class="container">
-            <!-- 標題與基本資訊 -->
             <div class="header-section" id="headerSection"></div>
-
-            <!-- 詳細說明 -->
             <div class="content-section" id="detailSection"></div>
-
-            <!-- 聯絡資訊 -->
             <div class="content-section" id="contactSection"></div>
-
-            <!-- 地圖 -->
             <div class="map-section" id="mapSection"></div>
 
-            <!-- CTA -->
             <div class="cta-section">
                 <h2>準備好開始你的體驗了嗎？</h2>
                 <h2>Ready to Start Your Experience?</h2>
@@ -274,11 +253,127 @@
     </footer>
 
     <script>
-        /* 原 JS 保留不變 */
         const SHEET_ID = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-        // ... 其餘 JS 程式碼完全不變 ...
+        function convertGoogleDriveLink(url) {
+            const driveMatch = url.match(/\/file\/d\/([^\/]+)/);
+            if (driveMatch) {
+                return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+            }
+            return url;
+        }
+
+        async function loadExperience() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const experienceId = urlParams.get('id');
+
+            if (!experienceId) {
+                document.getElementById('loading').innerHTML = `
+                    <p>找不到體驗 ID Experience ID not found</p>
+                    <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表</a></p>
+                `;
+                return;
+            }
+
+            try {
+                const response = await fetch(SHEET_URL);
+                const csvText = await response.text();
+                const rows = parseCSV(csvText);
+                const headers = rows[0];
+                const data = rows.slice(1);
+                
+                const experience = data.map(row => {
+                    const obj = {};
+                    headers.forEach((header, index) => {
+                        obj[header] = row[index] || '';
+                    });
+                    return obj;
+                }).find(exp => exp['ID'] === experienceId);
+
+                if (!experience) {
+                    document.getElementById('loading').innerHTML = `
+                        <p>找不到此體驗 Experience not found</p>
+                        <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表</a></p>
+                    `;
+                    return;
+                }
+
+                displayExperience(experience);
+            } catch (error) {
+                console.error('載入失敗:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p>載入體驗時發生錯誤 Error loading experience</p>
+                    <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表</a></p>
+                `;
+            }
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            return lines.map(line => {
+                const values = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"') inQuotes = !inQuotes;
+                    else if (char === ',' && !inQuotes) {
+                        values.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                values.push(current.trim());
+                return values;
+            });
+        }
+
+        function displayExperience(exp) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+
+            document.title = `${exp['體驗名稱(中)']} - Local Friends Taiwan | 台灣在地連線`;
+            displayPhotos(exp);
+        }
+
+        function displayPhotos(exp) {
+            const photoGallery = document.getElementById('photoGallery');
+            let photoLinks = (exp['照片集'] || exp['封面圖連結'] || '')
+                .split(',')
+                .map(link => link.trim())
+                .filter(link => link)
+                .map(link => convertGoogleDriveLink(link));
+
+            if (photoLinks.length === 0) {
+                photoGallery.innerHTML = '📷 此體驗尚無照片';
+                return;
+            }
+
+            const gridClass = photoLinks.length === 1 ? 'single-photo' : photoLinks.length === 2 ? 'two-photos' : '';
+            photoGallery.innerHTML = `
+                <div class="photo-gallery-grid ${gridClass}">
+                    ${photoLinks.map((link, index) => `
+                        <div class="photo-gallery-item">
+                            <img src="${link}" alt="${exp['體驗名稱(中)']} 圖片 ${index + 1}" onerror="this.parentElement.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:2rem;\\'>📷</div>'">
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) backToTop.classList.add('show');
+            else backToTop.classList.remove('show');
+        });
+
         window.addEventListener('DOMContentLoaded', loadExperience);
     </script>
 </body>
