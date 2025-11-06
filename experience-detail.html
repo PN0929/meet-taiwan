@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>體驗詳情 - Local Friends Taiwan | 台灣在地連線</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,12 +17,12 @@
             z-index: 1000; background: white; padding: 1rem; border-radius: 30px;
             box-shadow: 0 4px 20px rgba(45,106,79,.2); border: 2px solid #2D6A4F;
         }
-        .floating-nav a{
-            display:block;width:50px;height:50px;margin:.5rem 0;border-radius:50%;
-            background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;text-decoration:none;
-            display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:.3s;
+        .floating-nav a {
+            display: block; width: 50px; height: 50px; margin: .5rem 0; border-radius: 50%;
+            background: linear-gradient(135deg,#2D6A4F,#40916C); color: #fff; text-decoration: none;
+            display:flex; align-items:center; justify-content:center; font-size:1.5rem; transition: .3s;
         }
-        .floating-nav a:hover{ transform:scale(1.1); background:linear-gradient(135deg,#40916C,#52B788); }
+        .floating-nav a:hover { transform: scale(1.1); background: linear-gradient(135deg,#40916C,#52B788); }
 
         /* 回頂按鈕 */
         .back-to-top {
@@ -31,132 +31,117 @@
             font-size:1.5rem; cursor:pointer; box-shadow:0 4px 20px rgba(244,132,95,.4);
             display:none; z-index:999; transition: transform .3s;
         }
-        .back-to-top:hover{ transform: translateY(-5px); }
-        .back-to-top.show{ display:flex;align-items:center;justify-content:center; }
+        .back-to-top:hover { transform: translateY(-5px); }
+        .back-to-top.show { display:flex; align-items:center; justify-content:center; }
 
-        /* Hero Section - 全螢幕照片背景 */
+        /* Hero Section（縮小高度、資訊導向） */
         .hero-section {
-            position: relative; height: 100vh; display:flex; align-items:center; justify-content:center;
-            text-align:center; overflow:hidden; background: #2D6A4F;
+            position: relative; height: 42vh; min-height: 220px; max-height: 460px;
+            display:flex; align-items:center; justify-content:center; text-align:center;
+            overflow: hidden; background: #2D6A4F;
         }
-        .hero-background { position:absolute; inset:0; z-index:1; }
-        .hero-slide { position:absolute; inset:0; opacity:0; transition: opacity 1s ease; background: linear-gradient(135deg,#2D6A4F,#40916C); }
-        .hero-slide.active { opacity:1; }
-        /* ✅ 1. 每張圖自動適應原始比例（避免裁切） */
-        .hero-slide img {
-            width: 100%; height: 100%;
-            object-fit: contain;            /* 保留原始比例 */
-            display: block;
-            background: transparent;
-        }
-        /* ✅ 3. 綠色遮罩 rgba(45,106,79,0.6) */
+        .hero-background { position: absolute; inset: 0; z-index: 1; }
+        .hero-slide { position:absolute; inset:0; opacity:0; transition: opacity 1s ease;
+            background: linear-gradient(135deg,#2D6A4F,#40916C); }
+        .hero-slide.active { opacity: 1; }
+        /* 1. 每張圖保持原始比例 */
+        .hero-slide img { width: 100%; height: 100%; object-fit: contain; display:block; background: transparent; }
+        /* 3. 綠色遮罩（品牌色） */
         .hero-overlay { position:absolute; inset:0; background: rgba(45,106,79,0.6); z-index:2; }
 
-        /* Hero 內容 */
         .hero-content {
-            position: relative; z-index:3; color:#fff; max-width:1000px; padding:2rem; animation: fadeInUp 1s ease;
+            position: relative; z-index:3; color:#fff; max-width:1000px; padding: 1.25rem 2rem;
+            animation: fadeInUp 0.8s ease;
         }
-        .hero-content h1 {
-            font-size: 4rem; font-weight: bold; margin-bottom:1rem; text-shadow: 2px 2px 8px rgba(0,0,0,.3); line-height:1.2;
-        }
-        .hero-content .subtitle { font-size:2rem; margin-bottom:1.5rem; opacity:.95; text-shadow:1px 1px 4px rgba(0,0,0,.3); }
-        .hero-content .description { font-size:1.5rem; margin-bottom:2.5rem; line-height:1.8; opacity:.9; text-shadow:1px 1px 4px rgba(0,0,0,.3); }
-        .hero-tags{ display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
-        .hero-tag{
-            padding:1rem 2rem; background: rgba(255,255,255,.2); backdrop-filter: blur(10px);
-            border:2px solid rgba(255,255,255,.3); border-radius:30px; color:#fff; font-size:1.2rem; font-weight:600;
+        .hero-content h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: .4rem; text-shadow: 2px 2px 8px rgba(0,0,0,.3); line-height: 1.2; }
+        .hero-content .subtitle { font-size: 1.3rem; margin-bottom: .8rem; opacity:.95; text-shadow:1px 1px 4px rgba(0,0,0,.3); }
+        .hero-content .description { font-size: 1.1rem; margin-bottom: 1.2rem; line-height: 1.7; opacity:.9; text-shadow:1px 1px 4px rgba(0,0,0,.3); }
+        .hero-tags { display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; }
+        .hero-tag {
+            padding: .6rem 1.1rem; background: rgba(255,255,255,.2); backdrop-filter: blur(10px);
+            border:2px solid rgba(255,255,255,.3); border-radius: 30px; color:#fff; font-size: .95rem; font-weight:600;
             text-shadow:1px 1px 2px rgba(0,0,0,.3);
         }
-        .hero-status{
-            padding:1rem 2rem; background:linear-gradient(135deg,#F4845F,#F4A261);
-            border:2px solid rgba(255,255,255,.5); border-radius:30px; color:#fff; font-size:1.2rem; font-weight:bold;
+        .hero-status {
+            padding: .6rem 1.1rem; background:linear-gradient(135deg,#F4845F,#F4A261);
+            border:2px solid rgba(255,255,255,.5); border-radius: 30px; color:#fff; font-size:.95rem; font-weight:700;
             box-shadow:0 4px 15px rgba(244,132,95,.4);
         }
 
-        /* 輪播控制按鈕（桌機顯示，手機隱藏） */
-        .hero-controls{
-            position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; gap:1rem; z-index:4;
+        /* 容器與內容區 */
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+        .content-section {
+            background:#fff; padding: 3rem; border-radius: 15px; margin-bottom: 2rem;
+            border: 3px solid #E9C46A; box-shadow: 0 4px 20px rgba(233,196,106,.2);
         }
-        .hero-control-btn{
-            width:50px; height:50px; background: rgba(255,255,255,.3); backdrop-filter: blur(10px);
-            border:2px solid rgba(255,255,255,.5); border-radius:50%; color:#fff; font-size:1.5rem; cursor:pointer;
-            transition:.3s; display:flex; align-items:center; justify-content:center;
+        .content-section h2 {
+            display:flex; align-items:center; justify-content: space-between;
+            font-size: 2rem; color:#2D6A4F; margin-bottom: 1.2rem; font-weight: 800;
+            border-bottom:3px solid #E9C46A; padding-bottom:.5rem;
         }
-        .hero-control-btn:hover{ background: rgba(255,255,255,.5); transform: scale(1.1); }
+        .content-section h3 { font-size: 1.5rem; color:#2D6A4F; margin: 2rem 0 1rem; font-weight: 700; }
+        .content-section p { font-size: 1.2rem; color:#555; line-height: 1.9; margin-bottom: 1.2rem; }
 
-        /* 滾動指示器 */
-        .scroll-indicator{
-            position:absolute; bottom:80px; left:50%; transform:translateX(-50%);
-            color:#fff; font-size:2rem; cursor:pointer; animation:bounce 2s ease infinite; z-index:4;
-        }
+        .info-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 1.2rem; }
+        .info-item { background:#F7F5F2; padding: 1.6rem; border-radius: 12px; border:2px solid #E9C46A; }
+        .info-item h4 { font-size:1.2rem; color:#2D6A4F; margin-bottom:.8rem; font-weight: 800; }
+        .info-item p { font-size:1.05rem; margin-bottom:.4rem; }
+        .info-item a { color:#F4845F; text-decoration: none; font-weight:700; word-break: break-all; }
+        .info-item a:hover { text-decoration: underline; }
 
-        /* 內容區塊 */
-        .container{ max-width:1200px; margin:0 auto; padding:3rem 2rem; }
-        .content-section{
-            background:#fff; padding:3rem; border-radius:15px; margin-bottom:2rem;
-            border:3px solid #E9C46A; box-shadow:0 4px 20px rgba(233,196,106,.2);
+        /* 詳細說明右側按鈕 */
+        .doc-link-btn {
+            display:inline-block; margin-left: .8rem; padding: .5rem .9rem;
+            font-size:.95rem; border-radius: 999px; border:2px solid #E9C46A;
+            color:#2D6A4F; background:#FFF9E6; text-decoration:none; font-weight:800;
         }
-        .content-section h2{
-            font-size:2rem; color:#2D6A4F; margin-bottom:1.5rem; font-weight:bold; border-bottom:3px solid #E9C46A; padding-bottom:.5rem;
-        }
-        .content-section h3{ font-size:1.5rem; color:#2D6A4F; margin:2rem 0 1rem; font-weight:bold; }
-        .content-section p{ font-size:1.2rem; color:#555; line-height:1.9; margin-bottom:1.5rem; }
-
-        .info-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; margin-top:2rem; }
-        .info-item{ background:#F7F5F2; padding:2rem; border-radius:12px; border:2px solid #E9C46A; }
-        .info-item h4{ font-size:1.3rem; color:#2D6A4F; margin-bottom:1rem; font-weight:bold; }
-        .info-item p{ font-size:1.1rem; margin-bottom:.5rem; }
-        .info-item a{ color:#F4845F; text-decoration:none; font-weight:600; word-break:break-all; }
-        .info-item a:hover{ text-decoration:underline; }
+        .doc-link-btn:hover { background:#FFF1BF; }
 
         /* 地圖區塊 */
-        .map-section{
-            background:#fff; padding:2rem; border-radius:15px; border:3px solid #E9C46A; box-shadow:0 4px 20px rgba(233,196,106,.2); margin-bottom:2rem;
+        .map-section {
+            background:#fff; padding: 2rem; border-radius: 15px; border: 3px solid #E9C46A; box-shadow: 0 4px 20px rgba(233,196,106,.2);
+            margin-bottom: 2rem;
         }
-        .map-section h2{ font-size:2rem; color:#2D6A4F; margin-bottom:1rem; font-weight:bold; }
-        .map-address{
-            font-size:1.2rem; color:#555; margin-bottom:1.5rem; padding:1rem; background:#F7F5F2; border-radius:8px; border-left:4px solid #E9C46A;
+        .map-section h2 { font-size: 2rem; color:#2D6A4F; margin-bottom: 1rem; font-weight: 800; }
+        .map-address {
+            font-size: 1.1rem; color:#555; margin-bottom: 1.2rem; padding: .9rem 1rem; background:#F7F5F2; border-radius: 8px; border-left: 4px solid #E9C46A;
         }
-        .map-container{ width:100%; height:450px; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(45,106,79,.15); }
-        .map-container iframe{ width:100%; height:100%; border:none; }
+        .map-container { width: 100%; height: 450px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(45,106,79,.15); }
+        .map-container iframe { width:100%; height:100%; border:0; }
 
-        .cta-section{
-            background:linear-gradient(135deg,#2D6A4F,#40916C); color:#fff; padding:3rem; border-radius:15px; text-align:center;
-            box-shadow:0 4px 20px rgba(45,106,79,.3);
+        .cta-section {
+            background: linear-gradient(135deg,#2D6A4F,#40916C); color:#fff; padding: 3rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 20px rgba(45,106,79,.3);
         }
-        .cta-section h2{ font-size:2.2rem; margin-bottom:1rem; font-weight:bold; }
-        .cta-section p{ font-size:1.3rem; margin-bottom:2rem; opacity:.95; }
-        .btn{
-            display:inline-block; padding:1.3rem 3rem; background:linear-gradient(135deg,#F4845F,#F4A261); color:#fff; text-decoration:none;
-            border-radius:50px; font-weight:bold; font-size:1.2rem; transition:.3s; box-shadow:0 4px 15px rgba(244,132,95,.4);
+        .cta-section h2 { font-size: 2.2rem; margin-bottom: 1rem; font-weight: 800; }
+        .cta-section p { font-size: 1.2rem; margin-bottom: 2rem; opacity: .95; }
+        .btn {
+            display:inline-block; padding: 1.1rem 2.5rem; background: linear-gradient(135deg,#F4845F,#F4A261);
+            color:#fff; text-decoration:none; border-radius: 50px; font-weight: 800; font-size: 1.1rem;
+            transition: .3s; box-shadow: 0 4px 15px rgba(244,132,95,.4);
         }
-        .btn:hover{ transform: translateY(-3px); box-shadow:0 6px 25px rgba(244,132,95,.6); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(244,132,95,.6); }
 
-        .footer{ background:linear-gradient(135deg,#2D6A4F,#40916C); color:#fff; text-align:center; padding:2rem; }
-        .loading{ text-align:center; padding:5rem 2rem; font-size:1.5rem; color:#2D6A4F; font-weight:bold; }
+        .footer { background: linear-gradient(135deg,#2D6A4F,#40916C); color:#fff; text-align:center; padding: 2rem; }
+        .loading { text-align:center; padding: 5rem 2rem; font-size: 1.4rem; color:#2D6A4F; font-weight: 800; }
 
         /* 動畫 */
-        @keyframes fadeInUp{ from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
-        @keyframes bounce{
-            0%,20%,50%,80%,100%{ transform: translateX(-50%) translateY(0); }
-            40%{ transform: translateX(-50%) translateY(-10px); }
-            60%{ transform: translateX(-50%) translateY(-5px); }
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
 
-        /* 手機版適配 + ✅ 4. 手機不顯示按鈕、可滑動 */
-        @media (max-width:768px){
-            .floating-nav{ left:10px; padding:.5rem; }
-            .floating-nav a{ width:40px; height:40px; font-size:1.2rem; margin:.3rem 0; }
-            .hero-content h1{ font-size:2.5rem; }
-            .hero-content .subtitle{ font-size:1.3rem; }
-            .hero-content .description{ font-size:1.1rem; }
-            .hero-tag,.hero-status{ font-size:1rem; padding:.8rem 1.5rem; }
-            .container{ padding:2rem 1rem; }
-            .content-section{ padding:2rem 1.5rem; }
-            .content-section h2{ font-size:1.6rem; }
-            .info-grid{ grid-template-columns:1fr; }
-            .map-container{ height:300px; }
-            .hero-controls{ display:none !important; } /* ✅ 手機隱藏左右按鈕 */
+        /* 手機版適配（Hero 更緊湊） */
+        @media (max-width: 768px) {
+            .floating-nav { left: 10px; padding: .5rem; }
+            .floating-nav a { width: 40px; height: 40px; font-size: 1.2rem; margin: .3rem 0; }
+
+            .hero-section { height: 34vh; min-height: 200px; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content .subtitle { font-size: 1.1rem; }
+            .hero-content .description { font-size: .95rem; }
+
+            .container { padding: 2rem 1rem; }
+            .content-section { padding: 2rem 1.4rem; }
+            .content-section h2 { font-size: 1.6rem; }
+            .info-grid { grid-template-columns: 1fr; }
+            .map-container { height: 300px; }
         }
     </style>
 </head>
@@ -175,19 +160,12 @@
     <div id="loading" class="loading">載入體驗資訊中... Loading experience details...</div>
 
     <div id="content" style="display: none;">
-        <!-- Hero Section - 全螢幕照片背景 -->
+        <!-- Hero（縮小高度、無向下箭頭） -->
         <section class="hero-section" id="heroSection">
-            <div class="hero-background" id="heroBackground"><!-- 照片輪播 --></div>
+            <div class="hero-background" id="heroBackground"></div>
             <div class="hero-overlay"></div>
-            <div class="hero-content" id="heroContent"><!-- 文案動態生成 --></div>
-
-            <!-- 桌機左右控制（手機隱藏） -->
-            <div class="hero-controls" id="heroControls" style="display: none;">
-                <button class="hero-control-btn" onclick="changeSlide(-1)">‹</button>
-                <button class="hero-control-btn" onclick="changeSlide(1)">›</button>
-            </div>
-
-            <div class="scroll-indicator" onclick="document.querySelector('.container').scrollIntoView({behavior:'smooth'})">↓</div>
+            <div class="hero-content" id="heroContent"></div>
+            <!-- 移除 scroll indicator（依照你的要求不顯示箭頭） -->
         </section>
 
         <div class="container">
@@ -204,7 +182,7 @@
             <div class="cta-section">
                 <h2>準備好開始你的體驗了嗎？</h2>
                 <h2>Ready to Start Your Experience?</h2>
-                <p>直接聯繫主辦單位安排你的專屬體驗<br>Contact the organizer to arrange your unique experience</p>
+                <p>直接聯繫主辦單位安排你的專屬體驗<br />Contact the organizer to arrange your unique experience</p>
                 <a href="experiences.html" class="btn">← 瀏覽更多體驗 Browse More Experiences</a>
             </div>
         </div>
@@ -212,17 +190,19 @@
 
     <footer class="footer">
         <p><strong>Local Friends Taiwan 台灣在地連線</strong></p>
-        <p style="margin-top: 1rem; opacity: 0.9;">Your local friend in Taiwan | 你在台灣的在地朋友</p>
+        <p style="margin-top: 1rem; opacity: .9;">Your local friend in Taiwan | 你在台灣的在地朋友</p>
     </footer>
 
     <script>
         const SHEET_ID = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
+        // 你提供的 Google Doc 預設連結（當 Sheet 沒有對應欄位時使用）
+        const FALLBACK_DOC_URL = 'https://docs.google.com/document/d/e/2PACX-1vQj1gYlRDbgpH-IupwfkeS8kSMIvGb9TadFFwGpzj9TJXLYv3kzvhu9BqcpUetG-y7Dpt2M8qJLFkoV/pub';
+
         let currentSlide = 0;
         let slideCount = 0;
         let slideInterval;
-        let touchStartX = 0, touchEndX = 0;
 
         async function loadExperience() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -292,12 +272,20 @@
 
             document.title = `${exp['體驗名稱(中)']} - Local Friends Taiwan | 台灣在地連線`;
 
-            // 顯示 Hero Section
+            // Hero
             displayHero(exp);
 
-            // 詳細說明
+            // 詳細說明（含 Google Doc 連結）
             const detailSection = document.getElementById('detailSection');
-            let detailHTML = '<h2>📖 詳細說明 Details</h2>';
+            const docUrlFromSheet =
+                exp['詳細說明連結'] || exp['Google Doc'] || exp['Google Doc 連結'] || FALLBACK_DOC_URL;
+
+            let detailHTML = `
+                <h2>
+                    <span>📖 詳細說明 Details</span>
+                    <a href="${docUrlFromSheet}" target="_blank" rel="noopener" class="doc-link-btn">在 Google Docs 開啟</a>
+                </h2>
+            `;
 
             if (exp['詳細說明(中)']) detailHTML += formatContent(exp['詳細說明(中)']);
             if (exp['詳細說明(英)']) detailHTML += `<h3>English Description:</h3>${formatContent(exp['詳細說明(英)'])}`;
@@ -310,6 +298,7 @@
             if (exp['最佳季節']) infoCards += `<div class="info-item"><h4>🌸 最佳季節 Best Season</h4><p>${exp['最佳季節']}</p></div>`;
             if (exp['價格範圍']) infoCards += `<div class="info-item"><h4>💰 價格範圍 Price Range</h4><p>${exp['價格範圍']}</p></div>`;
             if (infoCards) detailHTML += `<div class="info-grid">${infoCards}</div>`;
+
             detailSection.innerHTML = detailHTML;
 
             // 聯絡資訊
@@ -326,50 +315,36 @@
             contactHTML += '</div>';
             if (hasContact) contactSection.innerHTML = contactHTML; else contactSection.style.display = 'none';
 
-            // 地圖
+            // 地圖（用地址自動生成嵌入）
             displayMap(exp);
         }
 
         function displayHero(exp) {
             const heroBackground = document.getElementById('heroBackground');
             const heroContent = document.getElementById('heroContent');
-            const heroControls = document.getElementById('heroControls');
 
-            // 讀取照片（最上面三張等）：保留原始比例
             let photoLinks = (exp['照片集'] || exp['封面圖連結'] || '')
-                .split(',').map(s => s.trim()).filter(Boolean);
+                .split(',')
+                .map(s => s.trim())
+                .filter(Boolean);
 
             if (photoLinks.length > 0) {
                 slideCount = photoLinks.length;
                 heroBackground.innerHTML = photoLinks.map((link, idx) => `
                     <div class="hero-slide ${idx === 0 ? 'active' : ''}">
-                        <img src="${link}" alt="${exp['體驗名稱(中)'] || 'experience'} 圖片 ${idx+1}">
+                        <img src="${link}" alt="${exp['體驗名稱(中)'] || 'experience'} 圖片 ${idx+1}" />
                     </div>
                 `).join('');
-
-                // 桌機才顯示控制鈕；手機不顯示（CSS 也已隱藏）
-                if (photoLinks.length > 1 && window.matchMedia('(min-width: 769px)').matches) {
-                    heroControls.style.display = 'flex';
-                } else {
-                    heroControls.style.display = 'none';
-                }
-
-                startSlideShow(); // 自動輪播（桌機/手機皆可，但手機沒有按鈕）
-                bindTouchSwipe(); // ✅ 手機可滑動
+                startSlideShow();
             } else {
-                // ✅ 5. 沒照片：顯示品牌漸層背景（.hero-slide 背景已是品牌漸層）
                 slideCount = 0;
-                heroBackground.innerHTML = `
-                    <div class="hero-slide active"></div>
-                `;
-                heroControls.style.display = 'none';
+                heroBackground.innerHTML = `<div class="hero-slide active"></div>`;
             }
 
-            // Hero 文案
             heroContent.innerHTML = `
                 <h1>${exp['體驗名稱(中)'] || ''}</h1>
                 ${exp['體驗名稱(英)'] ? `<div class="subtitle">${exp['體驗名稱(英)']}</div>` : ''}
-                <div class="description">${exp['一句話描述(中)'] || '深度台灣在地體驗'}</div>
+                <div class="description">${exp['一句話描述(中)'] || ''}</div>
                 <div class="hero-tags">
                     ${exp['地區'] ? `<span class="hero-tag">📍 ${exp['地區']}</span>` : ''}
                     ${exp['主要分類'] ? `<span class="hero-tag">${exp['主要分類']}</span>` : ''}
@@ -393,35 +368,26 @@
             slides[currentSlide]?.classList.add('active');
         }
 
-        /* ✅ 4. 手機滑動手勢 */
-        function bindTouchSwipe() {
-            const hero = document.getElementById('heroSection');
-            hero.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, {passive:true});
-            hero.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].clientX;
-                const dx = touchEndX - touchStartX;
-                if (Math.abs(dx) > 40 && slideCount > 1) {
-                    changeSlide(dx > 0 ? -1 : 1);
-                    startSlideShow(); // 重置自動輪播計時
-                }
-            }, {passive:true});
-        }
-
         function displayMap(exp) {
             const mapSection = document.getElementById('mapSection');
-            if (!exp['Google Maps 嵌入連結'] && !exp['地址']) {
+
+            // 以「地址」生成 Google Maps 內嵌
+            const addr = (exp['地址'] || '').trim();
+
+            if (!addr) {
                 mapSection.style.display = 'none';
                 return;
             }
-            let mapHTML = '<h2>📍 位置資訊 Location</h2>';
-            if (exp['地址']) mapHTML += `<div class="map-address">📍 ${exp['地址']}</div>`;
-            if (exp['Google Maps 嵌入連結']) {
-                mapHTML += `
-                    <div class="map-container">
-                        <iframe src="${exp['Google Maps 嵌入連結']}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                `;
-            }
+
+            const iframeSrc = `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed`;
+
+            const mapHTML = `
+                <h2>📍 位置資訊 Location</h2>
+                <div class="map-address">📍 ${addr}</div>
+                <div class="map-container">
+                    <iframe src="${iframeSrc}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            `;
             mapSection.innerHTML = mapHTML;
         }
 
@@ -437,7 +403,7 @@
             else backToTop.classList.remove('show');
         });
 
-        function scrollToTop(){ window.scrollTo({ top:0, behavior:'smooth' }); }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
         window.addEventListener('DOMContentLoaded', loadExperience);
     </script>
