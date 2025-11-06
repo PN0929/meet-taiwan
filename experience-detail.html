@@ -10,7 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
             line-height: 1.6;
@@ -31,7 +31,7 @@
             box-shadow: 0 4px 20px rgba(45, 106, 79, 0.2);
             border: 2px solid #2D6A4F;
         }
-        
+
         .floating-nav a {
             display: block;
             width: 50px;
@@ -47,7 +47,7 @@
             font-size: 1.5rem;
             transition: transform 0.3s;
         }
-        
+
         .floating-nav a:hover {
             transform: scale(1.1);
             background: linear-gradient(135deg, #40916C, #52B788);
@@ -71,24 +71,18 @@
             z-index: 999;
             transition: transform 0.3s;
         }
-        
+
         .back-to-top:hover {
             transform: translateY(-5px);
         }
-        
+
         .back-to-top.show {
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* ✅ 照片輪播區（5 項修改完成） */
+        /* ✅ 新增：照片輪播區 */
         .photo-gallery {
             width: 100%;
             max-width: 1200px;
@@ -101,7 +95,7 @@
         .photo-gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0; /* 無縫拼接 */
+            gap: 0;
         }
 
         .photo-gallery-item {
@@ -112,10 +106,10 @@
             overflow: hidden;
         }
 
-        /* ✅ 每張圖保持原始比例 */
         .photo-gallery-item img {
             width: 100%;
             height: auto;
+            aspect-ratio: auto;
             object-fit: contain;
             transition: transform 0.5s ease;
             display: block;
@@ -125,7 +119,6 @@
             transform: scale(1.05);
         }
 
-        /* ✅ 綠色遮罩 */
         .photo-gallery-item::after {
             content: "";
             position: absolute;
@@ -137,11 +130,11 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
         .photo-gallery-item:hover::after {
             opacity: 1;
         }
 
-        /* ✅ 無照片時顯示品牌色背景 */
         #photoGallery:empty {
             display: flex;
             align-items: center;
@@ -153,17 +146,14 @@
             border-radius: 15px;
         }
 
-        /* 單張照片樣式 */
         .photo-gallery-grid.single-photo {
             grid-template-columns: 1fr;
         }
 
-        /* 兩張照片樣式 */
         .photo-gallery-grid.two-photos {
             grid-template-columns: repeat(2, 1fr);
         }
 
-        /* ✅ 手機版可滑動、無按鈕 */
         @media (max-width: 768px) {
             .photo-gallery-grid {
                 display: flex;
@@ -176,29 +166,20 @@
             }
         }
 
-        .header-section {
-            background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            border: 3px solid #E9C46A;
-            box-shadow: 0 4px 20px rgba(233, 196, 106, 0.2);
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .header-section h1 {
-            font-size: 2.8rem;
-            color: #2D6A4F;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
+        /* （Hero 區、內容、CTA、Footer 保留） */
+        .hero-section { position: relative; height: 100vh; overflow: hidden; background: #2D6A4F; }
+        .hero-background, .hero-overlay { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
+        .hero-slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease; }
+        .hero-slide.active { opacity: 1; }
+        .hero-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-overlay { background: rgba(45, 106, 79, 0.7); z-index: 2; }
+        .hero-content { position: relative; z-index: 3; color: white; text-align: center; padding: 2rem; }
 
         .footer {
             background: linear-gradient(135deg, #2D6A4F, #40916C);
             color: white;
             text-align: center;
             padding: 2rem;
-            margin-top: 4rem;
         }
 
         .loading {
@@ -219,19 +200,22 @@
         <a href="index.html#contact" title="聯絡">✉️</a>
     </nav>
 
-    <!-- 回頂按鈕 -->
     <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
-    <div id="loading" class="loading">
-        載入體驗資訊中... Loading experience details...
-    </div>
+    <div id="loading" class="loading">載入體驗資訊中... Loading experience details...</div>
 
     <div id="content" style="display:none;">
-        <!-- ✅ 照片輪播區 -->
-        <div class="photo-gallery" id="photoGallery"></div>
+        <!-- ✅ 新增照片展示區 -->
+        <section class="photo-gallery" id="photoGallery"></section>
+
+        <!-- Hero 區 -->
+        <section class="hero-section" id="heroSection">
+            <div class="hero-background" id="heroBackground"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content" id="heroContent"></div>
+        </section>
 
         <div class="container">
-            <div class="header-section" id="headerSection"></div>
             <div class="content-section" id="detailSection"></div>
             <div class="content-section" id="contactSection"></div>
             <div class="map-section" id="mapSection"></div>
@@ -247,134 +231,85 @@
 
     <footer class="footer">
         <p><strong>Local Friends Taiwan 台灣在地連線</strong></p>
-        <p style="margin-top: 1rem; opacity: 0.9;">
-            Your local friend in Taiwan | 你在台灣的在地朋友
-        </p>
+        <p style="margin-top:1rem;opacity:0.9;">Your local friend in Taiwan | 你在台灣的在地朋友</p>
     </footer>
 
     <script>
         const SHEET_ID = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-        function convertGoogleDriveLink(url) {
-            const driveMatch = url.match(/\/file\/d\/([^\/]+)/);
-            if (driveMatch) {
-                return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
-            }
-            return url;
-        }
-
         async function loadExperience() {
             const urlParams = new URLSearchParams(window.location.search);
             const experienceId = urlParams.get('id');
-
             if (!experienceId) {
-                document.getElementById('loading').innerHTML = `
-                    <p>找不到體驗 ID Experience ID not found</p>
-                    <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表</a></p>
-                `;
+                document.getElementById('loading').innerHTML = '❌ 錯誤：找不到體驗 ID';
                 return;
             }
 
             try {
                 const response = await fetch(SHEET_URL);
-                const csvText = await response.text();
-                const rows = parseCSV(csvText);
+                const csv = await response.text();
+                const rows = parseCSV(csv);
                 const headers = rows[0];
                 const data = rows.slice(1);
-                
-                const experience = data.map(row => {
-                    const obj = {};
-                    headers.forEach((header, index) => {
-                        obj[header] = row[index] || '';
-                    });
-                    return obj;
-                }).find(exp => exp['ID'] === experienceId);
-
-                if (!experience) {
-                    document.getElementById('loading').innerHTML = `
-                        <p>找不到此體驗 Experience not found</p>
-                        <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表</a></p>
-                    `;
-                    return;
-                }
-
-                displayExperience(experience);
-            } catch (error) {
-                console.error('載入失敗:', error);
-                document.getElementById('loading').innerHTML = `
-                    <p>載入體驗時發生錯誤 Error loading experience</p>
-                    <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表</a></p>
-                `;
+                const exp = data.map(r => Object.fromEntries(headers.map((h,i)=>[h,r[i]||''])))
+                    .find(e => e['ID']?.toLowerCase() === experienceId.toLowerCase());
+                if (!exp) throw new Error('未找到該體驗');
+                displayExperience(exp);
+            } catch(e) {
+                console.error(e);
+                document.getElementById('loading').textContent = '⚠️ 錯誤：無法載入體驗';
             }
         }
 
         function parseCSV(csv) {
             const lines = csv.split('\n');
             return lines.map(line => {
-                const values = [];
-                let current = '';
-                let inQuotes = false;
-                
-                for (let i = 0; i < line.length; i++) {
-                    const char = line[i];
-                    if (char === '"') inQuotes = !inQuotes;
-                    else if (char === ',' && !inQuotes) {
-                        values.push(current.trim());
-                        current = '';
-                    } else {
-                        current += char;
-                    }
+                const result = [];
+                let cur = '', inQ = false;
+                for (let c of line) {
+                    if (c === '"') inQ = !inQ;
+                    else if (c === ',' && !inQ) { result.push(cur); cur=''; }
+                    else cur += c;
                 }
-                values.push(current.trim());
-                return values;
+                result.push(cur);
+                return result.map(v=>v.trim());
             });
         }
 
         function displayExperience(exp) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('content').style.display = 'block';
-
-            document.title = `${exp['體驗名稱(中)']} - Local Friends Taiwan | 台灣在地連線`;
+            document.title = `${exp['體驗名稱(中)']} - Local Friends Taiwan`;
             displayPhotos(exp);
         }
 
+        /* ✅ 改良照片展示邏輯 */
         function displayPhotos(exp) {
-            const photoGallery = document.getElementById('photoGallery');
-            let photoLinks = (exp['照片集'] || exp['封面圖連結'] || '')
-                .split(',')
-                .map(link => link.trim())
-                .filter(link => link)
-                .map(link => convertGoogleDriveLink(link));
-
-            if (photoLinks.length === 0) {
-                photoGallery.innerHTML = '📷 此體驗尚無照片';
+            const container = document.getElementById('photoGallery');
+            const links = (exp['照片集'] || exp['封面圖連結'] || '')
+                .split(',').map(l=>l.trim()).filter(Boolean);
+            if (links.length === 0) {
+                container.innerHTML = '📷 此體驗尚無照片';
                 return;
             }
-
-            const gridClass = photoLinks.length === 1 ? 'single-photo' : photoLinks.length === 2 ? 'two-photos' : '';
-            photoGallery.innerHTML = `
+            const gridClass = links.length===1?'single-photo':links.length===2?'two-photos':'';
+            container.innerHTML = `
                 <div class="photo-gallery-grid ${gridClass}">
-                    ${photoLinks.map((link, index) => `
+                    ${links.map((l,i)=>`
                         <div class="photo-gallery-item">
-                            <img src="${link}" alt="${exp['體驗名稱(中)']} 圖片 ${index + 1}" onerror="this.parentElement.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:2rem;\\'>📷</div>'">
-                        </div>
-                    `).join('')}
-                </div>
-            `;
+                            <img src="${l}" alt="photo ${i+1}">
+                        </div>`).join('')}
+                </div>`;
         }
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
 
-        window.addEventListener('scroll', function() {
-            const backToTop = document.querySelector('.back-to-top');
-            if (window.pageYOffset > 300) backToTop.classList.add('show');
-            else backToTop.classList.remove('show');
+        window.addEventListener('scroll',()=>{
+            document.querySelector('.back-to-top').classList.toggle('show',window.pageYOffset>300);
         });
 
-        window.addEventListener('DOMContentLoaded', loadExperience);
+        window.addEventListener('DOMContentLoaded',loadExperience);
     </script>
 </body>
 </html>
