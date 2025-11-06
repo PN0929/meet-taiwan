@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>體驗詳情 - Local Friends Taiwan | 台灣在地連線</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,136 +12,79 @@
         }
 
         /* 浮動導覽列 */
-        .floating-nav {
-            position: fixed; left: 20px; top: 50%; transform: translateY(-50%);
-            z-index: 1000; background: white; padding: 1rem; border-radius: 30px;
-            box-shadow: 0 4px 20px rgba(45,106,79,.2); border: 2px solid #2D6A4F;
-        }
-        .floating-nav a {
-            display: block; width: 50px; height: 50px; margin: .5rem 0; border-radius: 50%;
-            background: linear-gradient(135deg,#2D6A4F,#40916C); color: #fff; text-decoration: none;
-            display:flex; align-items:center; justify-content:center; font-size:1.5rem; transition: .3s;
-        }
-        .floating-nav a:hover { transform: scale(1.1); background: linear-gradient(135deg,#40916C,#52B788); }
+        .floating-nav { position: fixed; left: 20px; top: 50%; transform: translateY(-50%); z-index: 1000; background: white; padding: 1rem; border-radius: 30px; box-shadow: 0 4px 20px rgba(45,106,79,.2); border: 2px solid #2D6A4F; }
+        .floating-nav a { display:block;width:50px;height:50px;margin:.5rem 0;border-radius:50%;background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;text-decoration:none;display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:.3s; }
+        .floating-nav a:hover { transform:scale(1.1); background:linear-gradient(135deg,#40916C,#52B788); }
 
         /* 回頂按鈕 */
-        .back-to-top {
-            position: fixed; right: 30px; bottom: 30px; width: 60px; height: 60px;
-            background: linear-gradient(135deg,#F4845F,#F4A261); color:#fff; border:none; border-radius:50%;
-            font-size:1.5rem; cursor:pointer; box-shadow:0 4px 20px rgba(244,132,95,.4);
-            display:none; z-index:999; transition: transform .3s;
-        }
+        .back-to-top { position: fixed; right: 30px; bottom: 30px; width: 60px; height: 60px; background: linear-gradient(135deg,#F4845F,#F4A261); color:#fff; border:none; border-radius:50%; font-size:1.5rem; cursor:pointer; box-shadow:0 4px 20px rgba(244,132,95,.4); display:none; z-index:999; transition: transform .3s; }
         .back-to-top:hover { transform: translateY(-5px); }
         .back-to-top.show { display:flex; align-items:center; justify-content:center; }
 
-        /* Hero Section（縮小高度、資訊導向） */
-        .hero-section {
-            position: relative; height: 42vh; min-height: 220px; max-height: 460px;
-            display:flex; align-items:center; justify-content:center; text-align:center;
-            overflow: hidden; background: #2D6A4F;
-        }
-        .hero-background { position: absolute; inset: 0; z-index: 1; }
-        .hero-slide { position:absolute; inset:0; opacity:0; transition: opacity 1s ease;
-            background: linear-gradient(135deg,#2D6A4F,#40916C); }
-        .hero-slide.active { opacity: 1; }
-        /* 1. 每張圖保持原始比例 */
-        .hero-slide img { width: 100%; height: 100%; object-fit: contain; display:block; background: transparent; }
-        /* 3. 綠色遮罩（品牌色） */
+        /* Hero（縮小高度、資訊導向，保留原比例 + 綠色遮罩） */
+        .hero-section { position: relative; height: 42vh; min-height: 220px; max-height: 460px; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; background:#2D6A4F; }
+        .hero-background { position:absolute; inset:0; z-index:1; }
+        .hero-slide { position:absolute; inset:0; opacity:0; transition: opacity 1s ease; background: linear-gradient(135deg,#2D6A4F,#40916C); }
+        .hero-slide.active { opacity:1; }
+        .hero-slide img { width:100%; height:100%; object-fit: contain; display:block; background: transparent; }
         .hero-overlay { position:absolute; inset:0; background: rgba(45,106,79,0.6); z-index:2; }
-
-        .hero-content {
-            position: relative; z-index:3; color:#fff; max-width:1000px; padding: 1.25rem 2rem;
-            animation: fadeInUp 0.8s ease;
-        }
-        .hero-content h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: .4rem; text-shadow: 2px 2px 8px rgba(0,0,0,.3); line-height: 1.2; }
+        .hero-content { position:relative; z-index:3; color:#fff; max-width:1000px; padding: 1.25rem 2rem; animation: fadeInUp .8s ease; }
+        .hero-content h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: .4rem; text-shadow: 2px 2px 8px rgba(0,0,0,.3); line-height:1.2; }
         .hero-content .subtitle { font-size: 1.3rem; margin-bottom: .8rem; opacity:.95; text-shadow:1px 1px 4px rgba(0,0,0,.3); }
         .hero-content .description { font-size: 1.1rem; margin-bottom: 1.2rem; line-height: 1.7; opacity:.9; text-shadow:1px 1px 4px rgba(0,0,0,.3); }
         .hero-tags { display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; }
-        .hero-tag {
-            padding: .6rem 1.1rem; background: rgba(255,255,255,.2); backdrop-filter: blur(10px);
-            border:2px solid rgba(255,255,255,.3); border-radius: 30px; color:#fff; font-size: .95rem; font-weight:600;
-            text-shadow:1px 1px 2px rgba(0,0,0,.3);
-        }
-        .hero-status {
-            padding: .6rem 1.1rem; background:linear-gradient(135deg,#F4845F,#F4A261);
-            border:2px solid rgba(255,255,255,.5); border-radius: 30px; color:#fff; font-size:.95rem; font-weight:700;
-            box-shadow:0 4px 15px rgba(244,132,95,.4);
-        }
+        .hero-tag { padding:.6rem 1.1rem; background: rgba(255,255,255,.2); backdrop-filter: blur(10px); border:2px solid rgba(255,255,255,.3); border-radius:30px; color:#fff; font-size:.95rem; font-weight:600; text-shadow:1px 1px 2px rgba(0,0,0,.3); }
+        .hero-status { padding:.6rem 1.1rem; background:linear-gradient(135deg,#F4845F,#F4A261); border:2px solid rgba(255,255,255,.5); border-radius:30px; color:#fff; font-size:.95rem; font-weight:700; box-shadow:0 4px 15px rgba(244,132,95,.4); }
 
-        /* 容器與內容區 */
+        /* 內容與資訊卡 */
         .container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
-        .content-section {
-            background:#fff; padding: 3rem; border-radius: 15px; margin-bottom: 2rem;
-            border: 3px solid #E9C46A; box-shadow: 0 4px 20px rgba(233,196,106,.2);
-        }
-        .content-section h2 {
-            display:flex; align-items:center; justify-content: space-between;
-            font-size: 2rem; color:#2D6A4F; margin-bottom: 1.2rem; font-weight: 800;
-            border-bottom:3px solid #E9C46A; padding-bottom:.5rem;
-        }
-        .content-section h3 { font-size: 1.5rem; color:#2D6A4F; margin: 2rem 0 1rem; font-weight: 700; }
-        .content-section p { font-size: 1.2rem; color:#555; line-height: 1.9; margin-bottom: 1.2rem; }
+        .content-section { background:#fff; padding: 3rem; border-radius: 15px; margin-bottom: 2rem; border: 3px solid #E9C46A; box-shadow: 0 4px 20px rgba(233,196,106,.2); }
+        .content-section h2 { font-size: 2rem; color:#2D6A4F; margin-bottom: 1.2rem; font-weight: 800; border-bottom:3px solid #E9C46A; padding-bottom:.5rem; display:block; }
+        .content-section h3 { font-size: 1.5rem; color:#2D6A4F; margin: 2rem 0 1rem; font-weight:700; }
+        .content-section p { font-size:1.2rem; color:#555; line-height:1.9; margin-bottom:1.2rem; }
 
-        .info-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 1.2rem; }
-        .info-item { background:#F7F5F2; padding: 1.6rem; border-radius: 12px; border:2px solid #E9C46A; }
-        .info-item h4 { font-size:1.2rem; color:#2D6A4F; margin-bottom:.8rem; font-weight: 800; }
+        .info-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:2rem; margin-top:1.2rem; }
+        .info-item { background:#F7F5F2; padding:1.6rem; border-radius:12px; border:2px solid #E9C46A; }
+        .info-item h4 { font-size:1.2rem; color:#2D6A4F; margin-bottom:.8rem; font-weight:800; }
         .info-item p { font-size:1.05rem; margin-bottom:.4rem; }
-        .info-item a { color:#F4845F; text-decoration: none; font-weight:700; word-break: break-all; }
-        .info-item a:hover { text-decoration: underline; }
+        .info-item a { color:#F4845F; text-decoration:none; font-weight:700; word-break:break-all; }
+        .info-item a:hover { text-decoration:underline; }
 
-        /* 詳細說明右側按鈕 */
-        .doc-link-btn {
-            display:inline-block; margin-left: .8rem; padding: .5rem .9rem;
-            font-size:.95rem; border-radius: 999px; border:2px solid #E9C46A;
-            color:#2D6A4F; background:#FFF9E6; text-decoration:none; font-weight:800;
-        }
-        .doc-link-btn:hover { background:#FFF1BF; }
+        /* 內嵌 Google Doc */
+        .doc-embed { width:100%; height: 900px; border:0; border-radius: 12px; box-shadow: 0 4px 20px rgba(45,106,79,.15); background:#fff; }
+        @media (max-width: 768px){ .doc-embed{ height: 600px; } }
 
         /* 地圖區塊 */
-        .map-section {
-            background:#fff; padding: 2rem; border-radius: 15px; border: 3px solid #E9C46A; box-shadow: 0 4px 20px rgba(233,196,106,.2);
-            margin-bottom: 2rem;
-        }
-        .map-section h2 { font-size: 2rem; color:#2D6A4F; margin-bottom: 1rem; font-weight: 800; }
-        .map-address {
-            font-size: 1.1rem; color:#555; margin-bottom: 1.2rem; padding: .9rem 1rem; background:#F7F5F2; border-radius: 8px; border-left: 4px solid #E9C46A;
-        }
-        .map-container { width: 100%; height: 450px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(45,106,79,.15); }
+        .map-section { background:#fff; padding:2rem; border-radius:15px; border:3px solid #E9C46A; box-shadow:0 4px 20px rgba(233,196,106,.2); margin-bottom:2rem; }
+        .map-section h2 { font-size:2rem; color:#2D6A4F; margin-bottom:1rem; font-weight:800; }
+        .map-address { font-size:1.1rem; color:#555; margin-bottom:1.2rem; padding:.9rem 1rem; background:#F7F5F2; border-radius:8px; border-left:4px solid #E9C46A; }
+        .map-container { width:100%; height:450px; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(45,106,79,.15); }
         .map-container iframe { width:100%; height:100%; border:0; }
 
-        .cta-section {
-            background: linear-gradient(135deg,#2D6A4F,#40916C); color:#fff; padding: 3rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 20px rgba(45,106,79,.3);
-        }
-        .cta-section h2 { font-size: 2.2rem; margin-bottom: 1rem; font-weight: 800; }
-        .cta-section p { font-size: 1.2rem; margin-bottom: 2rem; opacity: .95; }
-        .btn {
-            display:inline-block; padding: 1.1rem 2.5rem; background: linear-gradient(135deg,#F4845F,#F4A261);
-            color:#fff; text-decoration:none; border-radius: 50px; font-weight: 800; font-size: 1.1rem;
-            transition: .3s; box-shadow: 0 4px 15px rgba(244,132,95,.4);
-        }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(244,132,95,.6); }
+        .cta-section { background: linear-gradient(135deg,#2D6A4F,#40916C); color:#fff; padding: 3rem; border-radius: 15px; text-align:center; box-shadow:0 4px 20px rgba(45,106,79,.3); }
+        .cta-section h2 { font-size:2.2rem; margin-bottom:1rem; font-weight:800; }
+        .cta-section p { font-size:1.2rem; margin-bottom:2rem; opacity:.95; }
+        .btn { display:inline-block; padding:1.1rem 2.5rem; background: linear-gradient(135deg,#F4845F,#F4A261); color:#fff; text-decoration:none; border-radius:50px; font-weight:800; font-size:1.1rem; transition:.3s; box-shadow:0 4px 15px rgba(244,132,95,.4); }
+        .btn:hover { transform: translateY(-3px); box-shadow:0 6px 25px rgba(244,132,95,.6); }
 
-        .footer { background: linear-gradient(135deg,#2D6A4F,#40916C); color:#fff; text-align:center; padding: 2rem; }
-        .loading { text-align:center; padding: 5rem 2rem; font-size: 1.4rem; color:#2D6A4F; font-weight: 800; }
+        .footer { background: linear-gradient(135deg,#2D6A4F,#40916C); color:#fff; text-align:center; padding:2rem; }
+        .loading { text-align:center; padding:5rem 2rem; font-size:1.4rem; color:#2D6A4F; font-weight:800; }
 
-        /* 動畫 */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
 
-        /* 手機版適配（Hero 更緊湊） */
-        @media (max-width: 768px) {
-            .floating-nav { left: 10px; padding: .5rem; }
-            .floating-nav a { width: 40px; height: 40px; font-size: 1.2rem; margin: .3rem 0; }
-
+        /* 手機調整 */
+        @media (max-width:768px){
+            .floating-nav{ left:10px; padding:.5rem; }
+            .floating-nav a{ width:40px; height:40px; font-size:1.2rem; margin:.3rem 0; }
             .hero-section { height: 34vh; min-height: 200px; }
-            .hero-content h1 { font-size: 1.8rem; }
-            .hero-content .subtitle { font-size: 1.1rem; }
-            .hero-content .description { font-size: .95rem; }
-
-            .container { padding: 2rem 1rem; }
-            .content-section { padding: 2rem 1.4rem; }
-            .content-section h2 { font-size: 1.6rem; }
-            .info-grid { grid-template-columns: 1fr; }
-            .map-container { height: 300px; }
+            .hero-content h1{ font-size:1.8rem; }
+            .hero-content .subtitle{ font-size:1.1rem; }
+            .hero-content .description{ font-size:.95rem; }
+            .container{ padding:2rem 1rem; }
+            .content-section{ padding:2rem 1.4rem; }
+            .content-section h2{ font-size:1.6rem; }
+            .info-grid{ grid-template-columns:1fr; }
+            .map-container{ height:300px; }
         }
     </style>
 </head>
@@ -160,16 +103,15 @@
     <div id="loading" class="loading">載入體驗資訊中... Loading experience details...</div>
 
     <div id="content" style="display: none;">
-        <!-- Hero（縮小高度、無向下箭頭） -->
+        <!-- Hero（縮小高度、無往下箭頭） -->
         <section class="hero-section" id="heroSection">
             <div class="hero-background" id="heroBackground"></div>
             <div class="hero-overlay"></div>
             <div class="hero-content" id="heroContent"></div>
-            <!-- 移除 scroll indicator（依照你的要求不顯示箭頭） -->
         </section>
 
         <div class="container">
-            <!-- 詳細說明 -->
+            <!-- 詳細說明（直接內嵌 Google Doc） -->
             <div class="content-section" id="detailSection"></div>
 
             <!-- 聯絡資訊 -->
@@ -182,7 +124,7 @@
             <div class="cta-section">
                 <h2>準備好開始你的體驗了嗎？</h2>
                 <h2>Ready to Start Your Experience?</h2>
-                <p>直接聯繫主辦單位安排你的專屬體驗<br />Contact the organizer to arrange your unique experience</p>
+                <p>直接聯繫主辦單位安排你的專屬體驗<br>Contact the organizer to arrange your unique experience</p>
                 <a href="experiences.html" class="btn">← 瀏覽更多體驗 Browse More Experiences</a>
             </div>
         </div>
@@ -197,7 +139,7 @@
         const SHEET_ID = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-        // 你提供的 Google Doc 預設連結（當 Sheet 沒有對應欄位時使用）
+        // 若 sheet 沒提供 doc 連結就用這個預設（你給的）
         const FALLBACK_DOC_URL = 'https://docs.google.com/document/d/e/2PACX-1vQj1gYlRDbgpH-IupwfkeS8kSMIvGb9TadFFwGpzj9TJXLYv3kzvhu9BqcpUetG-y7Dpt2M8qJLFkoV/pub';
 
         let currentSlide = 0;
@@ -211,39 +153,39 @@
             if (!experienceId) {
                 document.getElementById('loading').innerHTML = `
                     <p>找不到體驗 ID Experience ID not found</p>
-                    <p style="margin-top: 1rem;"><a href="experiences.html" style="color: #F4845F; font-weight: bold;">← 返回體驗列表 Back to Experiences</a></p>
+                    <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表 Back to Experiences</a></p>
                 `;
                 return;
             }
 
             try {
-                const response = await fetch(SHEET_URL);
-                const csvText = await response.text();
+                const res = await fetch(SHEET_URL);
+                const csvText = await res.text();
                 const rows = parseCSV(csvText);
                 const headers = rows[0];
                 const data = rows.slice(1);
 
-                const experience = data.map(row => {
+                const exp = data.map(row => {
                     const obj = {};
-                    headers.forEach((header, index) => { obj[header] = row[index] || ''; });
+                    headers.forEach((header, idx) => obj[header] = row[idx] || '');
                     return obj;
-                }).find(exp => (exp['ID'] || '').toLowerCase() === experienceId.toLowerCase());
+                }).find(x => (x['ID'] || '').toLowerCase() === experienceId.toLowerCase());
 
-                if (!experience) {
+                if (!exp) {
                     document.getElementById('loading').innerHTML = `
                         <p>找不到此體驗 Experience not found</p>
-                        <p style="margin-top: 1rem;"><a href="experiences.html" style="color: #F4845F; font-weight: bold;">← 返回體驗列表 Back to Experiences</a></p>
+                        <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表 Back to Experiences</a></p>
                     `;
                     return;
                 }
 
-                displayExperience(experience);
+                displayExperience(exp);
 
-            } catch (error) {
-                console.error('載入失敗:', error);
+            } catch (e) {
+                console.error(e);
                 document.getElementById('loading').innerHTML = `
                     <p>載入體驗時發生錯誤 Error loading experience</p>
-                    <p style="margin-top: 1rem;"><a href="experiences.html" style="color: #F4845F; font-weight: bold;">← 返回體驗列表 Back to Experiences</a></p>
+                    <p style="margin-top: 1rem;"><a href="experiences.html" style="color:#F4845F;font-weight:bold;">← 返回體驗列表 Back to Experiences</a></p>
                 `;
             }
         }
@@ -252,16 +194,14 @@
             const lines = csv.split('\n');
             return lines.map(line => {
                 const values = [];
-                let current = '';
-                let inQuotes = false;
-
+                let cur = '', inQ = false;
                 for (let i = 0; i < line.length; i++) {
-                    const char = line[i];
-                    if (char === '"') inQuotes = !inQuotes;
-                    else if (char === ',' && !inQuotes) { values.push(current.trim()); current = ''; }
-                    else { current += char; }
+                    const ch = line[i];
+                    if (ch === '"') inQ = !inQ;
+                    else if (ch === ',' && !inQ) { values.push(cur.trim()); cur = ''; }
+                    else cur += ch;
                 }
-                values.push(current.trim());
+                values.push(cur.trim());
                 return values;
             });
         }
@@ -272,59 +212,29 @@
 
             document.title = `${exp['體驗名稱(中)']} - Local Friends Taiwan | 台灣在地連線`;
 
-            // Hero
+            // Hero：讀圖 + 文案
             displayHero(exp);
 
-            // 詳細說明（含 Google Doc 連結）
-            const detailSection = document.getElementById('detailSection');
-            const docUrlFromSheet =
-                exp['詳細說明連結'] || exp['Google Doc'] || exp['Google Doc 連結'] || FALLBACK_DOC_URL;
-
-            let detailHTML = `
-                <h2>
-                    <span>📖 詳細說明 Details</span>
-                    <a href="${docUrlFromSheet}" target="_blank" rel="noopener" class="doc-link-btn">在 Google Docs 開啟</a>
-                </h2>
-            `;
-
-            if (exp['詳細說明(中)']) detailHTML += formatContent(exp['詳細說明(中)']);
-            if (exp['詳細說明(英)']) detailHTML += `<h3>English Description:</h3>${formatContent(exp['詳細說明(英)'])}`;
-            if (!exp['詳細說明(中)'] && !exp['詳細說明(英)']) detailHTML += '<p>詳細資訊準備中... Details coming soon...</p>';
-
-            // 資訊卡片
-            let infoCards = '';
-            if (exp['適合對象']) infoCards += `<div class="info-item"><h4>👥 適合對象 Who Should Join</h4><p>${exp['適合對象']}</p></div>`;
-            if (exp['建議停留時間']) infoCards += `<div class="info-item"><h4>⏰ 建議停留時間 Duration</h4><p>${exp['建議停留時間']}</p></div>`;
-            if (exp['最佳季節']) infoCards += `<div class="info-item"><h4>🌸 最佳季節 Best Season</h4><p>${exp['最佳季節']}</p></div>`;
-            if (exp['價格範圍']) infoCards += `<div class="info-item"><h4>💰 價格範圍 Price Range</h4><p>${exp['價格範圍']}</p></div>`;
-            if (infoCards) detailHTML += `<div class="info-grid">${infoCards}</div>`;
-
-            detailSection.innerHTML = detailHTML;
+            // 詳細說明：直接內嵌 Google Doc
+            renderDetailWithDoc(exp);
 
             // 聯絡資訊
-            const contactSection = document.getElementById('contactSection');
-            let contactHTML = '<h2>📞 聯絡資訊 Contact Information</h2><div class="info-grid">';
-            let hasContact = false;
+            renderContact(exp);
 
-            if (exp['主辦單位']) { contactHTML += `<div class="info-item"><h4>🏢 主辦單位 Organizer</h4><p>${exp['主辦單位']}</p></div>`; hasContact = true; }
-            if (exp['聯絡人']) { contactHTML += `<div class="info-item"><h4>👤 聯絡人 Contact Person</h4><p>${exp['聯絡人']}</p></div>`; hasContact = true; }
-            if (exp['電話']) { contactHTML += `<div class="info-item"><h4>📱 電話 Phone</h4><p><a href="tel:${exp['電話']}">${exp['電話']}</a></p></div>`; hasContact = true; }
-            if (exp['Email']) { contactHTML += `<div class="info-item"><h4>✉️ Email</h4><p><a href="mailto:${exp['Email']}">${exp['Email']}</a></p></div>`; hasContact = true; }
-            if (exp['網站']) { contactHTML += `<div class="info-item"><h4>🌐 網站 Website</h4><p><a href="${exp['網站']}" target="_blank">${exp['網站']}</a></p></div>`; hasContact = true; }
-            if (exp['社群媒體']) { contactHTML += `<div class="info-item"><h4>📱 社群媒體 Social Media</h4><p><a href="${exp['社群媒體']}" target="_blank">${exp['社群媒體']}</a></p></div>`; hasContact = true; }
-            contactHTML += '</div>';
-            if (hasContact) contactSection.innerHTML = contactHTML; else contactSection.style.display = 'none';
-
-            // 地圖（用地址自動生成嵌入）
+            // 地圖：用地址內嵌
             displayMap(exp);
         }
 
+        /* ========== 圖片（Hero） ========== */
         function displayHero(exp) {
             const heroBackground = document.getElementById('heroBackground');
             const heroContent = document.getElementById('heroContent');
 
-            let photoLinks = (exp['照片集'] || exp['封面圖連結'] || '')
-                .split(',')
+            // 兼容欄位名稱與分隔符（半形逗號、全形逗號、空白換行）
+            const rawList =
+                (exp['照片集'] || exp['封面圖連結'] || exp['圖片'] || '').replace(/，/g, ',');
+            const photoLinks = rawList
+                .split(/[,\s]+/)
                 .map(s => s.trim())
                 .filter(Boolean);
 
@@ -332,7 +242,8 @@
                 slideCount = photoLinks.length;
                 heroBackground.innerHTML = photoLinks.map((link, idx) => `
                     <div class="hero-slide ${idx === 0 ? 'active' : ''}">
-                        <img src="${link}" alt="${exp['體驗名稱(中)'] || 'experience'} 圖片 ${idx+1}" />
+                        <img src="${link}" alt="${exp['體驗名稱(中)'] || 'experience'} 圖片 ${idx+1}"
+                             onerror="this.outerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.9;font-size:1.2rem;&quot;>📷</div>'">
                     </div>
                 `).join('');
                 startSlideShow();
@@ -359,7 +270,6 @@
             if (slideCount <= 1) return;
             slideInterval = setInterval(() => changeSlide(1), 5000);
         }
-
         function changeSlide(direction) {
             const slides = document.querySelectorAll('.hero-slide');
             if (!slides.length) return;
@@ -368,42 +278,98 @@
             slides[currentSlide]?.classList.add('active');
         }
 
+        /* ========== 詳細說明：內嵌 Google Doc ========== */
+        function renderDetailWithDoc(exp) {
+            const detailSection = document.getElementById('detailSection');
+
+            // 先呈現文字（若有）
+            let html = `<h2>📖 詳細說明 Details</h2>`;
+            if (exp['詳細說明(中)']) html += formatContent(exp['詳細說明(中)']);
+            if (exp['詳細說明(英)']) html += `<h3>English Description:</h3>${formatContent(exp['詳細說明(英)'])}`;
+            if (!exp['詳細說明(中)'] && !exp['詳細說明(英)']) html += '<p>詳細資訊準備中... Details coming soon...</p>';
+
+            // 找 Google Doc 連結（多欄位名稱容錯）
+            const docUrlRaw = (exp['詳細說明連結'] || exp['Google Doc'] || exp['Google Doc 連結'] || '').trim();
+            const docUrl = docUrlRaw || FALLBACK_DOC_URL;
+
+            // 轉換成可內嵌網址
+            const embedded = toEmbeddableGoogleDocURL(docUrl);
+
+            // 直接 iframe 內嵌
+            html += `
+                <div style="margin-top:1.2rem">
+                    <iframe class="doc-embed"
+                            src="${embedded}"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            loading="lazy"></iframe>
+                </div>
+            `;
+
+            detailSection.innerHTML = html;
+        }
+
+        // 將 Google Doc 連結轉為可內嵌
+        function toEmbeddableGoogleDocURL(url) {
+            try {
+                // 已發佈到網路的形式：/document/d/e/.../pub
+                if (/\/document\/d\/e\/[^/]+\/pub/.test(url)) {
+                    return url.includes('?') ? url + '&embedded=true' : url + '?embedded=true';
+                }
+                // 一般編輯連結：/document/d/{id}/edit → 改用 preview
+                const m = url.match(/\/document\/d\/([^/]+)/);
+                if (m) {
+                    const id = m[1];
+                    return `https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`;
+                }
+                // 其他情況：原樣回傳（希望已可嵌入）
+                return url;
+            } catch { return url; }
+        }
+
+        /* ========== 聯絡資訊 ========== */
+        function renderContact(exp) {
+            const contactSection = document.getElementById('contactSection');
+            let html = '<h2>📞 聯絡資訊 Contact Information</h2><div class="info-grid">';
+            let has = false;
+
+            if (exp['主辦單位']) { html += `<div class="info-item"><h4>🏢 主辦單位 Organizer</h4><p>${exp['主辦單位']}</p></div>`; has = true; }
+            if (exp['聯絡人']) { html += `<div class="info-item"><h4>👤 聯絡人 Contact Person</h4><p>${exp['聯絡人']}</p></div>`; has = true; }
+            if (exp['電話']) { html += `<div class="info-item"><h4>📱 電話 Phone</h4><p><a href="tel:${exp['電話']}">${exp['電話']}</a></p></div>`; has = true; }
+            if (exp['Email']) { html += `<div class="info-item"><h4>✉️ Email</h4><p><a href="mailto:${exp['Email']}">${exp['Email']}</a></p></div>`; has = true; }
+            if (exp['網站']) { html += `<div class="info-item"><h4>🌐 網站 Website</h4><p><a href="${exp['網站']}" target="_blank">${exp['網站']}</a></p></div>`; has = true; }
+            if (exp['社群媒體']) { html += `<div class="info-item"><h4>📱 社群媒體 Social Media</h4><p><a href="${exp['社群媒體']}" target="_blank">${exp['社群媒體']}</a></p></div>`; has = true; }
+
+            html += '</div>';
+            if (has) contactSection.innerHTML = html; else contactSection.style.display = 'none';
+        }
+
+        /* ========== 地圖（用地址自動內嵌） ========== */
         function displayMap(exp) {
             const mapSection = document.getElementById('mapSection');
-
-            // 以「地址」生成 Google Maps 內嵌
             const addr = (exp['地址'] || '').trim();
 
-            if (!addr) {
-                mapSection.style.display = 'none';
-                return;
-            }
+            if (!addr) { mapSection.style.display = 'none'; return; }
 
             const iframeSrc = `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed`;
-
             const mapHTML = `
                 <h2>📍 位置資訊 Location</h2>
                 <div class="map-address">📍 ${addr}</div>
-                <div class="map-container">
-                    <iframe src="${iframeSrc}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+                <div class="map-container"><iframe src="${iframeSrc}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
             `;
             mapSection.innerHTML = mapHTML;
         }
 
         function formatContent(content) {
-            if (!content) return '<p>準備中...</p>';
-            const paragraphs = content.split('\n').filter(p => p.trim());
-            return paragraphs.map(p => `<p>${p}</p>`).join('');
+            const paras = (content || '').split('\n').filter(p => p.trim());
+            if (!paras.length) return '';
+            return paras.map(p => `<p>${p}</p>`).join('');
         }
 
         window.addEventListener('scroll', () => {
-            const backToTop = document.querySelector('.back-to-top');
-            if (window.pageYOffset > 300) backToTop.classList.add('show');
-            else backToTop.classList.remove('show');
+            const btn = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) btn.classList.add('show'); else btn.classList.remove('show');
         });
-
-        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function scrollToTop(){ window.scrollTo({ top:0, behavior:'smooth' }); }
 
         window.addEventListener('DOMContentLoaded', loadExperience);
     </script>
