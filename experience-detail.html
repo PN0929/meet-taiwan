@@ -404,14 +404,14 @@
             }
             
             .photo-gallery-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
             }
             
             .photo-gallery-item {
                 height: 250px;
             }
             
-            .header-section, .content-section {
+            .header-section, .content-section, .map-section {
                 padding: 2rem 1.5rem;
             }
             
@@ -500,6 +500,17 @@
     <script>
         const SHEET_ID = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+
+        // 轉換 Google Drive 連結為直連
+        function convertGoogleDriveLink(url) {
+            // 如果是 Google Drive /file/d/ 格式
+            const driveMatch = url.match(/\/file\/d\/([^\/]+)/);
+            if (driveMatch) {
+                return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+            }
+            // 如果已經是正確格式或其他圖床,直接返回
+            return url;
+        }
 
         async function loadExperience() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -596,82 +607,128 @@
 
             // 詳細說明區塊
             const detailSection = document.getElementById('detailSection');
-            detailSection.innerHTML = `
-                <h2>📖 詳細說明 Details</h2>
-                ${formatContent(exp['詳細說明(中)'] || '準備中...')}
-                ${exp['詳細說明(英)'] ? `<h3>English Description:</h3>${formatContent(exp['詳細說明(英)'])}` : ''}
-                
-                <div class="info-grid">
-                    ${exp['適合對象'] ? `
-                        <div class="info-item">
-                            <h4>👥 適合對象 Who Should Join</h4>
-                            <p>${exp['適合對象']}</p>
-                        </div>
-                    ` : ''}
-                    ${exp['建議停留時間'] ? `
-                        <div class="info-item">
-                            <h4>⏰ 建議停留時間 Duration</h4>
-                            <p>${exp['建議停留時間']}</p>
-                        </div>
-                    ` : ''}
-                    ${exp['最佳季節'] ? `
-                        <div class="info-item">
-                            <h4>🌸 最佳季節 Best Season</h4>
-                            <p>${exp['最佳季節']}</p>
-                        </div>
-                    ` : ''}
-                    ${exp['價格範圍'] ? `
-                        <div class="info-item">
-                            <h4>💰 價格範圍 Price Range</h4>
-                            <p>${exp['價格範圍']}</p>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
+            let detailHTML = '<h2>📖 詳細說明 Details</h2>';
+            
+            if (exp['詳細說明(中)']) {
+                detailHTML += formatContent(exp['詳細說明(中)']);
+            }
+            
+            if (exp['詳細說明(英)']) {
+                detailHTML += `<h3>English Description:</h3>${formatContent(exp['詳細說明(英)'])}`;
+            }
+            
+            if (!exp['詳細說明(中)'] && !exp['詳細說明(英)']) {
+                detailHTML += '<p>詳細資訊準備中... Details coming soon...</p>';
+            }
+            
+            // 資訊卡片
+            let infoCards = '';
+            if (exp['適合對象']) {
+                infoCards += `
+                    <div class="info-item">
+                        <h4>👥 適合對象 Who Should Join</h4>
+                        <p>${exp['適合對象']}</p>
+                    </div>
+                `;
+            }
+            if (exp['建議停留時間']) {
+                infoCards += `
+                    <div class="info-item">
+                        <h4>⏰ 建議停留時間 Duration</h4>
+                        <p>${exp['建議停留時間']}</p>
+                    </div>
+                `;
+            }
+            if (exp['最佳季節']) {
+                infoCards += `
+                    <div class="info-item">
+                        <h4>🌸 最佳季節 Best Season</h4>
+                        <p>${exp['最佳季節']}</p>
+                    </div>
+                `;
+            }
+            if (exp['價格範圍']) {
+                infoCards += `
+                    <div class="info-item">
+                        <h4>💰 價格範圍 Price Range</h4>
+                        <p>${exp['價格範圍']}</p>
+                    </div>
+                `;
+            }
+            
+            if (infoCards) {
+                detailHTML += `<div class="info-grid">${infoCards}</div>`;
+            }
+            
+            detailSection.innerHTML = detailHTML;
 
             // 聯絡資訊區塊
             const contactSection = document.getElementById('contactSection');
-            contactSection.innerHTML = `
-                <h2>📞 聯絡資訊 Contact Information</h2>
-                <div class="info-grid">
-                    ${exp['主辦單位'] ? `
-                        <div class="info-item">
-                            <h4>🏢 主辦單位 Organizer</h4>
-                            <p>${exp['主辦單位']}</p>
-                        </div>
-                    ` : ''}
-                    ${exp['聯絡人'] ? `
-                        <div class="info-item">
-                            <h4>👤 聯絡人 Contact Person</h4>
-                            <p>${exp['聯絡人']}</p>
-                        </div>
-                    ` : ''}
-                    ${exp['電話'] ? `
-                        <div class="info-item">
-                            <h4>📱 電話 Phone</h4>
-                            <p><a href="tel:${exp['電話']}">${exp['電話']}</a></p>
-                        </div>
-                    ` : ''}
-                    ${exp['Email'] ? `
-                        <div class="info-item">
-                            <h4>✉️ Email</h4>
-                            <p><a href="mailto:${exp['Email']}">${exp['Email']}</a></p>
-                        </div>
-                    ` : ''}
-                    ${exp['網站'] ? `
-                        <div class="info-item">
-                            <h4>🌐 網站 Website</h4>
-                            <p><a href="${exp['網站']}" target="_blank">${exp['網站']}</a></p>
-                        </div>
-                    ` : ''}
-                    ${exp['社群媒體'] ? `
-                        <div class="info-item">
-                            <h4>📱 社群媒體 Social Media</h4>
-                            <p><a href="${exp['社群媒體']}" target="_blank">${exp['社群媒體']}</a></p>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
+            let contactHTML = '<h2>📞 聯絡資訊 Contact Information</h2><div class="info-grid">';
+            let hasContact = false;
+            
+            if (exp['主辦單位']) {
+                contactHTML += `
+                    <div class="info-item">
+                        <h4>🏢 主辦單位 Organizer</h4>
+                        <p>${exp['主辦單位']}</p>
+                    </div>
+                `;
+                hasContact = true;
+            }
+            if (exp['聯絡人']) {
+                contactHTML += `
+                    <div class="info-item">
+                        <h4>👤 聯絡人 Contact Person</h4>
+                        <p>${exp['聯絡人']}</p>
+                    </div>
+                `;
+                hasContact = true;
+            }
+            if (exp['電話']) {
+                contactHTML += `
+                    <div class="info-item">
+                        <h4>📱 電話 Phone</h4>
+                        <p><a href="tel:${exp['電話']}">${exp['電話']}</a></p>
+                    </div>
+                `;
+                hasContact = true;
+            }
+            if (exp['Email']) {
+                contactHTML += `
+                    <div class="info-item">
+                        <h4>✉️ Email</h4>
+                        <p><a href="mailto:${exp['Email']}">${exp['Email']}</a></p>
+                    </div>
+                `;
+                hasContact = true;
+            }
+            if (exp['網站']) {
+                contactHTML += `
+                    <div class="info-item">
+                        <h4>🌐 網站 Website</h4>
+                        <p><a href="${exp['網站']}" target="_blank">${exp['網站']}</a></p>
+                    </div>
+                `;
+                hasContact = true;
+            }
+            if (exp['社群媒體']) {
+                contactHTML += `
+                    <div class="info-item">
+                        <h4>📱 社群媒體 Social Media</h4>
+                        <p><a href="${exp['社群媒體']}" target="_blank">${exp['社群媒體']}</a></p>
+                    </div>
+                `;
+                hasContact = true;
+            }
+            
+            contactHTML += '</div>';
+            
+            if (hasContact) {
+                contactSection.innerHTML = contactHTML;
+            } else {
+                contactSection.style.display = 'none';
+            }
 
             // 地圖區塊
             displayMap(exp);
@@ -681,7 +738,11 @@
             const photoGallery = document.getElementById('photoGallery');
             
             // 讀取照片連結 (優先讀取「照片集」,其次「封面圖連結」)
-            const photoLinks = (exp['照片集'] || exp['封面圖連結'] || '').split(',').map(link => link.trim()).filter(link => link);
+            let photoLinks = (exp['照片集'] || exp['封面圖連結'] || '')
+                .split(',')
+                .map(link => link.trim())
+                .filter(link => link)
+                .map(link => convertGoogleDriveLink(link)); // 轉換 Google Drive 連結
             
             if (photoLinks.length === 0) {
                 photoGallery.style.display = 'none';
@@ -692,9 +753,9 @@
             
             photoGallery.innerHTML = `
                 <div class="photo-gallery-grid ${gridClass}">
-                    ${photoLinks.map(link => `
+                    ${photoLinks.map((link, index) => `
                         <div class="photo-gallery-item">
-                            <img src="${link}" alt="${exp['體驗名稱(中)']}" onerror="this.parentElement.style.display='none'">
+                            <img src="${link}" alt="${exp['體驗名稱(中)']} 圖片 ${index + 1}" onerror="this.parentElement.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:2rem;\\'>📷</div>'">
                         </div>
                     `).join('')}
                 </div>
