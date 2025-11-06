@@ -22,37 +22,56 @@
     .hero-section{position:relative;height:42vh;min-height:240px;max-height:480px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:#2D6A4F}
     .hero-overlay{position:absolute;inset:0;background:rgba(45,106,79,.6);z-index:2}
 
-    /* 文字 */
-    .hero-content{position:relative;z-index:3;color:#fff;max-width:1000px;padding:1.25rem 2rem}
-    .hero-content h1{font-size:2.4rem;font-weight:800;margin-bottom:.4rem;text-shadow:2px 2px 8px rgba(0,0,0,.3);line-height:1.2}
-    .hero-content .subtitle{font-size:1.3rem;margin-bottom:.8rem;opacity:.95;text-shadow:1px 1px 4px rgba(0,0,0,.3)}
-    .hero-content .description{font-size:1.1rem;margin-bottom:1.2rem;line-height:1.7;opacity:.9;text-shadow:1px 1px 4px rgba(0,0,0,.3)}
+    /* 文字（加大字級 + 強化陰影） */
+    .hero-content{position:relative;z-index:3;color:#fff;max-width:1100px;padding:1.25rem 2rem}
+    .hero-content h1{
+      font-size:3rem;            /* ↑ 加大 */
+      font-weight:900;
+      margin-bottom:.5rem;
+      line-height:1.15;
+      text-shadow:
+        0 3px 10px rgba(0,0,0,.45),
+        0 8px 24px rgba(0,0,0,.35);  /* ↑ 陰影更明顯 */
+      letter-spacing:.3px;
+    }
+    .hero-content .subtitle{
+      font-size:1.5rem;          /* ↑ 加大 */
+      margin-bottom:.9rem;
+      opacity:.98;
+      text-shadow:0 2px 8px rgba(0,0,0,.35);
+    }
+    .hero-content .description{
+      font-size:1.15rem;
+      margin-bottom:1.2rem;
+      line-height:1.75;
+      opacity:.95;
+      text-shadow:0 2px 8px rgba(0,0,0,.35);
+    }
     .hero-tags{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
-    .hero-tag{padding:.6rem 1.1rem;background:rgba(255,255,255,.2);backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.3);border-radius:30px;color:#fff;font-size:.95rem;font-weight:600}
-    .hero-status{padding:.6rem 1.1rem;background:linear-gradient(135deg,#F4845F,#F4A261);border:2px solid rgba(255,255,255,.5);border-radius:30px;color:#fff;font-size:.95rem;font-weight:700;box-shadow:0 4px 15px rgba(244,132,95,.4)}
+    .hero-tag{padding:.6rem 1.1rem;background:rgba(255,255,255,.22);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.35);border-radius:30px;color:#fff;font-size:1rem;font-weight:700}
+    .hero-status{padding:.6rem 1.1rem;background:linear-gradient(135deg,#F4845F,#F4A261);border:2px solid rgba(255,255,255,.5);border-radius:30px;color:#fff;font-size:1rem;font-weight:800;box-shadow:0 4px 15px rgba(244,132,95,.4)}
 
     /* 影像背景容器 */
     .hero-media{position:absolute;inset:0;z-index:1}
 
-    /* 桌機：三張並排（不輪播） */
+    /* 桌機：三張並排（不輪播、完全填滿） */
     .hero-grid{width:100%;height:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-    .hero-grid-item{position:relative;background:linear-gradient(135deg,#2D6A4F,#40916C)}
-    /* 統一高度 + 智慧置中：用 flex 包覆，依照片方向選擇鋪滿寬或高 */
-    .hero-grid-fit{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-    .hero-grid-fit img{display:block;object-position:center center}
-    .hero-grid-fit img.landscape{width:100%;height:auto}
-    .hero-grid-fit img.portrait{height:100%;width:auto}
-    .hero-grid-fit img.square{height:100%;width:auto}
+    .hero-grid-item{position:relative;background:#2D6A4F}
+    .hero-grid-item img{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;            /* 重要：填滿、不留底色 */
+      object-position:center;      /* 以中心為重心 */
+      display:block;
+    }
 
-    /* 手機：單張輪播 */
+    /* 手機：單張輪播（也改 cover，避免黑邊） */
     .hero-carousel{display:none;position:absolute;inset:0}
-    .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;background:linear-gradient(135deg,#2D6A4F,#40916C)}
+    .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;background:#2D6A4F}
     .hero-slide.active{opacity:1}
-    .hero-slide .fit{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-    .hero-slide img{display:block;object-position:center center}
-    .hero-slide img.landscape{width:100%;height:auto}
-    .hero-slide img.portrait{height:100%;width:auto}
-    .hero-slide img.square{height:100%;width:auto}
+    .hero-slide img{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover; object-position:center; display:block;
+    }
 
     /* 內容與卡片 */
     .container{max-width:1200px;margin:0 auto;padding:3rem 2rem}
@@ -68,18 +87,21 @@
     .info-item a{color:#F4845F;text-decoration:none;font-weight:700;word-break:break-all}
     .info-item a:hover{text-decoration:underline}
 
-    /* Doc 內容：更舒適的版面（提取後的純內容） */
+    /* Doc 內容：把標題與內容放在同一內層，左右完美對齊 */
     .doc-render{padding:0}
     .doc-render-inner{
-      padding:2rem 2rem;              /* 更大的內距 */
-      max-width:900px; margin:0 auto; /* 舒適行寬 */
+      padding:2rem 2rem;              /* 更大的內距，避免字貼邊 */
+      max-width:900px; margin:0 auto; /* 舒適行寬 + 置中 */
     }
-    .doc-render-inner h1,.doc-render-inner h2,.doc-render-inner h3,.doc-render-inner h4{
+    .doc-render-inner h2{ /* 同 content-section h2，但在內層，以便跟內文對齊 */
+      font-size:2rem;color:#2D6A4F;margin-bottom:1.2rem;font-weight:800;border-bottom:3px solid #E9C46A;padding-bottom:.5rem;
+    }
+    .doc-render-inner h1,.doc-render-inner h2 + h3,.doc-render-inner h3,.doc-render-inner h4{
       line-height:1.3; margin:1.2rem 0 .6rem; color:#1f4d39; font-weight:800;
     }
     .doc-render-inner p{margin:.8rem 0; color:#2f2f2f; font-size:1.06rem}
     .doc-render-inner strong{font-weight:800}
-    .doc-render-inner ul,.doc-render-inner ol{margin: .8rem 0 .8rem 1.25rem}
+    .doc-render-inner ul,.doc-render-inner ol{margin:.8rem 0 .8rem 1.25rem}
     .doc-render-inner li{margin:.35rem 0}
     .doc-render-inner blockquote{
       border-left:4px solid #E9C46A; background:#FFF9E6; padding:.8rem 1rem; border-radius:8px; color:#2e2e2e; margin:1rem 0;
@@ -113,14 +135,14 @@
     .footer{background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;text-align:center;padding:2rem}
     .loading{text-align:center;padding:5rem 2rem;font-size:1.4rem;color:#2D6A4F;font-weight:800}
 
-    /* 手機：顯示輪播、隱藏三圖排版 */
+    /* 手機：顯示輪播、隱藏三圖排版；字體稍回縮 */
     @media (max-width:768px){
       .floating-nav{left:10px;padding:.5rem}
       .floating-nav a{width:40px;height:40px;font-size:1.2rem;margin:.3rem 0}
       .hero-section{height:34vh;min-height:200px}
-      .hero-content h1{font-size:1.8rem}
-      .hero-content .subtitle{font-size:1.1rem}
-      .hero-content .description{font-size:.95rem}
+      .hero-content h1{font-size:2.1rem}
+      .hero-content .subtitle{font-size:1.2rem}
+      .hero-content .description{font-size:1rem}
       .hero-grid{display:none}
       .hero-carousel{display:block}
       .container{padding:2rem 1rem}
@@ -158,10 +180,10 @@
     </section>
 
     <div class="container">
-      <!-- 詳細說明（提取 Google Doc 內容、非 iframe） -->
+      <!-- 詳細說明（把 h2 與內容放進同一內層以對齊邊距） -->
       <div class="content-section doc-render" id="detailSection">
-        <h2>📖 詳細說明 Details</h2>
         <div class="doc-render-inner" id="docRenderInner">
+          <h2>📖 詳細說明 Details</h2>
           <div class="loading-line" style="margin:12px 0;width:60%"></div>
           <div class="loading-line" style="margin:12px 0;width:80%"></div>
           <div class="loading-line" style="margin:12px 0;width:40%"></div>
@@ -251,7 +273,7 @@
       renderMap(exp);
     }
 
-    /* ---------------- 頂部圖片：桌機三張並排（智慧置中）、手機單張輪播 ---------------- */
+    /* ---------------- 頂部圖片：桌機三張並排（填滿）、手機單張輪播 ---------------- */
     function getPhotoLinks(exp){
       const raw = (exp['照片集'] || exp['封面圖連結'] || exp['圖片'] || '').replace(/，/g, ',');
       return raw.split(/[,\s]+/).map(s=>s.trim()).filter(Boolean);
@@ -262,22 +284,18 @@
       const carousel = document.getElementById('heroCarousel');
       const links = getPhotoLinks(exp);
 
-      /* 桌機：三張並排（取前三張，不輪播） */
+      /* 桌機：三張並排（不輪播；使用 cover 填滿） */
       const gridItems = (links.length? links.slice(0,3) : [null,null,null]).map((url,i)=>`
         <div class="hero-grid-item">
-          <div class="hero-grid-fit">
-            ${url ? `<img src="${url}" alt="hero ${i+1}" onload="classifyOrientation(this)" onerror="this.style.display='none'">`
-                  : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.9">📷</div>`}
-          </div>
+          ${url ? `<img src="${url}" alt="hero ${i+1}" onerror="this.style.display='none'">`
+                : ``}
         </div>`).join('');
       grid.innerHTML = gridItems;
 
-      /* 手機：單張輪播 */
+      /* 手機：單張輪播（cover，避免黑邊） */
       const mobileItems = (links.length? links : []).map((url,i)=>`
         <div class="hero-slide ${i===0?'active':''}">
-          <div class="fit">
-            <img src="${url}" alt="slide ${i+1}" onload="classifyOrientation(this)" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.9&quot;>📷</div>'">
-          </div>
+          <img src="${url}" alt="slide ${i+1}" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.9&quot;>📷</div>'">
         </div>`).join('');
       carousel.innerHTML = mobileItems || `<div class="hero-slide active"></div>`;
 
@@ -295,18 +313,6 @@
           ${exp['難度']?`<span class="hero-tag">⭐ 難度: ${exp['難度']}</span>`:''}
           <span class="hero-status">🚧 ${exp['Status']||'準備中'}</span>
         </div>`;
-    }
-
-    /* 依圖片實際尺寸，標記方向：landscape / portrait / square */
-    function classifyOrientation(img){
-      try{
-        const {naturalWidth:w, naturalHeight:h} = img;
-        if(!w || !h) return;
-        img.classList.remove('landscape','portrait','square');
-        if(Math.abs(w-h) < 4){ img.classList.add('square'); }
-        else if(w > h){ img.classList.add('landscape'); }
-        else{ img.classList.add('portrait'); }
-      }catch(e){}
     }
 
     function startMobileCarousel(){
@@ -339,7 +345,10 @@
 
     /* ---------------- 詳細說明：擷取 Google Doc 內容（含圖片） ---------------- */
     async function renderDetailFromDoc(exp){
-      const container = document.getElementById('docRenderInner');
+      const inner = document.getElementById('docRenderInner');
+      // 清掉預設 loading 線條，但保留 h2
+      inner.innerHTML = '<h2>📖 詳細說明 Details</h2>';
+
       const raw = (exp['詳細說明連結'] || exp['Google Doc'] || exp['Google Doc 連結'] || '').trim();
       const url = raw || FALLBACK_DOC_URL;
       const fetchURL = toFetchableDocURL(url);
@@ -351,21 +360,13 @@
         const tmp = document.createElement('div');
         tmp.innerHTML = html;
 
-        // 發佈版常見 #contents；否則 fallback body
         let main = tmp.querySelector('#contents') || tmp.querySelector('body') || tmp;
-
-        // 盡量清掉與我們樣式衝突的元素
         main.querySelectorAll('link,style,header,nav,script').forEach(n=>n.remove());
 
-        container.innerHTML = '';
         const wrapper = document.createElement('div');
-        wrapper.style.wordBreak='break-word';
-        wrapper.style.lineHeight='1.8';
-        wrapper.style.color='#2f2f2f';
-        wrapper.style.fontSize='1.06rem';
         wrapper.innerHTML = main.innerHTML;
 
-        // 處理圖片：自適應 + lazy
+        // 圖片處理：自適應 + lazy + 圖片失敗 fallback
         wrapper.querySelectorAll('img').forEach(img=>{
           img.style.maxWidth='100%';
           img.style.height='auto';
@@ -374,7 +375,6 @@
           img.style.borderRadius='8px';
           img.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';
           img.loading='lazy';
-          // 若圖片無法載入，加上替代
           img.onerror = () => { img.replaceWith(Object.assign(document.createElement('div'),{textContent:'📷 圖片無法載入',style:'text-align:center;color:#888;padding:1rem 0'})); };
         });
 
@@ -387,22 +387,20 @@
           w.appendChild(t);
         });
 
-        container.appendChild(wrapper);
+        inner.appendChild(wrapper);
       }catch(err){
         console.warn('Doc fetch blocked (CORS). Fallback to iframe.', err);
-        container.innerHTML = `
+        inner.insertAdjacentHTML('beforeend', `
           <iframe src="${toEmbeddableIframeURL(url)}"
                   style="width:100%;height:900px;border:0;border-radius:12px;background:#fff"
-                  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+                  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`);
       }
     }
 
     function toFetchableDocURL(url){
-      // 已發佈到網路
       if(/\/document\/d\/e\/[^/]+\/pub/.test(url)){
         return url.includes('?') ? url : url + '?embedded=true';
       }
-      // 一般 /edit → export html（需 Doc 設定可公開讀取）
       const m = url.match(/\/document\/d\/([^/]+)/);
       if(m){
         const id = m[1];
