@@ -52,10 +52,11 @@
       pointer-events:none;
     }
 
-    /* Hero 文字（保留寬鬆側邊距與陰影） */
+    /* Hero 文字：加頂部距離、維持陰影 */
     .hero-content{
       position:relative;z-index:3;color:#fff;max-width:1100px;
       padding:1.25rem clamp(22px,5vw,32px);
+      margin-top:clamp(24px,6vh,72px);   /* ✅ 與最上方留距 */
     }
     .hero-content h1{
       font-size:3rem;font-weight:900;margin-bottom:.5rem;line-height:1.15;
@@ -63,8 +64,23 @@
     }
     .hero-content .subtitle{font-size:1.5rem;margin-bottom:.9rem;opacity:.98;text-shadow:0 2px 8px rgba(0,0,0,.35)}
     .hero-content .description{font-size:1.15rem;margin-bottom:1.2rem;line-height:1.75;opacity:.95;text-shadow:0 2px 8px rgba(0,0,0,.35)}
-    .hero-tags{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
-    .hero-tag{padding:.6rem 1.1rem;background:rgba(255,255,255,.22);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.35);border-radius:30px;color:#fff;font-size:1rem;font-weight:700}
+
+    /* ✅ Tag 單行呈現＋縮小尺寸 */
+    .hero-tags{
+      display:flex;gap:.5rem;justify-content:center;align-items:center;
+      flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none
+    }
+    .hero-tags::-webkit-scrollbar{display:none}
+    .hero-tag{
+      padding:.4rem .8rem;
+      background:rgba(255,255,255,.22);
+      backdrop-filter:blur(8px);
+      border:2px solid rgba(255,255,255,.35);
+      border-radius:18px;
+      color:#fff;font-size:.92rem;font-weight:700;
+      white-space:nowrap;
+    }
 
     /* 內容與卡片 */
     .container{max-width:1200px;margin:0 auto;padding:3rem 2rem}
@@ -82,7 +98,7 @@
 
     /* Doc 內容呈現 */
     .doc-render{padding:0}
-    .doc-render-inner{padding:2rem 2rem;max-width:900px;margin:0 auto}
+    .doc-render-inner{padding:2rem 2rem;max-width:900px;margin:0 auto;overflow-wrap:anywhere}
     .doc-render-inner h2{font-size:2rem;color:#2D6A4F;margin-bottom:1.2rem;font-weight:800;border-bottom:3px solid #E9C46A;padding-bottom:.5rem}
     .doc-render-inner h1,.doc-render-inner h2 + h3,.doc-render-inner h3,.doc-render-inner h4{line-height:1.3;margin:1.2rem 0 .6rem;color:#1f4d39;font-weight:800}
     .doc-render-inner p{margin:.8rem 0;color:#2f2f2f;font-size:1.06rem}
@@ -91,12 +107,13 @@
     .doc-render-inner li{margin:.35rem 0}
     .doc-render-inner blockquote{border-left:4px solid #E9C46A;background:#FFF9E6;padding:.8rem 1rem;border-radius:8px;color:#2e2e2e;margin:1rem 0}
 
+    /* ✅ 更嚴謹地限制外溢 */
     .doc-render-inner img{max-width:100% !important;height:auto !important;display:block;margin:1rem auto;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-    .doc-render-inner figure{max-width:100%;margin:1rem 0}
-    .doc-render-inner table{width:100%;border-collapse:collapse;margin:1rem 0;overflow:auto;display:block}
+    .doc-render-inner figure{max-width:100% !important;margin:1rem 0;overflow-x:auto}
+    .doc-render-inner table{width:100%;border-collapse:collapse;margin:1rem 0;overflow:auto;display:block;max-width:100% !important}
     .doc-render-inner th,.doc-render-inner td{border:1px solid #e6e6e6;padding:.6rem .8rem;text-align:left;vertical-align:top}
     .doc-render-inner thead th{background:#f7f7f7;font-weight:800}
-    .doc-render-inner iframe{max-width:100%;width:100% !important;border:0;border-radius:8px;min-height:300px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .doc-render-inner iframe{max-width:100% !important;width:100% !important;border:0;border-radius:8px;min-height:300px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
 
     .doc-render .loading-line{height:10px;border-radius:6px;background:linear-gradient(90deg,#e9f3ee,#f3faf7,#e9f3ee);background-size:200% 100%;animation:shimmer 1.2s infinite}
     @keyframes shimmer{0%{background-position:0 0}100%{background-position:200% 0}}
@@ -118,19 +135,20 @@
     .footer{background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;text-align:center;padding:2rem}
     .loading{text-align:center;padding:5rem 2rem;font-size:1.4rem;color:#2D6A4F;font-weight:800}
 
-    /* 手機：Hero 內容靠左、凸顯頂部對比 */
+    /* 手機：Hero 內容靠左 */
     @media (max-width:768px){
       .floating-nav{left:10px;padding:.5rem}
       .floating-nav a{width:40px;height:40px;font-size:1.2rem;margin:.3rem 0}
 
       .hero-section{
         height:34vh;min-height:200px;
-        justify-content:flex-start;           /* ← 手機改為靠左 */
+        justify-content:flex-start;  /* 手機靠左 */
       }
       .hero-content{
-        text-align:left;                      /* ← 文字靠左 */
+        text-align:left;
         margin-left:0;
-        padding:1rem clamp(20px,6vw,28px);    /* ← 更自然的左右內距 */
+        padding:1rem clamp(20px,6vw,28px);
+        margin-top:clamp(16px,7vh,64px);   /* 手機再多一點頂距 */
       }
       .hero-content h1{font-size:2.1rem}
       .hero-content .subtitle{font-size:1.2rem}
@@ -360,22 +378,46 @@
         const wrapper = document.createElement('div');
         wrapper.innerHTML = main.innerHTML;
 
+        /* ✅ 更徹底處理 Doc 內圖片寬度溢出問題 */
         wrapper.querySelectorAll('img').forEach(img=>{
-          img.removeAttribute('width'); img.removeAttribute('height');
-          img.style.maxWidth='100%'; img.style.height='auto'; img.loading='lazy';
-          img.style.display='block'; img.style.margin='1rem auto';
-          img.style.borderRadius='8px'; img.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';
-          img.onerror = () => { img.replaceWith(Object.assign(document.createElement('div'),{textContent:'📷 圖片無法載入',style:'text-align:center;color:#888;padding:1rem 0'})); };
+          // 清除 Google Doc 可能塞的寬度
+          if (img.style && img.style.width) img.style.width = '';
+          if (img.getAttribute('style')) {
+            // 移除 style 中的 width 指定（保留其他樣式）
+            const rest = img.getAttribute('style').split(';').filter(s=>!/\bwidth\s*:/.test(s)).join(';');
+            img.setAttribute('style', rest);
+          }
+          img.removeAttribute('width');
+          img.removeAttribute('height');
+
+          // 強制自適應
+          img.style.maxWidth='100%';
+          img.style.height='auto';
+          img.loading='lazy';
+          img.style.display='block';
+          img.style.margin='1rem auto';
+          img.style.borderRadius='8px';
+          img.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';
+          img.onerror = () => {
+            img.replaceWith(Object.assign(document.createElement('div'),{
+              textContent:'📷 圖片無法載入',
+              style:'text-align:center;color:#888;padding:1rem 0'
+            }));
+          };
         });
 
+        // 表格可滾動
         wrapper.querySelectorAll('table').forEach(t=>{
           const w = document.createElement('div');
           w.style.overflow='auto'; w.style.margin='1rem 0';
           t.parentNode.insertBefore(w,t); w.appendChild(t);
         });
 
+        // 內嵌 iframe 也不外溢
         wrapper.querySelectorAll('iframe').forEach(f=>{
-          f.removeAttribute('width'); f.style.width='100%'; f.style.maxWidth='100%';
+          f.removeAttribute('width');
+          f.style.width='100%';
+          f.style.maxWidth='100%';
         });
 
         inner.appendChild(wrapper);
