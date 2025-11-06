@@ -149,6 +149,7 @@
             gap: 1rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
+            align-items: center;
         }
         
         .search-input {
@@ -187,8 +188,29 @@
             box-shadow: 0 6px 20px rgba(244, 132, 95, 0.4);
         }
         
+        /* 驚喜我按鈕 */
+        .surprise-btn {
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, #E9C46A, #F4A261);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(233, 196, 106, 0.3);
+            animation: pulse 2s ease infinite;
+        }
+        
+        .surprise-btn:hover {
+            transform: translateY(-2px) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(233, 196, 106, 0.5);
+        }
+        
         .filter-section {
             margin-top: 2rem;
+            position: relative;
         }
         
         .filter-section h3 {
@@ -196,6 +218,33 @@
             margin-bottom: 1rem;
             font-size: 1.4rem;
             font-weight: bold;
+        }
+        
+        /* 清除篩選按鈕 */
+        .clear-filters {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.6rem 1.5rem;
+            background: #F7F5F2;
+            color: #2D6A4F;
+            border: 2px solid #E9C46A;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: none;
+        }
+        
+        .clear-filters.show {
+            display: block;
+        }
+        
+        .clear-filters:hover {
+            background: #E9C46A;
+            color: white;
+            transform: scale(1.05);
         }
         
         .filter-group {
@@ -226,6 +275,13 @@
             font-size: 1rem;
             font-weight: 500;
             color: #2D6A4F;
+            position: relative;
+        }
+        
+        .filter-btn .count {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-left: 0.3rem;
         }
         
         .filter-btn:hover {
@@ -266,6 +322,7 @@
             margin-top: 2rem;
         }
         
+        /* 整張卡片可點擊 */
         .experience-card {
             background: white;
             border-radius: 15px;
@@ -276,6 +333,9 @@
             cursor: pointer;
             opacity: 0;
             transform: translateY(30px);
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         
         .experience-card.visible {
@@ -284,8 +344,8 @@
         }
         
         .experience-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 12px 40px rgba(233, 196, 106, 0.4);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(233, 196, 106, 0.5);
             border-color: #F4845F;
         }
         
@@ -310,7 +370,7 @@
         }
         
         .experience-card:hover .image img {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
         
         .experience-card .image::after {
@@ -320,12 +380,33 @@
             left: 0;
             right: 0;
             height: 50%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.3));
+            background: linear-gradient(transparent, rgba(0,0,0,0.4));
             opacity: 0;
             transition: opacity 0.3s;
         }
         
         .experience-card:hover .image::after {
+            opacity: 1;
+        }
+        
+        /* Hover 時顯示「點擊查看」 */
+        .experience-card .image::before {
+            content: '點擊查看 Click to View →';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 2;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        
+        .experience-card:hover .image::before {
             opacity: 1;
         }
         
@@ -373,15 +454,9 @@
             border: 2px solid #E9C46A;
             border-radius: 20px;
             font-size: 0.95rem;
-            cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
-        }
-        
-        .experience-card .tag:hover {
-            background: #E9C46A;
-            color: white;
-            transform: scale(1.05);
+            pointer-events: none;
         }
         
         .experience-card .status {
@@ -393,26 +468,6 @@
             border-radius: 20px;
             font-size: 0.95rem;
             font-weight: bold;
-        }
-        
-        .experience-card .btn {
-            display: inline-block;
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, #F4845F, #F4A261);
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            transition: all 0.3s;
-            font-weight: bold;
-            font-size: 1.15rem;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(244, 132, 95, 0.3);
-        }
-        
-        .experience-card .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(244, 132, 95, 0.5);
         }
         
         .footer {
@@ -436,6 +491,15 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
             }
         }
         
@@ -485,7 +549,13 @@
                 width: 100%;
             }
             
-            .search-btn {
+            .search-btn, .surprise-btn {
+                width: 100%;
+            }
+            
+            .clear-filters {
+                position: static;
+                margin-top: 1rem;
                 width: 100%;
             }
             
@@ -545,11 +615,15 @@
                     placeholder="🔍 搜尋體驗名稱或關鍵字... Search experiences..."
                 >
                 <button class="search-btn" onclick="performSearch()">搜尋 Search</button>
+                <button class="surprise-btn" onclick="surpriseMe()">✨ 驚喜我! Surprise Me</button>
             </div>
             
             <!-- 篩選器 -->
             <div class="filter-section">
                 <h3>🔍 篩選體驗 Filter Experiences</h3>
+                <button class="clear-filters" id="clearFilters" onclick="clearAllFilters()">
+                    ✕ 清除篩選 Clear Filters
+                </button>
                 
                 <div class="filter-group">
                     <label>地區 Region:</label>
@@ -581,16 +655,14 @@
     <footer class="footer">
         <p><strong>Local Friends Taiwan 台灣在地連線</strong></p>
         <p style="margin-top: 1rem; opacity: 0.9;">
-            Your local friend in Taiwan | 當你需要一位台灣在地的朋友
+            Your local friend in Taiwan | 你在台灣的在地朋友
         </p>
     </footer>
 
     <script>
-        // Google Sheets 連結
         const SHEET_ID = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
         const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-        // Emoji 對應
         const categoryEmojis = {
             '飲食文化': '🍜',
             '社區生活': '🏘️',
@@ -609,7 +681,6 @@
             '離島': '🏝️'
         };
 
-        // 全域變數
         let allExperiences = [];
         let currentFilters = {
             region: 'all',
@@ -617,7 +688,6 @@
             searchTerm: ''
         };
 
-        // 載入體驗
         async function loadExperiences() {
             try {
                 const response = await fetch(SHEET_URL);
@@ -649,17 +719,24 @@
             }
         }
 
-        // 建立篩選按鈕
         function createFilterButtons() {
             const regions = [...new Set(allExperiences.map(exp => exp['地區']).filter(r => r))];
             const regionContainer = document.getElementById('regionFilters');
+            
+            // 計算每個地區的數量
+            const regionCounts = {};
+            allExperiences.forEach(exp => {
+                if (exp['地區']) {
+                    regionCounts[exp['地區']] = (regionCounts[exp['地區']] || 0) + 1;
+                }
+            });
             
             regions.forEach(region => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn';
                 btn.dataset.type = 'region';
                 btn.dataset.value = region;
-                btn.textContent = `${regionEmojis[region] || '📍'} ${region}`;
+                btn.innerHTML = `${regionEmojis[region] || '📍'} ${region} <span class="count">(${regionCounts[region]})</span>`;
                 btn.onclick = () => handleFilterClick('region', region, btn);
                 regionContainer.appendChild(btn);
             });
@@ -667,35 +744,101 @@
             const categories = [...new Set(allExperiences.map(exp => exp['主要分類']).filter(c => c))];
             const categoryContainer = document.getElementById('categoryFilters');
             
+            // 計算每個分類的數量
+            const categoryCounts = {};
+            allExperiences.forEach(exp => {
+                if (exp['主要分類']) {
+                    categoryCounts[exp['主要分類']] = (categoryCounts[exp['主要分類']] || 0) + 1;
+                }
+            });
+            
             categories.forEach(category => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn';
                 btn.dataset.type = 'category';
                 btn.dataset.value = category;
-                btn.textContent = `${categoryEmojis[category] || '📍'} ${category}`;
+                btn.innerHTML = `${categoryEmojis[category] || '📍'} ${category} <span class="count">(${categoryCounts[category]})</span>`;
                 btn.onclick = () => handleFilterClick('category', category, btn);
                 categoryContainer.appendChild(btn);
             });
         }
 
-        // 處理篩選點擊
         function handleFilterClick(type, value, clickedBtn) {
             const container = type === 'region' ? document.getElementById('regionFilters') : document.getElementById('categoryFilters');
-            container.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // 移除同類型所有按鈕的 active 狀態
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 加上新的 active 狀態
             clickedBtn.classList.add('active');
-
+            
+            // 更新篩選條件
             currentFilters[type] = value;
+            
+            // 顯示/隱藏清除篩選按鈕
+            updateClearButton();
+            
             filterAndDisplay();
         }
 
-        // 搜尋功能
         function performSearch() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             currentFilters.searchTerm = searchTerm;
+            updateClearButton();
             filterAndDisplay();
         }
 
-        // Enter 鍵搜尋
+        // 驚喜我功能
+        function surpriseMe() {
+            if (allExperiences.length === 0) return;
+            
+            const randomExp = allExperiences[Math.floor(Math.random() * allExperiences.length)];
+            window.location.href = `experience-detail.html?id=${randomExp['ID']}`;
+        }
+
+        // 清除所有篩選
+        function clearAllFilters() {
+            // 重置篩選條件
+            currentFilters = {
+                region: 'all',
+                category: 'all',
+                searchTerm: ''
+            };
+            
+            // 清除搜尋框
+            document.getElementById('searchInput').value = '';
+            
+            // 重置所有按鈕
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.value === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // 隱藏清除按鈕
+            updateClearButton();
+            
+            // 重新顯示所有體驗
+            filterAndDisplay();
+        }
+
+        // 更新清除按鈕顯示狀態
+        function updateClearButton() {
+            const clearBtn = document.getElementById('clearFilters');
+            const hasFilters = currentFilters.region !== 'all' || 
+                              currentFilters.category !== 'all' || 
+                              currentFilters.searchTerm !== '';
+            
+            if (hasFilters) {
+                clearBtn.classList.add('show');
+            } else {
+                clearBtn.classList.remove('show');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('searchInput').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
@@ -704,7 +847,6 @@
             });
         });
 
-        // 篩選並顯示
         function filterAndDisplay() {
             let filtered = allExperiences;
 
@@ -733,7 +875,6 @@
             displayExperiences(filtered);
         }
 
-        // 更新篩選結果文字
         function updateFilterResults(count) {
             const resultsDiv = document.getElementById('filterResults');
             if (currentFilters.region === 'all' && currentFilters.category === 'all' && !currentFilters.searchTerm) {
@@ -743,7 +884,6 @@
             }
         }
 
-        // CSV 解析
         function parseCSV(csv) {
             const lines = csv.split('\n');
             return lines.map(line => {
@@ -767,7 +907,6 @@
             });
         }
 
-        // 顯示體驗卡片
         function displayExperiences(experiences) {
             const container = document.getElementById('experiences');
             const loading = document.getElementById('loading');
@@ -779,7 +918,10 @@
                 container.innerHTML = `
                     <div style="text-align: center; padding: 4rem; grid-column: 1/-1;">
                         <p style="font-size: 1.8rem; color: #2D6A4F; font-weight: bold; margin-bottom: 1rem;">沒有符合條件的體驗</p>
-                        <p style="color: #555; font-size: 1.2rem;">No experiences match your filters</p>
+                        <p style="color: #555; font-size: 1.2rem; margin-bottom: 2rem;">No experiences match your filters</p>
+                        <button onclick="clearAllFilters()" style="padding: 1rem 2rem; background: linear-gradient(135deg, #F4845F, #F4A261); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">
+                            清除篩選 Clear Filters
+                        </button>
                     </div>
                 `;
                 return;
@@ -790,21 +932,18 @@
                 card.style.transitionDelay = `${index * 0.1}s`;
                 container.appendChild(card);
                 
-                // 觸發動畫
                 setTimeout(() => {
                     card.classList.add('visible');
                 }, 100 + index * 100);
             });
         }
 
-        // 建立體驗卡片
         function createExperienceCard(exp) {
-            const card = document.createElement('div');
+            const card = document.createElement('a');
             card.className = 'experience-card';
+            card.href = `experience-detail.html?id=${exp['ID']}`;
             
             const emoji = categoryEmojis[exp['主要分類']] || regionEmojis[exp['地區']] || '📍';
-            
-            // 檢查是否有卡片圖片
             const hasImage = exp['卡片圖片'] && exp['卡片圖片'].trim() !== '';
             
             card.innerHTML = `
@@ -816,52 +955,19 @@
                     ${exp['體驗名稱(英)'] ? `<div class="subtitle">${exp['體驗名稱(英)']}</div>` : ''}
                     <div class="description">${exp['一句話描述(中)'] || '深度文化體驗'}</div>
                     <div class="meta">
-                        ${exp['地區'] ? `<span class="tag" onclick="filterByRegion('${exp['地區']}')" title="點擊查看所有${exp['地區']}體驗">📍 ${exp['地區']}</span>` : ''}
-                        ${exp['主要分類'] ? `<span class="tag" onclick="filterByCategory('${exp['主要分類']}')" title="點擊查看所有${exp['主要分類']}體驗">${exp['主要分類']}</span>` : ''}
+                        ${exp['地區'] ? `<span class="tag">📍 ${exp['地區']}</span>` : ''}
+                        ${exp['主要分類'] ? `<span class="tag">${exp['主要分類']}</span>` : ''}
                         ${exp['難度'] ? `<span class="tag">⭐ ${exp['難度']}</span>` : ''}
                     </div>
                     <div class="meta">
                         <span class="status">🚧 ${exp['Status'] || '準備中'}</span>
                     </div>
-                    <a href="experience-detail.html?id=${exp['ID']}" class="btn">
-                        查看詳細資訊 View Details →
-                    </a>
                 </div>
             `;
             
             return card;
         }
 
-        // 點擊標籤篩選
-        function filterByRegion(region) {
-            currentFilters.region = region;
-            const container = document.getElementById('regionFilters');
-            container.querySelectorAll('.filter-btn').forEach(btn => {
-                if (btn.dataset.value === region) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            document.querySelector('.search-filter-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            filterAndDisplay();
-        }
-
-        function filterByCategory(category) {
-            currentFilters.category = category;
-            const container = document.getElementById('categoryFilters');
-            container.querySelectorAll('.filter-btn').forEach(btn => {
-                if (btn.dataset.value === category) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            document.querySelector('.search-filter-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            filterAndDisplay();
-        }
-
-        // 回頂按鈕
         window.addEventListener('scroll', function() {
             const backToTop = document.querySelector('.back-to-top');
             if (window.pageYOffset > 300) {
@@ -878,7 +984,6 @@
             });
         }
 
-        // 頁面載入
         window.addEventListener('DOMContentLoaded', loadExperiences);
     </script>
 </body>
