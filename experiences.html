@@ -149,7 +149,6 @@
             gap: 1rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
-            align-items: center;
         }
         
         .search-input {
@@ -188,29 +187,8 @@
             box-shadow: 0 6px 20px rgba(244, 132, 95, 0.4);
         }
         
-        /* 驚喜我按鈕 */
-        .surprise-btn {
-            padding: 1.2rem 2.5rem;
-            background: linear-gradient(135deg, #E9C46A, #F4A261);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(233, 196, 106, 0.3);
-            animation: pulse 2s ease infinite;
-        }
-        
-        .surprise-btn:hover {
-            transform: translateY(-2px) rotate(5deg);
-            box-shadow: 0 6px 20px rgba(233, 196, 106, 0.5);
-        }
-        
         .filter-section {
             margin-top: 2rem;
-            position: relative;
         }
         
         .filter-section h3 {
@@ -218,33 +196,6 @@
             margin-bottom: 1rem;
             font-size: 1.4rem;
             font-weight: bold;
-        }
-        
-        /* 清除篩選按鈕 */
-        .clear-filters {
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 0.6rem 1.5rem;
-            background: #F7F5F2;
-            color: #2D6A4F;
-            border: 2px solid #E9C46A;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: none;
-        }
-        
-        .clear-filters.show {
-            display: block;
-        }
-        
-        .clear-filters:hover {
-            background: #E9C46A;
-            color: white;
-            transform: scale(1.05);
         }
         
         .filter-group {
@@ -494,15 +445,6 @@
             }
         }
         
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        
         /* 手機版適配 */
         @media (max-width: 768px) {
             .floating-nav {
@@ -549,13 +491,7 @@
                 width: 100%;
             }
             
-            .search-btn, .surprise-btn {
-                width: 100%;
-            }
-            
-            .clear-filters {
-                position: static;
-                margin-top: 1rem;
+            .search-btn {
                 width: 100%;
             }
             
@@ -615,27 +551,23 @@
                     placeholder="🔍 搜尋體驗名稱或關鍵字... Search experiences..."
                 >
                 <button class="search-btn" onclick="performSearch()">搜尋 Search</button>
-                <button class="surprise-btn" onclick="surpriseMe()">✨ 驚喜我! Surprise Me</button>
             </div>
             
             <!-- 篩選器 -->
             <div class="filter-section">
                 <h3>🔍 篩選體驗 Filter Experiences</h3>
-                <button class="clear-filters" id="clearFilters" onclick="clearAllFilters()">
-                    ✕ 清除篩選 Clear Filters
-                </button>
                 
                 <div class="filter-group">
                     <label>地區 Region:</label>
                     <div class="filter-buttons" id="regionFilters">
-                        <button class="filter-btn active" data-type="region" data-value="all">全部 All</button>
+                        <button class="filter-btn active" data-type="region" data-value="all" onclick="handleFilterClick('region', 'all', this)">全部 All</button>
                     </div>
                 </div>
                 
                 <div class="filter-group">
                     <label>分類 Category:</label>
                     <div class="filter-buttons" id="categoryFilters">
-                        <button class="filter-btn active" data-type="category" data-value="all">全部 All</button>
+                        <button class="filter-btn active" data-type="category" data-value="all" onclick="handleFilterClick('category', 'all', this)">全部 All</button>
                     </div>
                 </div>
             </div>
@@ -777,66 +709,13 @@
             // 更新篩選條件
             currentFilters[type] = value;
             
-            // 顯示/隱藏清除篩選按鈕
-            updateClearButton();
-            
             filterAndDisplay();
         }
 
         function performSearch() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             currentFilters.searchTerm = searchTerm;
-            updateClearButton();
             filterAndDisplay();
-        }
-
-        // 驚喜我功能
-        function surpriseMe() {
-            if (allExperiences.length === 0) return;
-            
-            const randomExp = allExperiences[Math.floor(Math.random() * allExperiences.length)];
-            window.location.href = `experience-detail.html?id=${randomExp['ID']}`;
-        }
-
-        // 清除所有篩選
-        function clearAllFilters() {
-            // 重置篩選條件
-            currentFilters = {
-                region: 'all',
-                category: 'all',
-                searchTerm: ''
-            };
-            
-            // 清除搜尋框
-            document.getElementById('searchInput').value = '';
-            
-            // 重置所有按鈕
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.value === 'all') {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // 隱藏清除按鈕
-            updateClearButton();
-            
-            // 重新顯示所有體驗
-            filterAndDisplay();
-        }
-
-        // 更新清除按鈕顯示狀態
-        function updateClearButton() {
-            const clearBtn = document.getElementById('clearFilters');
-            const hasFilters = currentFilters.region !== 'all' || 
-                              currentFilters.category !== 'all' || 
-                              currentFilters.searchTerm !== '';
-            
-            if (hasFilters) {
-                clearBtn.classList.add('show');
-            } else {
-                clearBtn.classList.remove('show');
-            }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -918,10 +797,7 @@
                 container.innerHTML = `
                     <div style="text-align: center; padding: 4rem; grid-column: 1/-1;">
                         <p style="font-size: 1.8rem; color: #2D6A4F; font-weight: bold; margin-bottom: 1rem;">沒有符合條件的體驗</p>
-                        <p style="color: #555; font-size: 1.2rem; margin-bottom: 2rem;">No experiences match your filters</p>
-                        <button onclick="clearAllFilters()" style="padding: 1rem 2rem; background: linear-gradient(135deg, #F4845F, #F4A261); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">
-                            清除篩選 Clear Filters
-                        </button>
+                        <p style="color: #555; font-size: 1.2rem;">No experiences match your filters</p>
                     </div>
                 `;
                 return;
