@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ | Local Friends Taiwan 台灣在地連線</title>
-  <meta name="description" content="FAQ for Local Friends Taiwan: how it works, safety, booking, fees, and how we connect travelers with local friends in Taiwan.">
+  <title>FAQ 常見問題 - Local Friends Taiwan | 台灣在地連線</title>
+  <meta name="description" content="FAQ for Local Friends Taiwan: how it works, safety, fees, being a good guest, and collaboration with local hosts.">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --header-height: 56px;
-      --page-max-width: 1100px;
+      --max-width: 1100px;
       --green: #2D6A4F;
-      --light-bg: #F7F5F2;
+      --bg: #F7F5F2;
       --accent: #F4845F;
       --accent-soft: #E9C46A;
     }
@@ -22,7 +22,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
       line-height: 1.7;
       color: var(--green);
-      background: var(--light-bg);
+      background: var(--bg);
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       word-break: keep-all;
@@ -30,7 +30,7 @@
     }
     h1, h2, h3 { text-wrap: balance; }
 
-    /* ===== 共用 Header ===== */
+    /* 共用 Header */
     .site-header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -44,7 +44,6 @@
       border-bottom: 1px solid rgba(45,106,79,0.06);
       z-index: 1100;
     }
-
     .brand {
       display: flex;
       flex-direction: column;
@@ -85,9 +84,7 @@
       white-space: nowrap;
       transition: all 0.18s;
     }
-    .main-nav a span.en {
-      margin-right: 0.18rem;
-    }
+    .main-nav a span.en { margin-right: 0.18rem; }
     .main-nav a:hover,
     .main-nav a.active {
       border-color: var(--accent-soft);
@@ -111,15 +108,14 @@
       justify-content: center;
       transition: all 0.2s;
     }
-    .nav-toggle:hover {
-      background: #E9C46A22;
-    }
+    .nav-toggle:hover { background: #E9C46A22; }
     .nav-toggle.open {
       background: var(--green);
       color: #F7F5F2;
       border-color: var(--green);
     }
 
+    /* 手機主導覽：橫向滑動 */
     @media (max-width: 768px) {
       .site-header {
         padding: 0 1rem;
@@ -133,8 +129,7 @@
       .main-nav {
         position: fixed;
         top: var(--header-height);
-        left: 0;
-        right: 0;
+        left: 0; right: 0;
         padding: 0.45rem 0.85rem 0.55rem;
         background: rgba(247,245,242,0.98);
         backdrop-filter: blur(10px);
@@ -146,13 +141,9 @@
         white-space: nowrap;
         z-index: 1090;
       }
-      .main-nav.open {
-        display: flex;
-      }
+      .main-nav.open { display: flex; }
 
-      .main-nav::-webkit-scrollbar {
-        height: 3px;
-      }
+      .main-nav::-webkit-scrollbar { height: 3px; }
       .main-nav::-webkit-scrollbar-thumb {
         background: rgba(233,196,106,0.9);
         border-radius: 999px;
@@ -164,9 +155,11 @@
         box-shadow: 0 1px 4px rgba(0,0,0,0.04);
       }
 
-      .nav-toggle {
-        display: inline-flex;
-      }
+      .nav-toggle { display: inline-flex; }
+
+      /* 若未來覺得太擠，可開啟只顯示英文：
+         .main-nav a span.zh { display:none; }
+      */
     }
 
     /* 回頂按鈕 */
@@ -177,12 +170,12 @@
       width: 60px;
       height: 60px;
       background: linear-gradient(135deg, #F4845F, #F4A261);
-      color: white;
+      color: #fff;
       border: none;
       border-radius: 50%;
       font-size: 1.5rem;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(244, 132, 95, 0.4);
+      box-shadow: 0 4px 20px rgba(244,132,95,0.4);
       display: none;
       z-index: 1000;
       transition: transform 0.3s;
@@ -195,14 +188,14 @@
       animation: fadeInUp 0.5s ease;
     }
 
-    /* Hero: FAQ */
+    /* Hero */
     .hero-faq {
-      padding: calc(3.2rem + var(--header-height)) 1.5rem 1.8rem;
+      padding: calc(var(--header-height) + 2.6rem) 1.5rem 2.4rem;
       background: #ffffff;
       border-bottom: 1px solid rgba(0,0,0,0.04);
     }
     .hero-inner {
-      max-width: var(--page-max-width);
+      max-width: var(--max-width);
       margin: 0 auto;
     }
     .hero-kicker {
@@ -210,109 +203,93 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #8d8d8d;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
     }
-    .hero-faq h1 {
-      font-size: 2.3rem;
-      color: var(--green);
-      margin-bottom: 0.2rem;
+    .hero-title {
+      font-size: 2.2rem;
       font-weight: 800;
+      color: var(--green);
+      margin-bottom: 0.3rem;
     }
     .hero-subtitle {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       color: #555;
-      max-width: 640px;
+      max-width: 680px;
     }
 
-    /* FAQ 區塊 */
+    /* FAQ layout */
     .faq-wrapper {
-      max-width: var(--page-max-width);
+      max-width: var(--max-width);
       margin: 0 auto;
       padding: 2.2rem 1.5rem 3rem;
     }
 
-    .faq-group-title {
+    .faq-section {
+      margin-bottom: 2.2rem;
+    }
+
+    .faq-section-title {
       font-size: 1.4rem;
       font-weight: 800;
       color: var(--green);
-      margin: 1.5rem 0 0.6rem;
+      margin-bottom: 0.8rem;
     }
-    .faq-group-title span.zh {
+    .faq-section-title .zh {
+      margin-left: 0.35rem;
       font-size: 1rem;
       font-weight: 600;
-      margin-left: 0.35rem;
       color: #3b7a5c;
     }
 
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-    }
-
     .faq-item {
+      margin-bottom: 1.2rem;
+      padding: 0.9rem 1rem 0.95rem;
+      border-radius: 12px;
       background: #ffffff;
-      border-radius: 10px;
-      padding: 0.85rem 1rem 0.6rem;
-      border: 1px solid rgba(233,196,106,0.6);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-    .faq-item:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      transform: translateY(-1px);
+      border: 1px solid #E5DECF;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
 
     .faq-q {
-      font-size: 0.98rem;
       font-weight: 700;
+      font-size: 0.98rem;
       color: var(--green);
-      display: flex;
-      align-items: baseline;
-      gap: 0.25rem;
+      margin-bottom: 0.25rem;
     }
-    .faq-q span.en {
-      margin-right: 0.15rem;
-    }
+
     .faq-a {
       font-size: 0.94rem;
       color: #444;
-      margin-top: 0.35rem;
-      display: none;
-    }
-    .faq-item.open .faq-a {
-      display: block;
+      line-height: 1.7;
     }
 
-    .faq-a p {
-      margin-bottom: 0.35rem;
-    }
     .faq-a ul {
-      margin: 0.15rem 0 0.4rem 1.2rem;
+      margin: 0.3rem 0 0.1rem 1.1rem;
       padding: 0;
       list-style: disc;
     }
-    .faq-a li {
-      margin-bottom: 0.18rem;
+    .faq-a ul li {
+      margin-bottom: 0.12rem;
     }
 
-    .note {
-      font-size: 0.86rem;
-      color: #777;
-      margin-top: 0.25rem;
+    /* 淡色中文輔助說明 */
+    .muted-zh {
+      display: block;
+      margin-top: 0.16rem;
+      font-size: 0.87em;
+      color: #7a8d80;
+      line-height: 1.7;
     }
 
     /* 動畫 */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(26px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     .fade-in {
       opacity: 0;
-      transform: translateY(26px);
-      transition: all 0.7s ease;
+      transform: translateY(18px);
+      transition: all 0.6s ease;
     }
     .fade-in.visible {
       opacity: 1;
@@ -338,29 +315,35 @@
     /* 手機調整 */
     @media (max-width: 768px) {
       .hero-faq {
-        padding: calc(2.6rem + var(--header-height)) 1.25rem 1.4rem;
+        padding: calc(var(--header-height) + 2.2rem) 1.25rem 1.9rem;
       }
-      .hero-faq h1 {
+      .hero-title {
         font-size: 1.9rem;
       }
       .hero-subtitle {
-        font-size: 0.96rem;
+        font-size: 0.95rem;
       }
       .faq-wrapper {
-        padding: 1.8rem 1.25rem 2.5rem;
+        padding: 1.9rem 1.25rem 2.6rem;
       }
-      .faq-group-title {
+      .faq-section-title {
         font-size: 1.25rem;
-        margin-top: 1.4rem;
       }
-      .faq-group-title span.zh {
-        font-size: 0.92rem;
+      .faq-item {
+        padding: 0.8rem 0.85rem 0.85rem;
       }
       .faq-q {
-        font-size: 0.94rem;
+        font-size: 0.95rem;
       }
       .faq-a {
         font-size: 0.9rem;
+      }
+      .back-to-top {
+        right: 16px;
+        bottom: 16px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
       }
     }
   </style>
@@ -385,237 +368,219 @@
     <button class="nav-toggle" id="navToggle" aria-label="切換導覽選單">☰</button>
   </header>
 
-  <!-- 回頂按鈕 -->
+  <!-- Back to top -->
   <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
   <!-- Hero -->
   <section class="hero-faq">
     <div class="hero-inner fade-in">
-      <div class="hero-kicker">FAQ ・ HOW IT WORKS</div>
-      <h1>FAQ & How It Works <span style="font-size:1.05rem;font-weight:500;color:#3b7a5c;">常見問題與使用說明</span></h1>
+      <div class="hero-kicker">FAQ · COMMON QUESTIONS</div>
+      <h1 class="hero-title">FAQ for Local Friends Taiwan</h1>
       <p class="hero-subtitle">
-        How Local Friends Taiwan works, what kind of experiences you can expect, how we keep things transparent,
-        and how to be a respectful guest in local communities.
+        How this platform works, what we do (and don’t do), how we choose partners,
+        and how you can travel more respectfully in Taiwan.
       </p>
     </div>
   </section>
 
-  <!-- FAQ 區塊 -->
+  <!-- FAQ Content -->
   <main class="faq-wrapper">
-    <!-- 1. 基本概念 -->
-    <section class="fade-in">
-      <h2 class="faq-group-title">About Local Friends Taiwan<span class="zh">關於 Local Friends Taiwan</span></h2>
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">What is Local Friends Taiwan?</span>
-            <span class="zh">這是一個什麼樣的平台？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              Local Friends Taiwan is an <strong>independent information platform</strong> that helps travelers
-              discover real people, communities, and experiences in Taiwan.
-            </p>
-            <p>
-              我們不是旅行社，不賣套裝行程，而是整理、驗證與紀錄值得信任的在地夥伴，提供你清楚的資訊與聯繫方式，
-              讓你可以直接跟他們對話，安排屬於自己的體驗。
-            </p>
-          </div>
-        </div>
+    <!-- About -->
+    <section class="faq-section fade-in">
+      <h2 class="faq-section-title">
+        About Local Friends Taiwan<span class="zh">關於 Local Friends Taiwan</span>
+      </h2>
 
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">Are you a travel agency?</span>
-            <span class="zh">你們是旅行社嗎？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              No. We do not operate tours, do not收訂金 on behalf of hosts, and do not強迫你走既定行程。
-            </p>
-            <p>
-              我們的角色比較像「做功課的在地朋友」：幫你找到合適的人與地方，剩下的由你和在地夥伴直接溝通決定。
-            </p>
-          </div>
+      <div class="faq-item">
+        <div class="faq-q">Q. What is Local Friends Taiwan?</div>
+        <div class="faq-a">
+          Local Friends Taiwan is an independent information platform that helps travelers discover real people,
+          communities, and experiences in Taiwan. We curate, verify, and document trustworthy local partners so you
+          can contact them directly and shape your own experience — without buying a fixed tour from us.
+          <span class="muted-zh">
+            Local Friends Taiwan 是獨立資訊平台，幫你找到值得信任的在地人、社群與體驗。
+            我們整理、查證與紀錄資訊，提供清楚的介紹與聯繫方式，讓你直接和在地夥伴對話，
+            自己決定如何走，而不是向我們購買套裝行程。
+          </span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Q. Are you a travel agency?</div>
+        <div class="faq-a">
+          No. We don’t operate tours and we don’t sell packages.
+          Think of us as your research helper and connector: we help you find the right people and places;
+          details and bookings are confirmed directly between you and the hosts.
+          <span class="muted-zh">
+            我們不是旅行社，也不辦團、不賣行程。
+            比較像「幫你做功課的朋友」，協助你找到適合的在地夥伴，其餘細節由你與主辦單位直接溝通與決定。
+          </span>
         </div>
       </div>
     </section>
 
-    <!-- 2. 使用說明 / How It Works -->
-    <section class="fade-in">
-      <h2 class="faq-group-title">How It Works<span class="zh">使用說明</span></h2>
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">How do I use this platform?</span>
-            <span class="zh">要怎麼開始使用？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              1. Browse the <strong>Experiences</strong> page and read each host / community introduction carefully.  
-              2. Check details, limitations, pricing, languages offered.  
-              3. Use the listed contact method to talk directly with the host.
-            </p>
-            <p>
-              若你不確定如何選擇，也可以透過 <strong>Contact</strong> 頁面寫信給我們，我們會依照你的興趣，
-              提出建議與提醒，但不會替你代訂。
-            </p>
-          </div>
-        </div>
+    <!-- How It Works -->
+    <section class="faq-section fade-in">
+      <h2 class="faq-section-title">
+        How It Works<span class="zh">使用說明</span>
+      </h2>
 
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">Can you book or arrange tours for me?</span>
-            <span class="zh">你們會幫我代訂或安排行程嗎？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              We don’t act as an agency. You will always confirm details and bookings directly with the host or organization.
-            </p>
-            <p>
-              若你需要語言協助或判斷資訊是否合理，我們可以提供建議，但最終決定與金流都在你與主辦單位之間完成。
-            </p>
-          </div>
+      <div class="faq-item">
+        <div class="faq-q">Q. How do I use this platform?</div>
+        <div class="faq-a">
+          1. Browse the <strong>Experiences</strong> page and read each introduction carefully.<br>
+          2. Check details: scope, limitations, pricing, languages, and who is hosting.<br>
+          3. Use the listed contact method to talk directly with the host or organization.<br>
+          If you’re unsure where to start, write to us via the <strong>Contact</strong> page for suggestions —
+          we’ll share context and options, but won’t push you to book.
+          <span class="muted-zh">
+            建議步驟：① 先看「體驗列表」與各夥伴介紹；② 留意體驗內容、限制、價格與語言；
+            ③ 使用頁面提供的方式，直接聯繫主辦單位。
+            若不確定怎麼選，可以在 Contact 寫信給我們，我們會提供建議與提醒，但不會替你代訂。
+          </span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Q. Can you book or arrange tours for me?</div>
+        <div class="faq-a">
+          We don’t act as an agency. All bookings and payments are handled directly between you and the hosts.
+          If needed, we can help you sanity-check information or language, but decisions and transactions stay with you.
+          <span class="muted-zh">
+            我們不代訂、不包團。所有報名與金流都在你與主辦單位之間完成；
+            若你需要語言協助或想確認資訊是否合理，可以寫信與我們討論。
+          </span>
         </div>
       </div>
     </section>
 
-    <!-- 3. 安全與信任 -->
-    <section class="fade-in">
-      <h2 class="faq-group-title">Safety & Trust<span class="zh">安全與信任</span></h2>
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">How do you choose which hosts to feature?</span>
-            <span class="zh">你們怎麼挑選在地朋友？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              We prioritise community-rooted people and organizations with clear values and transparent communication.
-            </p>
-            <ul>
-              <li>長期在地深耕，而非短期觀光噱頭</li>
-              <li>尊重社區、勞動與多元族群</li>
-              <li>價格與內容清楚，不打迷糊仗</li>
-              <li>我們曾親訪、對談，或持續追蹤其公共紀錄</li>
-            </ul>
-            <p class="note">
-              更多細節與實際探訪紀錄，會整理在 <strong>Trail Notes 探路筆記</strong>。
-            </p>
-          </div>
-        </div>
+    <!-- Safety & Trust -->
+    <section class="faq-section fade-in">
+      <h2 class="faq-section-title">
+        Safety & Trust<span class="zh">安全與信任</span>
+      </h2>
 
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">Is everything 100% guaranteed?</span>
-            <span class="zh">體驗內容一定不會有問題嗎？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              No platform can promise perfection, especially with small community-based projects.
-              But we try to reduce risk by doing homework, sharing context honestly, and updating information when things change.
-            </p>
-            <p>
-              若你在體驗中有不舒服或覺得不合宜的情況，歡迎回報給我們，我們會暫緩或重新審視合作關係。
-            </p>
-          </div>
+      <div class="faq-item">
+        <div class="faq-q">Q. How do you choose which hosts to feature?</div>
+        <div class="faq-a">
+          We prioritize people and organizations who are:
+          <ul>
+            <li>Community-rooted: long-term local commitment, not quick tourism hype.</li>
+            <li>Respectful & fair: no exploitation of communities, workers, cultures, or environments.</li>
+            <li>Transparent: clear pricing, content, limitations, and contact points.</li>
+            <li>Authentic: real motivations and stories, not over-packaged marketing.</li>
+          </ul>
+          We do background research, conversations, and when possible, on-site visits.
+          Some of our process and field notes are shared through <strong>Trail Notes</strong>.
+          <span class="muted-zh">
+            我們會優先合作：長期深耕在地、尊重社區與勞動、資訊公開清楚、動機真誠的夥伴。
+            透過背景了解、對談與實地探訪來做判斷，相關觀察與更新會在「Trail Notes 探路筆記」中公開紀錄。
+          </span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Q. Is everything 100% guaranteed?</div>
+        <div class="faq-a">
+          No platform can promise perfection, especially with small, community-based projects that keep evolving.
+          What we can do is: do our homework, share context honestly, update when things change,
+          and pause or review collaborations if issues arise.
+          If you experience something unsafe, disrespectful, or very different from what was described,
+          you’re welcome to let us know.
+          <span class="muted-zh">
+            尤其是以小型社群與實驗型計畫為主，沒有人能保證「完全不出錯」。
+            我們會盡力查證與更新；若你在體驗中感到不舒服或與描述落差過大，請回報給我們，
+            我們會暫緩曝光或重新評估合作。
+          </span>
         </div>
       </div>
     </section>
 
-    <!-- 4. 費用與金流 -->
-    <section class="fade-in">
-      <h2 class="faq-group-title">Money & Fees<span class="zh">費用與金流</span></h2>
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">Do you charge extra fees?</span>
-            <span class="zh">透過這個平台會多收費嗎？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              Generally, <strong>no extra platform fee</strong> is added on top of what hosts charge, unless clearly stated.
-            </p>
-            <p>
-              如果有平台協力成本或服務費，會在介紹文字中清楚標註，不會用「到現場才知道」的方式。
-            </p>
-          </div>
-        </div>
+    <!-- Money & Fees -->
+    <section class="faq-section fade-in">
+      <h2 class="faq-section-title">
+        Money & Fees<span class="zh">費用與金流</span>
+      </h2>
 
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">Who do I pay?</span>
-            <span class="zh">我要把錢付給誰？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              Payment is made <strong>directly to the host or organization</strong>, using the method you agree on together.
-            </p>
-            <p>
-              我們不經手現金或刷卡資訊；若有人自稱是 Local Friends Taiwan 要你先匯款給他，請直接與我們確認。
-            </p>
-          </div>
+      <div class="faq-item">
+        <div class="faq-q">Q. Do you charge extra fees?</div>
+        <div class="faq-a">
+          Generally, no extra platform fee is added on top of what hosts charge — unless clearly stated in advance.
+          <span class="muted-zh">
+            通常不會在主辦單位原本收費上再加收平台費；若有必要的服務費或協力成本，
+            會在頁面上清楚寫出，不會用「到現場才知道」的方式。
+          </span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Q. Who do I pay?</div>
+        <div class="faq-a">
+          You pay the host or organization directly, using the method you agree on together.
+          We don’t handle your cash or card details.
+          If anyone claims to be “Local Friends Taiwan” and asks you to transfer money to them personally,
+          please verify with us.
+          <span class="muted-zh">
+            費用一律直接支付給在地夥伴或主辦單位，我們不代收款、不保管你的金流資訊。
+            若有人自稱 Local Friends Taiwan 要你先匯款給他，請務必與我們再次確認。
+          </span>
         </div>
       </div>
     </section>
 
-    <!-- 5. 成為更好的旅人 -->
-    <section class="fade-in">
-      <h2 class="faq-group-title">Being a Good Guest<span class="zh">如何成為更好的旅人</span></h2>
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">What kind of travelers is this for?</span>
-            <span class="zh">這個平台適合誰？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              For travelers who care about people, stories, ethics, and mutual respect — not just checklists.
-            </p>
-            <p>
-              如果你願意提前閱讀說明、準時赴約、尊重場域規則、願意多聽少拍一點，那你非常適合來找 Local Friends Taiwan。
-            </p>
-          </div>
-        </div>
+    <!-- Being a Good Guest -->
+    <section class="faq-section fade-in">
+      <h2 class="faq-section-title">
+        Being a Good Guest<span class="zh">如何成為更好的旅人</span>
+      </h2>
 
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">How can I respect local communities?</span>
-            <span class="zh">我要怎麼尊重在地社群？</span>
-          </div>
-          <div class="faq-a">
-            <ul>
-              <li>Ask before taking photos, especially of people, homes, and rituals.</li>
-              <li>遵守主辦方與社區的規則（環境、服裝、聲量、飲食等）。</li>
-              <li>對價格與勞動給予基本尊重，不殺價當娛樂。</li>
-              <li>如果不確定是否合宜，先問「這樣可以嗎？」</li>
-            </ul>
-            <p class="note">
-              更多實際建議，未來會持續更新在 <strong>Trail Notes 探路筆記</strong> 中。
-            </p>
-          </div>
+      <div class="faq-item">
+        <div class="faq-q">Q. What kind of travelers is this for?</div>
+        <div class="faq-a">
+          For travelers who care about people, context, ethics, and mutual respect — not just checklists or photo spots.
+          <span class="muted-zh">
+            如果你願意事前閱讀說明、準時赴約、尊重場域規則、願意多聽少打擾，
+            你就是我們非常期待的 Local Friends Taiwan 旅人。
+          </span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Q. How can I respect local communities?</div>
+        <div class="faq-a">
+          <ul>
+            <li>Ask before taking photos of people, homes, rituals, or sensitive spaces.</li>
+            <li>Follow host and community guidelines (environment, clothing, volume, food, etc.).</li>
+            <li>Respect prices and labor; don’t treat bargaining as entertainment.</li>
+            <li>If you’re unsure, ask: “Is this okay?”</li>
+          </ul>
+          We’ll keep sharing practical tips in <strong>Trail Notes</strong>.
+          <span class="muted-zh">
+            拍照前先詢問、遵守主辦與社區規則、尊重標示價格與勞動付出；
+            有疑慮就先問「這樣可以嗎？」更多具體建議會陸續整理在「Trail Notes 探路筆記」。
+          </span>
         </div>
       </div>
     </section>
 
-    <!-- 6. For Hosts 摘要導向 -->
-    <section class="fade-in">
-      <h2 class="faq-group-title">For Hosts & Collaborators<span class="zh">給在地朋友與合作夥伴</span></h2>
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-q">
-            <span class="en">I run a local project. Can we collaborate?</span>
-            <span class="zh">我們是地方團隊／職人，可以合作嗎？</span>
-          </div>
-          <div class="faq-a">
-            <p>
-              Yes. If you are a community group, social enterprise, artisan, cultural worker,
-              or anyone seriously rooted in your place, we’d love to talk.
-            </p>
-            <p>
-              請到 <strong>For Hosts 成為在地朋友</strong> 頁面留下資料，或直接寫信給我們，
-              簡單介紹你是誰、做什麼，以及為什麼想對旅人打開空間。我們會以尊重你節奏的方式一起設計呈現方式。
-            </p>
-          </div>
+    <!-- For Hosts -->
+    <section class="faq-section fade-in">
+      <h2 class="faq-section-title">
+        For Hosts & Collaborators<span class="zh">給在地朋友與合作夥伴</span>
+      </h2>
+
+      <div class="faq-item">
+        <div class="faq-q">Q. I run a local project. Can we collaborate?</div>
+        <div class="faq-a">
+          Yes. If you are a community group, social enterprise, artisan, cultural worker, local host, or space
+          rooted in your place, we’d love to talk.
+          Please visit the <strong>For Hosts</strong> page or email us with a short introduction and why you’d like
+          to welcome travelers.
+          <span class="muted-zh">
+            歡迎長期在地深耕的社區團隊、職人、文化工作者、友善空間與我們聯繫。
+            請到「For Hosts 成為在地朋友」頁面填表，或直接寫信簡單介紹你們與合作想法，
+            我們會用尊重你節奏的方式一起討論最合適的呈現。
+          </span>
         </div>
       </div>
     </section>
@@ -623,17 +588,15 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p style="font-size: 1.3rem; margin-bottom: 1rem;"><strong>Local Friends Taiwan 台灣在地連線</strong></p>
+    <p style="font-size:1.2rem;margin-bottom:0.6rem;"><strong>Local Friends Taiwan 台灣在地連線</strong></p>
     <p>Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
-    <p style="margin-top: 1rem;">
-    </p>
-    <p style="margin-top: 1.5rem; opacity: 0.9; font-size: 1rem;">
+    <p style="margin-top:1.2rem;opacity:0.9;font-size:0.95rem;">
       © 2025 Local Friends Taiwan. Independent Information Platform.
     </p>
   </footer>
 
   <script>
-    // 導覽收合（手機）
+    // Nav toggle (mobile)
     document.addEventListener('DOMContentLoaded', () => {
       const navToggle = document.getElementById('navToggle');
       const mainNav = document.getElementById('mainNav');
@@ -654,20 +617,14 @@
         });
       }
 
-      // FAQ 展開
-      document.querySelectorAll('.faq-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-          // 避免狂點內文造成不必要冒泡問題，直接整卡切換即可
-          item.classList.toggle('open');
-        });
-      });
-
-      // 區塊淡入動畫
+      // Fade-in on scroll
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
       document.querySelectorAll('.fade-in').forEach((el, i) => {
         el.style.transitionDelay = `${i * 0.04}s`;
@@ -675,12 +632,12 @@
       });
     });
 
-    // 回頂按鈕
+    // Back to top
     window.addEventListener('scroll', () => {
-      const backToTop = document.querySelector('.back-to-top');
-      if (!backToTop) return;
-      if (window.pageYOffset > 300) backToTop.classList.add('show');
-      else backToTop.classList.remove('show');
+      const b = document.querySelector('.back-to-top');
+      if (!b) return;
+      if (window.pageYOffset > 300) b.classList.add('show');
+      else b.classList.remove('show');
     });
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
