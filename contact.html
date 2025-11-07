@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聯繫我們 - Local Friends Taiwan | 台灣在地連線</title>
+  <meta name="description" content="Contact Local Friends Taiwan to plan your visit, ask questions, or explore collaboration.">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{overflow-x:hidden}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",sans-serif;
+      line-height:1.6;
+      color:#2D6A4F;
+      background:#F7F5F2;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      word-break:keep-all;
+      overflow-wrap:anywhere;
+    }
+
+    .floating-nav{
+      position:fixed;left:20px;top:50%;transform:translateY(-50%);
+      z-index:1000;background:#fff;padding:1rem;border-radius:30px;
+      box-shadow:0 4px 20px rgba(45,106,79,.2);border:2px solid #2D6A4F;
+    }
+    .floating-nav a{
+      display:block;width:50px;height:50px;margin:.5rem 0;border-radius:50%;
+      background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;
+      text-decoration:none;display:flex;align-items:center;justify-content:center;
+      font-size:1.5rem;transition:.3s;
+    }
+    .floating-nav a:hover{
+      transform:scale(1.15);
+      background:linear-gradient(135deg,#40916C,#52B788);
+    }
+
+    .hero{
+      padding:5.5rem 1.5rem 3rem;
+      text-align:center;
+      background:linear-gradient(135deg,#2D6A4F,#40916C);
+      color:#fff;
+    }
+    .hero h1{
+      font-size:2.6rem;
+      font-weight:800;
+      margin-bottom:.4rem;
+    }
+    .hero p{
+      font-size:1.05rem;
+      opacity:.95;
+      max-width:700px;
+      margin:0 auto;
+    }
+
+    .container{
+      max-width:900px;
+      margin:0 auto;
+      padding:3rem 1.8rem 4rem;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:16px;
+      border:2px solid #E9C46A;
+      box-shadow:0 4px 18px rgba(233,196,106,.16);
+      padding:2rem 1.8rem;
+    }
+
+    .card h2{
+      font-size:1.7rem;
+      font-weight:800;
+      margin-bottom:1.2rem;
+      color:#2D6A4F;
+    }
+
+    .field-group{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:1rem 1.5rem;
+      margin-bottom:1rem;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:.3rem;
+      margin-bottom:.8rem;
+    }
+    label{
+      font-size:.9rem;
+      font-weight:600;
+      color:#2D6A4F;
+    }
+    input,select,textarea{
+      padding:.65rem .7rem;
+      border-radius:9px;
+      border:1px solid #D9D9D9;
+      font-size:.95rem;
+      font-family:inherit;
+      transition:border-color .2s, box-shadow .2s;
+      background:#FDFBF6;
+    }
+    input:focus,select:focus,textarea:focus{
+      outline:none;
+      border-color:#2D6A4F;
+      box-shadow:0 0 0 2px rgba(45,106,79,.12);
+      background:#fff;
+    }
+    textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .hint{
+      font-size:.8rem;
+      color:#888;
+    }
+
+    .submit-row{
+      margin-top:1.5rem;
+      text-align:right;
+    }
+    button{
+      padding:.85rem 1.7rem;
+      border-radius:999px;
+      border:none;
+      background:linear-gradient(135deg,#F4845F,#F4A261);
+      color:#fff;
+      font-weight:700;
+      font-size:.98rem;
+      cursor:pointer;
+      box-shadow:0 4px 14px rgba(244,132,95,.45);
+      transition:.25s;
+    }
+    button:hover{
+      transform:translateY(-2px);
+      box-shadow:0 7px 22px rgba(244,132,95,.6);
+    }
+
+    .note{
+      margin-top:1rem;
+      font-size:.85rem;
+      color:#777;
+    }
+
+    .footer{
+      background:linear-gradient(135deg,#2D6A4F,#40916C);
+      color:#fff;
+      text-align:center;
+      padding:2.2rem 1.5rem;
+      font-size:.95rem;
+      margin-top:2rem;
+    }
+
+    @media(max-width:768px){
+      .floating-nav{
+        left:10px;
+        padding:.5rem;
+      }
+      .floating-nav a{
+        width:40px;height:40px;font-size:1.2rem;margin:.3rem 0;
+      }
+      .hero{
+        padding:4.2rem 1.4rem 2.4rem;
+      }
+      .hero h1{
+        font-size:2.1rem;
+      }
+      .hero p{
+        font-size:.98rem;
+      }
+      .container{
+        padding:2.5rem 1.2rem 3rem;
+      }
+      .card{
+        padding:1.6rem 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="floating-nav">
+    <a href="index.html" title="首頁">🏠</a>
+    <a href="experiences.html" title="體驗">🌟</a>
+    <a href="about.html" title="關於我們">ℹ️</a>
+    <a href="faq.html" title="常見問題">❓</a>
+    <a href="hosts.html" title="成為在地朋友">👥</a>
+    <a href="contact.html" title="聯繫我們">✉️</a>
+  </nav>
+
+  <section class="hero">
+    <h1>聯繫 Local Friends Taiwan</h1>
+    <p>Tell us who you are, what you’re curious about in Taiwan, and we’ll help you找到合適的在地朋友與體驗方向。</p>
+  </section>
+
+  <main class="container">
+    <div class="card">
+      <h2>預約 / 問詢表單</h2>
+      <form id="contactForm">
+        <div class="field-group">
+          <div class="field">
+            <label for="name">姓名 Name *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="field">
+            <label for="nationality">國籍 Nationality *</label>
+            <input type="text" id="nationality" name="nationality" required>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="field">
+            <label for="languages">使用語言 Languages *</label>
+            <input type="text" id="languages" name="languages" placeholder="e.g. English, 日本語, 한국어, 正體中文" required>
+          </div>
+          <div class="field">
+            <label for="gender">性別 Gender</label>
+            <select id="gender" name="gender">
+              <option value="">Prefer not to say / 不方便透露</option>
+              <option value="female">Female / 女性</option>
+              <option value="male">Male / 男性</option>
+              <option value="non-binary">Non-binary / 非二元性別</option>
+              <option value="self-described">Self-described / 自我描述</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="field">
+            <label for="birth">出生日期 Date of Birth (YYYY-MM-DD)</label>
+            <input type="date" id="birth" name="birth">
+          </div>
+          <div class="field">
+            <label for="contactMethod">聯絡方式 Contact</label>
+            <input type="text" id="contactMethod" name="contactMethod" placeholder="WhatsApp / Line / WeChat / Email...">
+            <div class="hint">請留下帳號或聯絡方式，我們只會用於回覆此次詢問。</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="diet">飲食禁忌 Dietary Restrictions</label>
+          <input type="text" id="diet" name="diet" placeholder="e.g. 素食, 不吃牛, 不能吃堅果...">
+        </div>
+
+        <div class="field">
+          <label for="message">備註 / 想像中的體驗 Notes *</label>
+          <textarea id="message" name="message" required placeholder="請簡單描述你對台灣的期待、想參與的體驗類型、預計日期與人數等。"></textarea>
+        </div>
+
+        <div class="submit-row">
+          <button type="submit">送出表單 Send</button>
+        </div>
+
+        <div class="note">
+          填寫此表單不代表完成預約，我們將以人工回信或訊息與你聯繫，協助媒合合適的在地單位與體驗。
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p><strong>Local Friends Taiwan 台灣在地連線</strong></p>
+    <p style="margin-top:.4rem;">Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
+    <p style="margin-top:.8rem;opacity:.9;">© 2025 Local Friends Taiwan. Independent Information Platform.</p>
+  </footer>
+
+  <script>
+    // 目前先用 mailto 寄出內容，如需真正自動寄出，之後可改為呼叫後端 API
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const to = 'peienli.tw@gmail.com';
+
+      const name = document.getElementById('name').value.trim();
+      const nationality = document.getElementById('nationality').value.trim();
+      const languages = document.getElementById('languages').value.trim();
+      const gender = document.getElementById('gender').value;
+      const birth = document.getElementById('birth').value;
+      const contact = document.getElementById('contactMethod').value.trim();
+      const diet = document.getElementById('diet').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if(!name || !nationality || !languages || !message){
+        alert('請填寫必填欄位 / Please fill in required fields.');
+        return;
+      }
+
+      const subject = encodeURIComponent(`[Local Friends Taiwan] New Inquiry from ${name}`);
+      const bodyLines = [
+        `Name 姓名: ${name}`,
+        `Nationality 國籍: ${nationality}`,
+        `Languages 語言: ${languages}`,
+        `Gender 性別: ${gender || 'N/A'}`,
+        `Date of Birth 出生日期: ${birth || 'N/A'}`,
+        `Contact 聯絡方式: ${contact || 'N/A'}`,
+        `Dietary Restrictions 飲食禁忌: ${diet || 'N/A'}`,
+        '',
+        `Notes / 想像中的體驗:`,
+        message
+      ];
+      const body = encodeURIComponent(bodyLines.join('\n'));
+
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
