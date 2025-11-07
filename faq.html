@@ -30,7 +30,7 @@
     }
     h1, h2, h3 { text-wrap: balance; }
 
-    /* 共用 Header */
+    /* ===== 共用 Header ===== */
     .site-header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -115,7 +115,6 @@
       border-color: var(--green);
     }
 
-    /* 手機主導覽：橫向滑動 */
     @media (max-width: 768px) {
       .site-header {
         padding: 0 1rem;
@@ -158,7 +157,7 @@
       .nav-toggle { display: inline-flex; }
     }
 
-    /* 回頂按鈕 */
+    /* ===== 回頂按鈕 ===== */
     .back-to-top {
       position: fixed;
       right: 30px;
@@ -184,7 +183,7 @@
       animation: fadeInUp 0.5s ease;
     }
 
-    /* Hero */
+    /* ===== Hero ===== */
     .hero-faq {
       padding: calc(var(--header-height) + 2.6rem) 1.5rem 2.4rem;
       background: #ffffff;
@@ -213,7 +212,7 @@
       max-width: 680px;
     }
 
-    /* FAQ layout */
+    /* ===== FAQ layout ===== */
     .faq-wrapper {
       max-width: var(--max-width);
       margin: 0 auto;
@@ -239,7 +238,7 @@
 
     .faq-item {
       margin-bottom: 1.2rem;
-      padding: 0.9rem 1rem 0.95rem;
+      padding: 0.9rem 1rem 0.9rem;
       border-radius: 12px;
       background: #ffffff;
       border: 1px solid #E5DECF;
@@ -256,24 +255,23 @@
       font-weight: 700;
       font-size: 0.98rem;
       color: var(--green);
-      margin-bottom: 0.1rem;
       display: flex;
       align-items: center;
       gap: 0.4rem;
       cursor: pointer;
+      user-select: none;
     }
     .faq-q::before {
       content: "+";
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--accent);
       flex-shrink: 0;
-      transition: transform 0.2s ease, color 0.2s ease;
+      transition: transform 0.16s ease, color 0.16s ease;
     }
     .faq-item.open .faq-q::before {
-      content: "✓";
-      color: var(--accent);
-      transform: scale(1.05);
+      content: "–";
+      transform: translateY(-1px);
     }
 
     .faq-a {
@@ -284,12 +282,12 @@
       overflow: hidden;
       opacity: 0;
       margin-top: 0;
-      transition: all 0.28s ease;
+      transition: max-height 0.22s ease, opacity 0.22s ease, margin-top 0.22s ease;
     }
     .faq-item.open .faq-a {
-      max-height: 800px; /* 足夠容納多行文字 */
+      max-height: 800px;
       opacity: 1;
-      margin-top: 0.25rem;
+      margin-top: 0.3rem;
     }
 
     .faq-a ul {
@@ -359,7 +357,7 @@
         font-size: 1.25rem;
       }
       .faq-item {
-        padding: 0.8rem 0.85rem 0.85rem;
+        padding: 0.8rem 0.85rem 0.8rem;
       }
       .faq-q {
         font-size: 0.95rem;
@@ -420,7 +418,7 @@
         About Local Friends Taiwan<span class="zh">關於 Local Friends Taiwan</span>
       </h2>
 
-      <div class="faq-item open">
+      <div class="faq-item">
         <div class="faq-q">Q. What is Local Friends Taiwan?</div>
         <div class="faq-a">
           Local Friends Taiwan is an independent information platform that helps travelers discover real people,
@@ -429,7 +427,7 @@
           <span class="muted-zh">
             Local Friends Taiwan 是獨立資訊平台，幫你找到值得信任的在地人、社群與體驗。
             我們整理、查證與紀錄資訊，提供清楚的介紹與聯繫方式，讓你直接和在地夥伴對話，
-            自己決定如何走，而不是向我們購買套裝行程。
+            自己決定怎麼玩，而不是向我們購買套裝行程。
           </span>
         </div>
       </div>
@@ -442,7 +440,7 @@
           details and bookings are confirmed directly between you and the hosts.
           <span class="muted-zh">
             我們不是旅行社，也不辦團、不賣行程。
-            比較像「幫你做功課的朋友」，協助你找到適合的在地夥伴，其餘細節由你與主辦單位直接溝通與決定。
+            比較像「幫你做功課的朋友」，協助你找到適合的在地夥伴，其餘細節由你與主辦單位直接溝通決定。
           </span>
         </div>
       </div>
@@ -463,8 +461,8 @@
           If you’re unsure where to start, write to us via the <strong>Contact</strong> page for suggestions —
           we’ll share context and options, but won’t push you to book.
           <span class="muted-zh">
-            建議步驟：① 先看「體驗列表」與各夥伴介紹；② 留意體驗內容、限制、價格與語言；
-            ③ 使用頁面提供的方式，直接聯繫主辦單位。
+            建議步驟：① 看「體驗列表」與各夥伴介紹；② 留意體驗內容、限制、價格與語言；
+            ③ 使用提供的方式直接聯繫主辦單位。
             若不確定怎麼選，可以在 Contact 寫信給我們，我們會提供建議與提醒，但不會替你代訂。
           </span>
         </div>
@@ -502,8 +500,8 @@
           We do background research, conversations, and when possible, on-site visits.
           Some of our process and field notes are shared through <strong>Trail Notes</strong>.
           <span class="muted-zh">
-            我們會優先合作：長期深耕在地、尊重社區與勞動、資訊公開清楚、動機真誠的夥伴。
-            透過背景了解、對談與實地探訪來做判斷，相關觀察與更新會在「Trail Notes 探路筆記」中公開紀錄。
+            我們優先與以下特質的夥伴合作：長期深耕在地、尊重社區與勞動、資訊公開透明、動機真誠。
+            透過背景了解、對談與實地探訪做判斷，相關觀察與更新會在「Trail Notes 探路筆記」公開。
           </span>
         </div>
       </div>
@@ -511,15 +509,14 @@
       <div class="faq-item">
         <div class="faq-q">Q. Is everything 100% guaranteed?</div>
         <div class="faq-a">
-          No platform can promise perfection, especially with small, community-based projects that keep evolving.
-          What we can do is: do our homework, share context honestly, update when things change,
-          and pause or review collaborations if issues arise.
+          No platform can promise perfection, especially with small, evolving community projects.
+          We reduce risk by doing homework, sharing context honestly, updating when things change,
+          and pausing or reviewing collaborations if issues arise.
           If you experience something unsafe, disrespectful, or very different from what was described,
           you’re welcome to let us know.
           <span class="muted-zh">
-            尤其是以小型社群與實驗型計畫為主，沒有人能保證「完全不出錯」。
-            我們會盡力查證與更新；若你在體驗中感到不舒服或與描述落差過大，請回報給我們，
-            我們會暫緩曝光或重新評估合作。
+            對以小型社群與實驗計畫為主的合作，我們不會宣稱「絕對完美」。
+            能做的是：事前查證、誠實說明、適時更新；若收到負面回饋，我們會暫緩或重新評估合作。
           </span>
         </div>
       </div>
@@ -536,8 +533,8 @@
         <div class="faq-a">
           Generally, no extra platform fee is added on top of what hosts charge — unless clearly stated in advance.
           <span class="muted-zh">
-            通常不會在主辦單位原本收費上再加收平台費；若有必要的服務費或協力成本，
-            會在頁面上清楚寫出，不會用「到現場才知道」的方式。
+            原則上不會在主辦單位的價格上再加收平台費。
+            若有額外服務費或協力成本，會事先清楚標註，不會「到現場才說」。
           </span>
         </div>
       </div>
@@ -551,7 +548,7 @@
           please verify with us.
           <span class="muted-zh">
             費用一律直接支付給在地夥伴或主辦單位，我們不代收款、不保管你的金流資訊。
-            若有人自稱 Local Friends Taiwan 要你先匯款給他，請務必與我們再次確認。
+            若有人自稱 Local Friends Taiwan 要你匯款給個人帳戶，請務必來信確認。
           </span>
         </div>
       </div>
@@ -568,8 +565,8 @@
         <div class="faq-a">
           For travelers who care about people, context, ethics, and mutual respect — not just checklists or photo spots.
           <span class="muted-zh">
-            如果你願意事前閱讀說明、準時赴約、尊重場域規則、願意多聽少打擾，
-            你就是我們非常期待的 Local Friends Taiwan 旅人。
+            適合願意閱讀說明、準時赴約、尊重場域規則與在地生活節奏的旅人；
+            如果你在意的是人與故事，而不只是「收集景點」，你會很適合這裡。
           </span>
         </div>
       </div>
@@ -608,7 +605,7 @@
           <span class="muted-zh">
             歡迎長期在地深耕的社區團隊、職人、文化工作者、友善空間與我們聯繫。
             請到「For Hosts 成為在地朋友」頁面填表，或直接寫信簡單介紹你們與合作想法，
-            我們會用尊重你節奏的方式一起討論最合適的呈現。
+            我們會一起討論最適合的呈現方式。
           </span>
         </div>
       </div>
@@ -625,11 +622,11 @@
   </footer>
 
   <script>
-    // Nav toggle (mobile)
     document.addEventListener('DOMContentLoaded', () => {
       const navToggle = document.getElementById('navToggle');
       const mainNav = document.getElementById('mainNav');
 
+      // 手機導覽收合
       if (navToggle && mainNav) {
         navToggle.addEventListener('click', () => {
           const isOpen = mainNav.classList.toggle('open');
@@ -646,22 +643,27 @@
         });
       }
 
-      // FAQ：點開後只展開、不收回
+      // FAQ toggle：可開可關，多題同時開
       document.querySelectorAll('.faq-item').forEach(item => {
         const q = item.querySelector('.faq-q');
-        if (!q) return;
+        const a = item.querySelector('.faq-a');
+        if (!q || !a) return;
+
+        // 初始高度（預設都收起來）
+        a.style.maxHeight = '0px';
+
         q.addEventListener('click', () => {
-          if (!item.classList.contains('open')) {
+          const isOpen = item.classList.contains('open');
+          if (isOpen) {
+            // 關閉
+            item.classList.remove('open');
+            a.style.maxHeight = '0px';
+          } else {
+            // 打開
             item.classList.add('open');
+            a.style.maxHeight = a.scrollHeight + 'px';
           }
         });
-      });
-
-      // 初始：已標記 open 的 (例如第一題) 直接顯示答案
-      document.querySelectorAll('.faq-item.open .faq-a').forEach(a => {
-        a.style.maxHeight = a.scrollHeight + 'px';
-        a.style.opacity = '1';
-        a.style.marginTop = '0.25rem';
       });
 
       // 區塊淡入
@@ -669,11 +671,6 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-
-            // 若這個區塊中有預設 open 的項目，重新計算高度（避免動畫期間高度不準）
-            entry.target.querySelectorAll('.faq-item.open .faq-a').forEach(a => {
-              a.style.maxHeight = a.scrollHeight + 'px';
-            });
           }
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
