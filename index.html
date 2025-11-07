@@ -8,6 +8,10 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        :root {
+            --top-bar-height: 40px;
+        }
+
         html, body { overflow-x: hidden; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
@@ -23,40 +27,30 @@
 
         img, video { max-width: 100%; height: auto; display: block; }
 
-        /* 浮動導覽列（精簡版） */
-        .floating-nav {
+        /* 頂部品牌列（小字，固定在最上方） */
+        .top-bar {
             position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1000;
-            background: white;
-            padding: 0.75rem;
-            border-radius: 26px;
-            box-shadow: 0 4px 20px rgba(45, 106, 79, 0.18);
-            border: 2px solid #2D6A4F;
-            opacity: 0;
-            animation: fadeInLeft 1s ease forwards 0.5s;
-        }
-        .floating-nav a {
-            display: block;
-            width: 44px;
-            height: 44px;
-            margin: 0.35rem 0;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2D6A4F, #40916C);
-            color: white;
-            text-decoration: none;
+            top: 0; left: 0; right: 0;
+            height: var(--top-bar-height);
+            padding: 0 1.5rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.35rem;
-            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            gap: 0.5rem;
+            background: rgba(247, 245, 242, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(45, 106, 79, 0.06);
+            z-index: 1100;
+            font-size: 0.8rem;
+            color: #2D6A4F;
         }
-        .floating-nav a:hover {
-            transform: scale(1.15);
-            background: linear-gradient(135deg, #40916C, #52B788);
-            box-shadow: 0 4px 14px rgba(64,145,108,.35);
+        .top-bar .brand-en {
+            font-weight: 700;
+            letter-spacing: 0.11em;
+            font-size: 0.78rem;
+        }
+        .top-bar .brand-zh {
+            opacity: 0.9;
+            font-size: 0.78rem;
         }
 
         /* 回頂按鈕 */
@@ -74,7 +68,7 @@
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(244, 132, 95, 0.4);
             display: none;
-            z-index: 999;
+            z-index: 1000;
             transition: transform 0.3s;
         }
         .back-to-top:hover { transform: translateY(-5px); }
@@ -93,7 +87,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 4rem 1.5rem 6rem;
+            padding: calc(4rem + var(--top-bar-height)) 1.5rem 6rem;
             background: linear-gradient(
                 rgba(45, 106, 79, 0.6),
                 rgba(45, 106, 79, 0.6)
@@ -167,7 +161,7 @@
         /* 開場文案區塊 */
         .intro-section {
             background: white;
-            padding: 4.5rem 2rem;
+            padding: 4.5rem 2rem 3.5rem;
             text-align: center;
         }
         .intro-section .intro-content {
@@ -205,55 +199,54 @@
 
         /* 導覽入口區塊（Explore Local Friends Taiwan） */
         .nav-entry-section {
-            padding: 3.5rem 2rem 4rem;
             background: #FFFFFF;
+            padding: 0 0 4rem;
         }
         .nav-entry-inner {
             max-width: 1100px;
             margin: 0 auto;
+            position: sticky;
+            top: var(--top-bar-height);
+            z-index: 900;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 2rem 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
         }
         .nav-entry-title {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: #2D6A4F;
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.6rem;
             text-align: left;
         }
         .nav-entry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 0.9rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
         }
         .nav-pill {
-            display: flex;
-            flex-direction: column;
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            gap: 0.12rem;
-            padding: 0.8rem 1rem;
-            border-radius: 14px;                    /* 更像小卡片 */
-            background: #F7F5F2;
-            border: 2px solid #E9C46A;              /* 與 Why Choose 卡片同粗細 */
+            padding: 0.65rem 1.1rem;
+            border-radius: 14px;
+            background: #FFFFFF;
+            border: 2px solid #E9C46A;
             text-decoration: none;
             color: #2D6A4F;
             font-size: 0.9rem;
+            font-weight: 700;
             transition: all 0.22s;
             box-shadow: 0 2px 8px rgba(233,196,106,.16);
             cursor: pointer;
-        }
-        .nav-pill span.label {
-            font-weight: 700;
-            line-height: 1.3;
-        }
-        .nav-pill span.sub {
-            font-size: 0.78rem;
-            opacity: 0.9;
-            line-height: 1.35;
+            white-space: nowrap;
         }
         .nav-pill:hover {
             background: #FFF7EB;
             border-color: #F4845F;
-            box-shadow: 0 4px 16px rgba(244,132,95,.18);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(244,132,95,.18);
+            transform: translateY(-1px);
         }
 
         /* 價值主張卡片 */
@@ -399,15 +392,13 @@
         }
 
         @media (max-width: 768px) {
-            .floating-nav {
-                left: 10px;
-                padding: 0.5rem;
+            .top-bar {
+                padding: 0 1rem;
+                font-size: 0.74rem;
             }
-            .floating-nav a {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-                margin: 0.3rem 0;
+            .top-bar .brand-en,
+            .top-bar .brand-zh {
+                font-size: 0.74rem;
             }
 
             .back-to-top {
@@ -419,7 +410,7 @@
 
             .hero {
                 justify-content: flex-start;
-                padding-top: max(4rem, 10svh);
+                padding-top: calc(max(4rem, 10svh) + var(--top-bar-height));
                 padding-bottom: 4rem;
                 min-height: 100svh;
             }
@@ -443,7 +434,7 @@
             }
 
             .intro-section {
-                padding: 3.2rem 1.25rem;
+                padding: 3.2rem 1.25rem 2.5rem;
             }
             .intro-section h2 {
                 font-size: 1.7rem;
@@ -460,6 +451,21 @@
                 line-height: 1.8;
             }
 
+            .nav-entry-inner {
+                padding: 0.65rem 1.25rem 0.8rem;
+            }
+            .nav-entry-title {
+                font-size: 1.2rem;
+                margin-bottom: 0.4rem;
+            }
+            .nav-entry-grid {
+                gap: 0.5rem;
+            }
+            .nav-pill {
+                padding: 0.6rem 0.9rem;
+                font-size: 0.82rem;
+            }
+
             .values {
                 padding: 3.2rem 1.25rem;
             }
@@ -471,17 +477,6 @@
             .values-grid {
                 grid-template-columns: 1fr;
                 gap: 0.9rem;
-            }
-
-            .nav-entry-section {
-                padding: 3rem 1.25rem 3.3rem;
-            }
-            .nav-entry-title {
-                font-size: 1.3rem;
-            }
-            .nav-pill {
-                padding: 0.75rem 0.9rem;
-                font-size: 0.86rem;
             }
 
             .cta-section {
@@ -504,12 +499,11 @@
     </style>
 </head>
 <body>
-    <!-- 浮動導覽 -->
-    <nav class="floating-nav">
-        <a href="#home" title="首頁">🏠</a>
-        <a href="experiences.html" title="體驗列表">🌟</a>
-        <a href="contact.html" title="聯繫我們">✉️</a>
-    </nav>
+    <!-- 頂部品牌列（小字固定） -->
+    <div class="top-bar">
+        <span class="brand-en">LOCAL FRIENDS TAIWAN</span>
+        <span class="brand-zh">台灣在地連線</span>
+    </div>
 
     <!-- 回頂按鈕 -->
     <button class="back-to-top" onclick="scrollToTop()">↑</button>
@@ -554,31 +548,17 @@
         </div>
     </section>
 
-    <!-- Explore Local Friends Taiwan（導覽入口，已移到價值主張前） -->
+    <!-- Explore Local Friends Taiwan：導覽列（含探路筆記） -->
     <section class="nav-entry-section">
         <div class="nav-entry-inner">
             <h2 class="nav-entry-title">Explore Local Friends Taiwan</h2>
             <div class="nav-entry-grid">
-                <a href="experiences.html" class="nav-pill">
-                    <span class="label">Experiences 體驗列表</span>
-                    <span class="sub">真實、非制式，直接找到在地夥伴</span>
-                </a>
-                <a href="about.html" class="nav-pill">
-                    <span class="label">About 關於我們</span>
-                    <span class="sub">我們的初衷與 Independent Platform 聲明</span>
-                </a>
-                <a href="faq.html" class="nav-pill">
-                    <span class="label">FAQ 常見問題</span>
-                    <span class="sub">How it works・安全・預約流程</span>
-                </a>
-                <a href="hosts.html" class="nav-pill">
-                    <span class="label">For Hosts 成為在地朋友</span>
-                    <span class="sub">如果你是職人／社區單位，來聊聊合作</span>
-                </a>
-                <a href="contact.html" class="nav-pill">
-                    <span class="label">Contact 聯繫我們</span>
-                    <span class="sub">需要建議或媒合？寫信給我們</span>
-                </a>
+                <a href="experiences.html" class="nav-pill">Experiences 體驗列表</a>
+                <a href="about.html" class="nav-pill">About 關於我們</a>
+                <a href="faq.html" class="nav-pill">FAQ 常見問題</a>
+                <a href="hosts.html" class="nav-pill">For Hosts 成為在地朋友</a>
+                <a href="notes.html" class="nav-pill">Trail Notes 探路筆記</a>
+                <a href="contact.html" class="nav-pill">Contact 聯繫我們</a>
             </div>
         </div>
     </section>
@@ -652,7 +632,7 @@
         });
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        // 平滑滾動（頁內錨點）
+        // 平滑滾動（僅處理頁內錨點）
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const target = document.querySelector(this.getAttribute('href'));
