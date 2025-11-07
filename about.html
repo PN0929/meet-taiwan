@@ -3,258 +3,584 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>關於我們 - Local Friends Taiwan | 台灣在地連線</title>
-  <meta name="description" content="了解 Local Friends Taiwan 的故事、初衷與價值。Not a travel agency, but your local friend in Taiwan.">
+  <title>About | Local Friends Taiwan 台灣在地連線</title>
+  <meta name="description" content="About Local Friends Taiwan - an independent information platform connecting travelers with real local hosts and communities in Taiwan.">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{overflow-x:hidden}
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",sans-serif;
-      line-height:1.7;
-      color:#2D6A4F;
-      background:#F7F5F2;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-      word-break:keep-all;
-      overflow-wrap:anywhere;
-    }
-    h1,h2{text-wrap:balance}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* 浮動導覽列（沿用樣式） */
-    .floating-nav{
-      position:fixed;left:20px;top:50%;transform:translateY(-50%);
-      z-index:1000;background:#fff;padding:1rem;border-radius:30px;
-      box-shadow:0 4px 20px rgba(45,106,79,.2);border:2px solid #2D6A4F;
-    }
-    .floating-nav a{
-      display:block;width:50px;height:50px;margin:.5rem 0;border-radius:50%;
-      background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;
-      text-decoration:none;display:flex;align-items:center;justify-content:center;
-      font-size:1.5rem;transition:.3s;
-    }
-    .floating-nav a:hover{
-      transform:scale(1.15);
-      background:linear-gradient(135deg,#40916C,#52B788);
+    :root {
+      --header-height: 56px;
+      --page-max-width: 1100px;
+      --green: #2D6A4F;
+      --light-bg: #F7F5F2;
+      --accent: #F4845F;
+      --accent-soft: #E9C46A;
     }
 
-    /* Hero */
-    .hero{
-      position:relative;
-      padding:6rem 1.5rem 4rem;
-      text-align:center;
-      background:linear-gradient(135deg,#2D6A4F,#40916C);
-      color:#fff;
+    html, body { overflow-x: hidden; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+      line-height: 1.7;
+      color: var(--green);
+      background: var(--light-bg);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
     }
-    .hero h1{
-      font-size:2.8rem;
-      font-weight:800;
-      margin-bottom:.5rem;
-      letter-spacing:1px;
-    }
-    .hero p{
-      font-size:1.15rem;
-      opacity:.95;
-      max-width:720px;
-      margin:0 auto;
+    h1, h2, h3 { text-wrap: balance; }
+
+    /* ===== 共用 Header ===== */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      background: rgba(247,245,242,0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(45,106,79,0.06);
+      z-index: 1100;
     }
 
-    .container{
-      max-width:1100px;
-      margin:0 auto;
-      padding:3rem 1.8rem 4rem;
+    .brand {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.2;
+    }
+    .brand a {
+      text-decoration: none;
+      color: var(--green);
+    }
+    .brand-en {
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      font-size: 0.78rem;
+    }
+    .brand-zh {
+      opacity: 0.9;
+      font-size: 0.78rem;
     }
 
-    .section{
-      background:#fff;
-      border-radius:16px;
-      border:2px solid #E9C46A;
-      box-shadow:0 4px 18px rgba(233,196,106,.18);
-      padding:2.2rem 2rem;
-      margin-bottom:1.8rem;
+    .main-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .section h2{
-      font-size:1.8rem;
-      margin-bottom:1rem;
-      font-weight:800;
-      color:#2D6A4F;
+    .main-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1.4px solid transparent;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.18s;
     }
-    .section p{
-      font-size:1.05rem;
-      color:#444;
-      margin-bottom:.9rem;
+    .main-nav a span.en {
+      margin-right: 0.18rem;
     }
-    .section ul{
-      margin:.6rem 0 0 1.25rem;
-      padding:0;
-      color:#444;
-      font-size:1.02rem;
-    }
-    .section li{margin:.25rem 0}
-
-    .pill{
-      display:inline-block;
-      padding:.3rem .9rem;
-      border-radius:999px;
-      background:#F7F5F2;
-      border:1px solid #E9C46A;
-      font-size:.8rem;
-      color:#2D6A4F;
-      margin:.15rem .3rem 0 0;
+    .main-nav a:hover,
+    .main-nav a.active {
+      border-color: var(--accent-soft);
+      background: #FFF7EB;
+      box-shadow: 0 2px 8px rgba(233,196,106,.25);
+      transform: translateY(-1px);
     }
 
-    .values-list{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-      gap:1.2rem;
-      margin-top:.6rem;
+    .nav-toggle {
+      display: none;
+      margin-left: auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1.4px solid var(--green);
+      background: transparent;
+      color: var(--green);
+      font-size: 1.2rem;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
     }
-    .value-card{
-      background:#FDFBF6;
-      border-radius:12px;
-      padding:1rem .9rem;
-      border:1px solid #E9C46A;
-      font-size:.98rem;
-      color:#444;
+    .nav-toggle:hover {
+      background: #E9C46A22;
     }
-    .value-card strong{display:block;margin-bottom:.2rem;color:#2D6A4F}
-
-    .note{
-      font-size:.95rem;
-      color:#777;
-      margin-top:.8rem;
-    }
-
-    .link-row{
-      margin-top:1.2rem;
-      font-size:.98rem;
-    }
-    .link-row a{
-      color:#F4845F;
-      font-weight:600;
-      text-decoration:none;
-    }
-    .link-row a:hover{text-decoration:underline}
-
-    .footer{
-      background:linear-gradient(135deg,#2D6A4F,#40916C);
-      color:#fff;
-      text-align:center;
-      padding:2.2rem 1.5rem;
-      font-size:.95rem;
+    .nav-toggle.open {
+      background: var(--green);
+      color: #F7F5F2;
+      border-color: var(--green);
     }
 
-    @media(max-width:768px){
-      .floating-nav{
-        left:10px;
-        padding:.5rem;
+    /* 手機版導覽：滑動列 */
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 0 1rem;
+        height: var(--header-height);
       }
-      .floating-nav a{
-        width:40px;height:40px;font-size:1.2rem;margin:.3rem 0;
+      .brand-en,
+      .brand-zh {
+        font-size: 0.74rem;
       }
-      .hero{
-        padding:4.5rem 1.4rem 3rem;
+
+      .main-nav {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        padding: 0.45rem 0.85rem 0.55rem;
+        background: rgba(247,245,242,0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(45,106,79,0.08);
+        display: none;
+        flex-wrap: nowrap;
+        gap: 0.45rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        z-index: 1090;
       }
-      .hero h1{font-size:2.1rem}
-      .hero p{font-size:1rem}
-      .container{
-        padding:2.5rem 1.2rem 3rem;
+      .main-nav.open {
+        display: flex;
       }
-      .section{
-        padding:1.6rem 1.35rem;
+
+      .main-nav::-webkit-scrollbar {
+        height: 3px;
       }
-      .section h2{
-        font-size:1.5rem;
+      .main-nav::-webkit-scrollbar-thumb {
+        background: rgba(233,196,106,0.9);
+        border-radius: 999px;
+      }
+
+      .main-nav a {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.8rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      /* 如需極窄時只顯示英文，可啟用這行：
+         .main-nav a span.zh { display:none; }
+      */
+    }
+
+    /* ===== 回頂按鈕 ===== */
+    .back-to-top {
+      position: fixed;
+      right: 30px;
+      bottom: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #F4845F, #F4A261);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(244, 132, 95, 0.4);
+      display: none;
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+    .back-to-top:hover { transform: translateY(-5px); }
+    .back-to-top.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    /* ===== Hero（About 頁精簡版）===== */
+    .hero-about {
+      padding: calc(3.2rem + var(--header-height)) 1.5rem 2.5rem;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+    .hero-inner {
+      max-width: var(--page-max-width);
+      margin: 0 auto;
+    }
+    .hero-kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8d8d8d;
+      margin-bottom: 0.4rem;
+    }
+    .hero-about h1 {
+      font-size: 2.4rem;
+      color: var(--green);
+      margin-bottom: 0.3rem;
+      font-weight: 800;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 640px;
+      margin-bottom: 0.4rem;
+    }
+    .hero-tagline {
+      font-size: 0.95rem;
+      color: #888;
+    }
+
+    /* ===== 主要內容區 ===== */
+    .page-section {
+      max-width: var(--page-max-width);
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 0;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+    .section-title span.zh {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-left: 0.35rem;
+      color: #3b7a5c;
+    }
+
+    .page-section p {
+      font-size: 1.02rem;
+      color: #444;
+      margin-bottom: 0.75rem;
+    }
+
+    .highlight-box {
+      margin-top: 1.4rem;
+      padding: 1.2rem 1.3rem;
+      border-radius: 12px;
+      border: 1.5px solid var(--accent-soft);
+      background: #FFFBF2;
+      font-size: 0.98rem;
+      color: #555;
+    }
+    .highlight-box strong {
+      color: var(--green);
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 0.8rem;
+      margin-bottom: 0.4rem;
+    }
+    .principle-card {
+      padding: 1.1rem 1rem;
+      border-radius: 12px;
+      border: 1.5px solid rgba(233,196,106,0.9);
+      background: #fff;
+      font-size: 0.96rem;
+      color: #444;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .principle-label {
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 0.25rem;
+      font-size: 0.98rem;
+    }
+    .principle-label span.zh {
+      margin-left: 0.25rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #3b7a5c;
+    }
+
+    .list-inline {
+      margin: 0.4rem 0 0.2rem;
+      padding-left: 1.1rem;
+      font-size: 0.96rem;
+      color: #555;
+    }
+    .list-inline li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* 區塊間距 */
+    .page-section + .page-section {
+      padding-top: 2rem;
+    }
+    .page-section:last-of-type {
+      padding-bottom: 3rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #2D6A4F, #40916C);
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 2.5rem;
+    }
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* 動畫 */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: all 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 手機調整 */
+    @media (max-width: 768px) {
+      .hero-about {
+        padding: calc(2.6rem + var(--header-height)) 1.25rem 2rem;
+      }
+      .hero-about h1 {
+        font-size: 1.9rem;
+      }
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      .page-section {
+        padding: 2rem 1.25rem 0;
+      }
+      .section-title {
+        font-size: 1.3rem;
+      }
+      .section-title span.zh {
+        font-size: 0.96rem;
+      }
+      .page-section p {
+        font-size: 0.95rem;
+      }
+      .principle-card {
+        font-size: 0.92rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 浮動導覽 -->
-  <nav class="floating-nav">
-    <a href="index.html" title="首頁">🏠</a>
-    <a href="experiences.html" title="體驗">🌟</a>
-    <a href="about.html" title="關於我們">ℹ️</a>
-    <a href="faq.html" title="常見問題">❓</a>
-    <a href="hosts.html" title="成為在地朋友">👥</a>
-    <a href="contact.html" title="聯繫我們">✉️</a>
-  </nav>
+  <!-- 固定主導覽列（與首頁一致） -->
+  <header class="site-header">
+    <div class="brand">
+      <a href="index.html">
+        <div class="brand-en">LOCAL FRIENDS TAIWAN</div>
+        <div class="brand-zh">台灣在地連線</div>
+      </a>
+    </div>
+    <nav class="main-nav" id="mainNav">
+      <a href="experiences.html"><span class="en">Experiences</span><span class="zh">體驗列表</span></a>
+      <a href="about.html" class="active"><span class="en">About</span><span class="zh">關於我們</span></a>
+      <a href="faq.html"><span class="en">FAQ</span><span class="zh">常見問題</span></a>
+      <a href="hosts.html"><span class="en">For Hosts</span><span class="zh">成為在地朋友</span></a>
+      <a href="notes.html"><span class="en">Trail Notes</span><span class="zh">探路筆記</span></a>
+      <a href="contact.html"><span class="en">Contact</span><span class="zh">聯繫我們</span></a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="切換導覽選單">☰</button>
+  </header>
 
-  <section class="hero">
-    <h1>關於 Local Friends Taiwan</h1>
-    <p>We are not a tour company. We are an independent, human-scale bridge between curious travelers and real communities in Taiwan.</p>
+  <!-- 回頂按鈕 -->
+  <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+  <!-- Hero: About -->
+  <section class="hero-about">
+    <div class="hero-inner fade-in">
+      <div class="hero-kicker">ABOUT LOCAL FRIENDS TAIWAN</div>
+      <h1>About Local Friends Taiwan <span style="font-size:1.1rem;font-weight:500;color:#3b7a5c;">關於我們</span></h1>
+      <p class="hero-subtitle">
+        We are an independent information platform that connects curious travelers with real people, communities,
+        and stories across Taiwan — without becoming a travel agency.
+      </p>
+      <p class="hero-tagline">
+        幫你找到那位「在地的朋友」。
+      </p>
+    </div>
   </section>
 
-  <main class="container">
-    <section class="section">
-      <h2>我們是誰｜Who We Are</h2>
-      <p>
-        Local Friends Taiwan 是一個獨立策展計畫，由長期關注在地文化、社區實驗與公共議題的夥伴發起。
-        我們相信旅行可以是對話，而不是消費；可以是互相理解，而不是打卡蒐集。
-      </p>
-      <p>
-        我們透過實地探訪與長期關係，連結職人、社區組織、友善店家與文化單位，
-        將這些真實而細膩的場域整理成資訊，讓你更容易走進「真實有人生活的地方」。
-      </p>
-    </section>
+  <!-- 我們是誰 -->
+  <section class="page-section fade-in">
+    <h2 class="section-title">
+      Who We Are<span class="zh">我們是誰</span>
+    </h2>
+    <p>
+      Local Friends Taiwan was born from a simple belief: 
+      that a great trip comes from connecting with "people,
+      " not ticking off a checklist. 
+      Here, you won't find mass-produced tourist packages, 
+      but rather real islanders—community workers, craftspeople, 
+      cultural practitioners, young people returning to their hometowns, 
+      and local businesses and organizations.
+    </p>
+    <p>
+      Local Friends Taiwan 起心動念很簡單：我們相信，一趟好的旅行來自「人」，而不是打卡清單。
+      在這裡，你看到的不是大型觀光產品，而是真正在島上生活的人——社區工作者、職人、文化工作者、
+      青年返鄉計畫、在地小店與組織。
+    </p>
+    <div class="highlight-box">
+      <strong>We are matchmakers of stories, not package tours.</strong><br>
+      我們幫你找到值得認識的人與場域，但主動權始終在你與在地夥伴手中。
+    </div>
+  </section>
 
-    <section class="section">
-      <h2>我們不是旅行社｜Not a Travel Agency</h2>
-      <p>
-        Local Friends Taiwan 不販售套裝行程、不主導團體操作、不收上架佣金來推誰或藏誰。
-      </p>
-      <ul>
-        <li>我們不包裝「完美故事」，只提供真實資訊與誠實建議。</li>
-        <li>你直接與主辦單位或在地朋友聯絡、付款，我們不介入金流。</li>
-        <li>我們保留拒絕與剝削勞動、破壞社區或不尊重在地文化單位合作的權利。</li>
-      </ul>
-      <p class="note">
-        Local Friends Taiwan 是 <strong>Independent Information Platform</strong>：
-        我們連結、說明、翻譯，但不取代你的選擇與判斷。
-      </p>
-    </section>
+  <!-- 我們不是旅行社 / Independent Info Platform -->
+  <section class="page-section fade-in">
+    <h2 class="section-title">
+      Independent Information Platform<span class="zh">我們不是旅行社</span>
+    </h2>
+    <p>
+      Local Friends Taiwan is <strong>not</strong> a travel agency, and we do not operate tours.
+      We are an independent information platform:
+    </p>
+    <ul class="list-inline">
+      <li>We do not force fixed itineraries or shopping stops.</li>
+      <li>We do not收取抽成作為前提來「推銷」某個體驗給你。</li>
+      <li>We are transparent about who you are contacting, and why we recommend them.</li>
+    </ul>
+    <p>
+      我們的角色比較像是「認真做功課的朋友」：幫你確認資訊來源、理解在地脈絡、提供英文友善的入口，
+      讓你可以更安心地主動聯繫到值得信任的在地夥伴。
+    </p>
+  </section>
 
-    <section class="section">
-      <h2>我們怎麼選擇合作對象｜How We Curate</h2>
-      <p>每一個被整理上線的體驗與空間，至少符合以下精神：</p>
-      <div class="values-list">
-        <div class="value-card">
-          <strong>👥 真實的人 Real People</strong>
-          主角是人：職人、社區成員、主理人，而不是只為觀光而生的布景或人設。
+  <!-- 我們如何選擇合作對象 -->
+  <section class="page-section fade-in">
+    <h2 class="section-title">
+      How We Choose Local Friends<span class="zh">我們怎麼選擇合作對象</span>
+    </h2>
+    <p>
+      每一位被放上 Local Friends Taiwan 的在地朋友／組織，都會經過最基本的「探路」與背景了解，
+      而不是隨便貼上任何觀光文案。
+    </p>
+    <ul class="list-inline">
+      <li>Community-Rooted：是否長期在地深耕，而非只為觀光短期搭建。</li>
+      <li>Respect & Fairness：是否尊重社區、參與者，不剝削人與環境。</li>
+      <li>Transparency：價格、內容、限制是否清楚，聯繫窗口是否可信。</li>
+      <li>Real Story：是否有真實動機與故事，而不是包裝過度的噱頭。</li>
+    </ul>
+    <p>
+      如果我們對某個資訊仍在觀察階段，我們會明白標註；當我們有新的探訪或調整，也會在
+      <strong>Trail Notes 探路筆記</strong> 中更新，讓你知道我們是如何做判斷的。
+    </p>
+  </section>
+
+  <!-- 對旅人的承諾：對應首頁三大原則 -->
+  <section class="page-section fade-in">
+    <h2 class="section-title">
+      Our Commitment to Travelers<span class="zh">對旅人的承諾</span>
+    </h2>
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-label">
+          Real People, Real Encounters<span class="zh">真實人選，真實交流</span>
         </div>
-        <div class="value-card">
-          <strong>🤝 有意義的連結 Meaningful Connections</strong>
-          重視互動與理解，而不是走馬看花。願意花時間說明脈絡，也願意聽你的故事。
-        </div>
-        <div class="value-card">
-          <strong>💙 支持在地社群 Support Communities</strong>
-          讓參與者的費用、關注與回饋，實際回到在地：勞動被合理對待，資源不是單向抽取。
-        </div>
+        <p>
+          We introduce you to people we願意親自拜訪、介紹給朋友的人。
+          不演戲、不制式話術，重點是雙向的理解與信任。
+        </p>
       </div>
-      <p class="note">
-        在上架前，我們會閱讀背景資料、實地走訪或深度對話，評估是否符合上述原則。
-      </p>
-    </section>
-
-    <section class="section">
-      <h2>給旅人的承諾｜Our Promise to Travelers</h2>
-      <ul>
-        <li>我們不收推坑佣金，不因業配而把你導向不適合的地方。</li>
-        <li>我們會盡量揭露風險與限制：交通不便、人力有限、語言差異，都會事先說明。</li>
-        <li>我們尊重你的背景與身分，多元性別、不同國籍與文化，都應在旅程中被友善對待。</li>
-        <li>若你在體驗過程感到不安或不適，我們願意成為協調與反映的窗口。</li>
-      </ul>
-      <div class="link-row">
-        想更了解運作方式？請參考
-        <a href="faq.html">常見問題 FAQ</a>，
-        或直接透過 <a href="contact.html">聯繫我們</a> 與我們對話。
+      <div class="principle-card">
+        <div class="principle-label">
+          No Hard-Sell, Ever<span class="zh">不硬推銷，不綁約</span>
+        </div>
+        <p>
+          我們不以佣金導向推薦，也不會催促你一定要預訂任何行程。
+          所有資訊都盡可能清楚、好懂，好讓你自己做出選擇。
+        </p>
       </div>
-    </section>
-  </main>
+      <div class="principle-card">
+        <div class="principle-label">
+          Respect Local Communities<span class="zh">尊重在地，是前提</span>
+        </div>
+        <p>
+          我們希望來到這裡的旅人，願意尊重文化、性別、多元族群與生活節奏。
+          在 FAQ 與 Trail Notes，我們會分享如何成為更好的訪客。
+        </p>
+      </div>
+    </div>
+    <p>
+      If this resonates with you, you're exactly the kind of traveler Local Friends Taiwan is built for.
+    </p>
+  </section>
 
   <footer class="footer">
-    <p><strong>Local Friends Taiwan 台灣在地連線</strong></p>
-    <p style="margin-top:.4rem;">Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
-    <p style="margin-top:.8rem;opacity:.9;">© 2025 Local Friends Taiwan. Independent Information Platform.</p>
+    <p style="font-size: 1.3rem; margin-bottom: 1rem;"><strong>Local Friends Taiwan 台灣在地連線</strong></p>
+    <p>Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
+    <p style="margin-top: 1rem;">
+      <a href="https://github.com/PN0929/meet-taiwan" target="_blank">📂 GitHub Project</a>
+    </p>
+    <p style="margin-top: 1.5rem; opacity: 0.9; font-size: 1rem;">
+      © 2025 Local Friends Taiwan. Independent Information Platform.
+    </p>
   </footer>
+
+  <script>
+    // 導覽收合（手機）
+    document.addEventListener('DOMContentLoaded', () => {
+      const navToggle = document.getElementById('navToggle');
+      const mainNav = document.getElementById('mainNav');
+
+      if (navToggle && mainNav) {
+        navToggle.addEventListener('click', () => {
+          const isOpen = mainNav.classList.toggle('open');
+          navToggle.classList.toggle('open', isOpen);
+        });
+
+        mainNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            if (mainNav.classList.contains('open')) {
+              mainNav.classList.remove('open');
+              navToggle.classList.remove('open');
+            }
+          });
+        });
+      }
+
+      // 區塊淡入
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.fade-in').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.05}s`;
+        observer.observe(el);
+      });
+    });
+
+    // 回頂按鈕
+    window.addEventListener('scroll', () => {
+      const backToTop = document.querySelector('.back-to-top');
+      if (!backToTop) return;
+      if (window.pageYOffset > 300) backToTop.classList.add('show');
+      else backToTop.classList.remove('show');
+    });
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
 </body>
 </html>
