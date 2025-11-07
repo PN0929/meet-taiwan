@@ -168,10 +168,6 @@
       .nav-toggle {
         display: inline-flex;
       }
-
-      /* 如需極窄時只顯示英文，可啟用這行：
-         .main-nav a span.zh { display:none; }
-      */
     }
 
     /* ===== 回頂按鈕 ===== */
@@ -200,7 +196,7 @@
       animation: fadeInUp 0.5s ease;
     }
 
-    /* ===== Hero（About 頁精簡版）===== */
+    /* ===== Hero（About 頁）===== */
     .hero-about {
       padding: calc(3.2rem + var(--header-height)) 1.5rem 2.5rem;
       background: #ffffff;
@@ -260,6 +256,13 @@
       margin-bottom: 0.75rem;
     }
 
+    .muted-zh {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: -0.2rem;
+      margin-bottom: 0.8rem;
+    }
+
     .highlight-box {
       margin-top: 1.4rem;
       padding: 1.2rem 1.3rem;
@@ -273,14 +276,16 @@
       color: var(--green);
     }
 
-    .principles-grid {
+    .principles-grid,
+    .criteria-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
       margin-top: 0.8rem;
       margin-bottom: 0.4rem;
     }
-    .principle-card {
+    .principle-card,
+    .criteria-card {
       padding: 1.1rem 1rem;
       border-radius: 12px;
       border: 1.5px solid rgba(233,196,106,0.9);
@@ -289,13 +294,15 @@
       color: #444;
       box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-    .principle-label {
+    .principle-label,
+    .criteria-label {
       font-weight: 800;
       color: var(--green);
       margin-bottom: 0.25rem;
       font-size: 0.98rem;
     }
-    .principle-label span.zh {
+    .principle-label span.zh,
+    .criteria-label span.zh {
       margin-left: 0.25rem;
       font-weight: 600;
       font-size: 0.9rem;
@@ -376,14 +383,15 @@
       .page-section p {
         font-size: 0.95rem;
       }
-      .principle-card {
+      .principle-card,
+      .criteria-card {
         font-size: 0.92rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 固定主導覽列（與首頁一致） -->
+  <!-- 固定主導覽列 -->
   <header class="site-header">
     <div class="brand">
       <a href="index.html">
@@ -411,8 +419,8 @@
       <div class="hero-kicker">ABOUT LOCAL FRIENDS TAIWAN</div>
       <h1>About Local Friends Taiwan <span style="font-size:1.1rem;font-weight:500;color:#3b7a5c;">關於我們</span></h1>
       <p class="hero-subtitle">
-        We are an independent information platform that connects curious travelers with real people, communities,
-        and stories across Taiwan — without becoming a travel agency.
+        We are an independent information platform that connects curious travelers with real people,
+        communities, and stories across Taiwan — without becoming a travel agency.
       </p>
       <p class="hero-tagline">
         讓我們幫你找到那位「在地的朋友」。
@@ -426,18 +434,15 @@
       Who We Are<span class="zh">我們是誰</span>
     </h2>
     <p>
-      Local Friends Taiwan was born from a simple belief: 
-      that a great trip comes from connecting with "people,
-      " not ticking off a checklist. 
-      Here, you won't find mass-produced tourist packages, 
-      but rather real islanders—community workers, craftspeople, 
-      cultural practitioners, young people returning to their hometowns, 
-      and local businesses and organizations.
+      Local Friends Taiwan was born from a simple belief:
+      a meaningful trip starts with people, not checklists.
+      Here, you won't find mass-produced tour packages,
+      but real islanders – community organizers, craftspeople, cultural workers,
+      returning youth, local shops, and organizations.
     </p>
-    <p>
-      Local Friends Taiwan 起心動念很簡單：我們相信，一趟好的旅行來自「人」，而不是打卡清單。
-      在這裡，你看到的不是大型觀光產品，而是真正在島上生活的人——社區工作者、職人、文化工作者、
-      青年返鄉計畫、在地小店與組織。
+    <p class="muted-zh">
+      我們相信，一趟好的旅行來自「人」，而不是打卡清單。這裡聚焦的，是真正在島上生活與行動的人，
+      而非只為觀光包裝出來的產品。
     </p>
     <div class="highlight-box">
       <strong>We are matchmakers of stories, not package tours.</strong><br>
@@ -445,24 +450,23 @@
     </div>
   </section>
 
-  <!-- 我們不是旅行社 / Independent Info Platform -->
+  <!-- 我們不是旅行社 -->
   <section class="page-section fade-in">
     <h2 class="section-title">
       Independent Information Platform<span class="zh">我們不是旅行社</span>
     </h2>
     <p>
-      Local Friends Taiwan is <strong>not</strong> a travel agency, and we do not operate tours.
-      We are an independent information platform:
+      Local Friends Taiwan is <strong>not</strong> a travel agency, and we do not operate or sell tours.
+      We are an independent information platform focused on careful curation and context.
     </p>
     <ul class="list-inline">
-      <li>We do not force fixed itineraries or shopping stops.</li>
-      <li>Weverifying information sources, helping you understand the local context, 
-        and providing English-friendly entry points, 
-        so you can confidently connect with trustworthy local partners on your own.</li>
+      <li>No forced shopping stops, no hidden commissions, no pay-to-play listings.</li>
+      <li>We focus on verifying information sources, clarifying context,
+          and offering English-friendly entry points so you can confidently contact hosts yourself.</li>
     </ul>
-    <p>
-      我們的角色是「認真做功課的朋友」：幫你確認資訊來源、理解在地脈絡、提供英文友善的入口，
-      讓你可以更安心地主動聯繫到值得信任的在地夥伴。
+    <p class="muted-zh">
+      我們是「幫你做功課的朋友」：查資料、問清楚、理解在地脈絡，整理成清楚的資訊給你參考，
+      而不是代替你賣行程。
     </p>
   </section>
 
@@ -471,33 +475,82 @@
     <h2 class="section-title">
       How We Choose Local Friends<span class="zh">我們怎麼選擇合作對象</span>
     </h2>
+
     <p>
-      Every local friend or organization listed on Local Friends Taiwan 
-      has been vetted through basic background research and firsthand exploration—
-      this isn't just generic tourism promotional material.
+      Every local friend or organization featured here goes through basic background checks
+      and, whenever possible, on-the-ground visits. This is not auto-imported tourism PR.
     </p>
-    <p>
-      每一位被放上 Local Friends Taiwan 的在地朋友／組織，都會經過最基本的背景了解與「探路」，
-      這不是隨便貼上任何觀光文案。
+    <p class="muted-zh">
+      被放上 Local Friends Taiwan 的夥伴，至少會經過基本背景了解與實際「探路」，
+      不會只是複製貼上行銷文案。
     </p>
-    <ul class="list-inline">
-      <li>Community-Rooted：Long-term local commitment, not short-term tourism opportunism. 是否長期在地深耕，而非只為短期觀光上線。</li>
-      <li>Respect & Fairness：Respects the community and participants, with no exploitation of people or the environment. 是否尊重社區、參與者，不剝削人與環境。</li>
-      <li>Transparency：Clear pricing, content, and limitations, with trustworthy contact points. 價格、內容、限制是否清楚，聯繫窗口是否可信。</li>
-      <li>Real Story：Authentic motivations and stories, not over-packaged marketing hype. 是否有真實動機與故事，而不是包裝過度的噱頭。</li>
-    </ul>
+
+    <div class="criteria-grid">
+      <div class="criteria-card">
+        <div class="criteria-label">
+          Community-Rooted<span class="zh">長期在地深耕</span>
+        </div>
+        <p>
+          Hosts show real, ongoing commitment to their place and community —
+          not short-term, opportunistic projects.
+        </p>
+        <p class="muted-zh">
+          是否真正在這裡生活與投入，而不是為了觀光熱度短暫「上線」。
+        </p>
+      </div>
+
+      <div class="criteria-card">
+        <div class="criteria-label">
+          Respect & Fairness<span class="zh">尊重與不剝削</span>
+        </div>
+        <p>
+          Activities respect residents, participants, and the environment.
+          No exploitation, no using vulnerable people as a selling point.
+        </p>
+        <p class="muted-zh">
+          是否尊重社區與參與者，不以人或環境的受損作為代價。
+        </p>
+      </div>
+
+      <div class="criteria-card">
+        <div class="criteria-label">
+          Transparency<span class="zh">資訊清楚透明</span>
+        </div>
+        <p>
+          Clear pricing, content, limitations, and reliable contact points
+          so travelers know what they’re joining.
+        </p>
+        <p class="muted-zh">
+          價格、行程內容、限制條件與聯繫窗口是否清楚可查。
+        </p>
+      </div>
+
+      <div class="criteria-card">
+        <div class="criteria-label">
+          Real Story<span class="zh">真實動機與故事</span>
+        </div>
+        <p>
+          Authentic motivations and grounded stories, instead of inflated branding
+          or purely marketing-driven concepts.
+        </p>
+        <p class="muted-zh">
+          是否有真實的背景與初衷，而不是只有包裝出來的美詞。
+        </p>
+      </div>
+    </div>
+
     <p>
-      When we're still evaluating certain information, we clearly label it. 
-      As we make new visits or updates, we share them in our <strong>Trail Notes</strong> 
-      so you can see our decision-making process.
-      </p>
-      <p>
-      如果我們對某個資訊仍在觀察階段，我們會明白標註；當我們有新的探訪或調整，也會在
-      <strong>Trail Notes 探路筆記</strong> 中更新，讓你知道我們是如何做判斷的。
+      When some information is still under review, we mark it clearly.
+      As we re-visit places or update our understanding, we document it in
+      <strong>Trail Notes</strong> so you can see how we think and why we recommend (or adjust).
+    </p>
+    <p class="muted-zh">
+      如果對某些資訊仍在觀察中，我們會清楚標註；未來有新的探訪或調整，
+      也會在 <strong>Trail Notes 探路筆記</strong> 更新，讓你看見我們做判斷的過程。
     </p>
   </section>
 
-  <!-- 對旅人的承諾：對應首頁三大原則 -->
+  <!-- 對旅人的承諾 -->
   <section class="page-section fade-in">
     <h2 class="section-title">
       Our Commitment to Travelers<span class="zh">對旅人的承諾</span>
@@ -505,46 +558,48 @@
     <div class="principles-grid">
       <div class="principle-card">
         <div class="principle-label">
-          Real People, Real Encounters<span class="zh"></span>
+          Real People, Real Encounters
         </div>
         <p>
-          We connect you with people we would genuinely visit ourselves and introduce to our own friends. What matters most is two-way understanding and trust.
+          We connect you with people we’d happily visit ourselves and introduce to our own friends.
+          Encounters should feel human, not transactional.
         </p>
       </div>
       <div class="principle-card">
         <div class="principle-label">
-          No Hard-Sell, Ever<span class="zh"></span>
+          No Hard-Sell, Ever
         </div>
         <p>
-          We don't work on commission and won't pressure you to book. All information is clear and accessible so you can choose for yourself.
+          We don’t work on referral commission and won’t pressure you to book.
+          Information stays clear so you can make your own decisions.
         </p>
       </div>
       <div class="principle-card">
         <div class="principle-label">
-          Respect Local Communities<span class="zh"></span>
+          Respect Local Communities
         </div>
         <p>
-          We welcome travelers who respect culture, gender, diversity, and local life rhythms. Our FAQ and Trail Notes offer guidance on being a better visitor.
+          We care about whether travelers and hosts respect culture, gender, labor, and everyday life.
+          Our FAQ and Trail Notes share how to be a thoughtful guest in Taiwan.
         </p>
       </div>
     </div>
     <p>
-      If this resonates with you, you're exactly the kind of traveler Local Friends Taiwan is built for.
+      If this resonates with you, you’re exactly the kind of traveler Local Friends Taiwan is built for.
     </p>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <p style="font-size: 1.3rem; margin-bottom: 1rem;"><strong>Local Friends Taiwan 台灣在地連線</strong></p>
     <p>Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
-    <p style="margin-top: 1rem;">
-    </p>
     <p style="margin-top: 1.5rem; opacity: 0.9; font-size: 1rem;">
       © 2025 Local Friends Taiwan. Independent Information Platform.
     </p>
   </footer>
 
   <script>
-    // 導覽收合（手機）
+    // 手機導覽收合
     document.addEventListener('DOMContentLoaded', () => {
       const navToggle = document.getElementById('navToggle');
       const mainNav = document.getElementById('mainNav');
