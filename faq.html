@@ -156,10 +156,6 @@
       }
 
       .nav-toggle { display: inline-flex; }
-
-      /* 若未來覺得太擠，可開啟只顯示英文：
-         .main-nav a span.zh { display:none; }
-      */
     }
 
     /* 回頂按鈕 */
@@ -248,19 +244,52 @@
       background: #ffffff;
       border: 1px solid #E5DECF;
       box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .faq-item.open {
+      border-color: var(--accent-soft);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      background: #FFFEFA;
     }
 
     .faq-q {
       font-weight: 700;
       font-size: 0.98rem;
       color: var(--green);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+    .faq-q::before {
+      content: "+";
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .faq-item.open .faq-q::before {
+      content: "✓";
+      color: var(--accent);
+      transform: scale(1.05);
     }
 
     .faq-a {
       font-size: 0.94rem;
       color: #444;
       line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      margin-top: 0;
+      transition: all 0.28s ease;
+    }
+    .faq-item.open .faq-a {
+      max-height: 800px; /* 足夠容納多行文字 */
+      opacity: 1;
+      margin-top: 0.25rem;
     }
 
     .faq-a ul {
@@ -391,7 +420,7 @@
         About Local Friends Taiwan<span class="zh">關於 Local Friends Taiwan</span>
       </h2>
 
-      <div class="faq-item">
+      <div class="faq-item open">
         <div class="faq-q">Q. What is Local Friends Taiwan?</div>
         <div class="faq-a">
           Local Friends Taiwan is an independent information platform that helps travelers discover real people,
@@ -617,11 +646,34 @@
         });
       }
 
-      // Fade-in on scroll
+      // FAQ：點開後只展開、不收回
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const q = item.querySelector('.faq-q');
+        if (!q) return;
+        q.addEventListener('click', () => {
+          if (!item.classList.contains('open')) {
+            item.classList.add('open');
+          }
+        });
+      });
+
+      // 初始：已標記 open 的 (例如第一題) 直接顯示答案
+      document.querySelectorAll('.faq-item.open .faq-a').forEach(a => {
+        a.style.maxHeight = a.scrollHeight + 'px';
+        a.style.opacity = '1';
+        a.style.marginTop = '0.25rem';
+      });
+
+      // 區塊淡入
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+
+            // 若這個區塊中有預設 open 的項目，重新計算高度（避免動畫期間高度不準）
+            entry.target.querySelectorAll('.faq-item.open .faq-a').forEach(a => {
+              a.style.maxHeight = a.scrollHeight + 'px';
+            });
           }
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
