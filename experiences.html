@@ -523,19 +523,16 @@
         experiences = data.map((r, idx)=>{
           const o={};
           headers.forEach((h,i)=>o[h]=r[i]||'');
-          o.__rowIndex = idx; // 精準記錄原始列索引
+          o.__rowIndex = idx;
           return o;
-        }).filter(o=>{
-          const flag = (o['顯示'] || o['Publish'] || '').toString().trim().toLowerCase();
-          return flag !== 'no' && flag !== 'hide' && flag !== '0';
-        });
+        }).filter(o=>isPublished(o));  // ✅ 只留已發佈
 
         buildFilters(experiences);
         renderCards();
       }catch(err){
         console.error(err);
-        const cards = document.getElementById('cards');
-        cards.innerHTML = `<div class="empty">⚠️ 無法載入體驗列表 Error loading experiences.</div>`;
+        document.getElementById('cards').innerHTML =
+          `<div class="empty">⚠️ 無法載入體驗列表 Error loading experiences.</div>`;
       }
     }
 
@@ -556,6 +553,28 @@
         values.push(cur.trim());
         return values;
       });
+    }
+
+    // ✅ 只顯示「已發佈」的列
+    function isPublished(o){
+      const raw =
+        (o['顯示'] ||
+         o['Publish'] ||
+         o['Published'] ||
+         o['發布'] ||
+         o['發布狀態'] ||
+         o['已發佈'] ||
+         o['已發布'] ||
+         '').toString().trim().toLowerCase();
+
+      if(!raw) return false;
+
+      const positive = [
+        'y','yes','1','true',
+        'show','公開','publish','published',
+        '已發佈','已發布','顯示','上架','enabled','enable','active'
+      ];
+      return positive.includes(raw);
     }
 
     function buildFilters(list){
@@ -602,7 +621,6 @@
       const filtered = experiences.filter(exp=>{
         if(region && (exp['地區']||'').trim() !== region) return false;
         if(cat && (exp['主要分類']||'').trim() !== cat) return false;
-
         if(q){
           const text = [
             exp['體驗名稱(中)'], exp['體驗名稱(英)'],
@@ -623,7 +641,7 @@
       filtered.forEach(exp=>{
         const id = (exp['ID'] || '').trim();
         const rowIndex = typeof exp.__rowIndex === 'number' ? exp.__rowIndex : '';
-        const url = id && rowIndex !== ''
+        const url = (id && rowIndex !== '')
           ? `experience-detail.html?id=${encodeURIComponent(id)}&row=${rowIndex}`
           : '#';
 
