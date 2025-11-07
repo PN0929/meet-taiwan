@@ -237,7 +237,6 @@
     }
     .filter-select option { color: #222; }
     .search-input::placeholder { color: rgba(255,255,255,0.9); }
-
     .search-input {
       flex: 1;
       max-width: 320px;
@@ -376,9 +375,20 @@
     }
     .footer a:hover { text-decoration: underline; }
 
+    /* 動畫 */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: all 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     @media (max-width: 768px) {
@@ -444,9 +454,9 @@
   <!-- Back to top -->
   <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
-  <!-- Hero -->
+  <!-- Hero + Filter -->
   <section class="hero">
-    <div class="hero-inner">
+    <div class="hero-inner fade-in">
       <h1 class="hero-title">Experiences 體驗列表</h1>
       <p class="hero-sub">
         Curated, community-rooted experiences hosted by real people in Taiwan.
@@ -468,7 +478,7 @@
   </section>
 
   <!-- Experiences list -->
-  <main class="page">
+  <main class="page fade-in">
     <div id="cards" class="cards-grid"></div>
     <div id="emptyState" class="empty" style="display:none;">
       找不到符合條件的體驗。<br>
@@ -491,8 +501,8 @@
 
     let experiences = [];
 
-    // Nav toggle (mobile)
     document.addEventListener('DOMContentLoaded', () => {
+      // Nav toggle (mobile)
       const navToggle = document.getElementById('navToggle');
       const mainNav = document.getElementById('mainNav');
       if (navToggle && mainNav) {
@@ -509,6 +519,18 @@
           });
         });
       }
+
+      // 淡入動畫（與 about/notes 一致）
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.fade-in').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.06}s`;
+        observer.observe(el);
+      });
 
       loadExperiences();
     });
@@ -538,16 +560,9 @@
 
     // 只顯示 Status 標記為「已發佈 / 已發布 / published」的體驗
     function isPublished(o){
-      let raw = (o['Status'] || o['status'] || '').toString().trim();
+      const raw = (o['Status'] || o['status'] || '').toString().trim();
       if (!raw) return false;
-
-      const lowered = raw.toLowerCase();
-
-      return (
-        lowered === '已發佈' ||
-        lowered === '已發布' ||
-        lowered === 'published'
-      );
+      return raw === '已發佈' || raw === '已發布' || raw.toLowerCase() === 'published';
     }
 
     function parseCSV(csv){
@@ -556,11 +571,12 @@
         const values=[];
         let cur=''; let inQ=false;
         for(const ch of line){
-          if(ch==='"') inQ=!inQ;
-          else if(ch===',' && !inQ){
+          if(ch==='"'){
+            inQ = !inQ;
+          } else if(ch===',' && !inQ){
             values.push(cur.trim());
             cur='';
-          }else{
+          } else{
             cur+=ch;
           }
         }
