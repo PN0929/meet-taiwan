@@ -8,7 +8,7 @@
 
 ## 技術架構
 ```
-Notion (內容管理,中文) 
+Google doc (內容管理,中文) 
   ↓
 Claude API (自動翻譯)
   ↓
