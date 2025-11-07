@@ -1,573 +1,736 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trail Note - Local Friends Taiwan</title>
-  <meta name="description" content="Local Friends Taiwan 探路筆記單篇內容。">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trail Notes 探路筆記 - Local Friends Taiwan | 台灣在地連線</title>
+  <meta name="description" content="Stories behind the hosts, field notes from communities, and reflections on respectful travel in Taiwan." />
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{overflow-x:hidden}
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",sans-serif;
-      line-height:1.6;color:#2D6A4F;background:#F7F5F2;
-      text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;
-      word-break:keep-all;overflow-wrap:anywhere;
-    }
-    img{max-width:100%;height:auto;display:block}
-    h1,h2{text-wrap:balance}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* 浮動導覽 */
-    .floating-nav{
-      position:fixed;left:20px;top:50%;transform:translateY(-50%);
-      z-index:1000;background:#fff;padding:.75rem;border-radius:26px;
-      box-shadow:0 4px 20px rgba(45,106,79,.18);border:2px solid #2D6A4F;
-      opacity:0;animation:fadeInLeft 1s ease forwards .5s;
-    }
-    .floating-nav a{
-      display:block;width:44px;height:44px;margin:.35rem 0;border-radius:50%;
-      background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;
-      text-decoration:none;display:flex;align-items:center;justify-content:center;
-      font-size:1.35rem;transition:.3s;
-    }
-    .floating-nav a:hover{
-      transform:scale(1.15);
-      background:linear-gradient(135deg,#40916C,#52B788);
-      box-shadow:0 4px 14px rgba(64,145,108,.35);
+    :root {
+      --header-height: 56px;
+      --max-width: 1100px;
+      --green: #2D6A4F;
+      --bg: #F7F5F2;
+      --accent: #F4845F;
+      --accent-soft: #E9C46A;
     }
 
-    /* 回頂 */
-    .back-to-top{
-      position:fixed;right:30px;bottom:30px;width:60px;height:60px;
-      background:linear-gradient(135deg,#F4845F,#F4A261);color:#fff;border:none;
-      border-radius:50%;font-size:1.5rem;cursor:pointer;
-      box-shadow:0 4px 20px rgba(244,132,95,.4);display:none;z-index:999;
-      transition:transform .3s;
+    html, body { overflow-x: hidden; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+      line-height: 1.7;
+      color: var(--green);
+      background: var(--bg);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
     }
-    .back-to-top:hover{transform:translateY(-5px)}
-    .back-to-top.show{
-      display:flex;align-items:center;justify-content:center;
-      animation:fadeInUp .5s ease;
+    h1, h2, h3 { text-wrap: balance; }
+    img, video { max-width: 100%; height: auto; display: block; }
+
+    /* ===== 共用 Header ===== */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      background: rgba(247, 245, 242, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(45, 106, 79, 0.06);
+      z-index: 1100;
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.2;
+    }
+    .brand a {
+      text-decoration: none;
+      color: var(--green);
+    }
+    .brand-en {
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      font-size: 0.78rem;
+    }
+    .brand-zh {
+      opacity: 0.9;
+      font-size: 0.78rem;
     }
 
-    /* 頂部小品牌列 */
-    .top-bar{
-      position:sticky;top:0;z-index:900;
-      background:rgba(247,245,242,.98);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(45,106,79,.08);
+    .main-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .top-bar-inner{
-      max-width:1200px;margin:0 auto;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:.6rem 1.5rem;font-size:.9rem;color:#2D6A4F;
+    .main-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1.4px solid transparent;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.18s;
     }
-    .brand-small{
-      font-weight:800;letter-spacing:.08em;font-size:.8rem;
-    }
-    .brand-small span{
-      font-weight:500;margin-left:.35rem;font-size:.78rem;opacity:.8;
-    }
-    .top-nav-links{
-      display:flex;gap:.8rem;font-size:.8rem;
-    }
-    .top-nav-links a{
-      text-decoration:none;color:#2D6A4F;opacity:.8;
-      padding:.25rem .55rem;border-radius:999px;
-      border:1px solid transparent;transition:.2s;
-    }
-    .top-nav-links a:hover{
-      opacity:1;border-color:#E9C46A;background:#FFF7EB;
-    }
-    .top-nav-links a.active{
-      opacity:1;border-color:#2D6A4F;background:#fff;font-weight:700;
+    .main-nav a span.en { margin-right: 0.18rem; }
+    .main-nav a:hover,
+    .main-nav a.active {
+      border-color: var(--accent-soft);
+      background: #FFF7EB;
+      box-shadow: 0 2px 8px rgba(233,196,106,.25);
+      transform: translateY(-1px);
     }
 
-    /* Hero 單篇 */
-    .hero{
-      position:relative;
-      padding:2.4rem 1.5rem 1.8rem;
-      background:linear-gradient(180deg,#EAF4EE,#F7F5F2);
+    .nav-toggle {
+      display: none;
+      margin-left: auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1.4px solid var(--green);
+      background: transparent;
+      color: var(--green);
+      font-size: 1.2rem;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
     }
-    .hero-inner{
-      max-width:1200px;margin:0 auto;
-      display:grid;
-      grid-template-columns:minmax(0,2fr) minmax(260px,1.3fr);
-      gap:1.8rem;
-      align-items:flex-start;
-    }
-    .note-label{
-      font-size:.85rem;font-weight:700;color:#2D6A4F;
-      letter-spacing:.16em;text-transform:uppercase;margin-bottom:.3rem;
-    }
-    #noteTitle{
-      font-size:2rem;font-weight:800;color:#2D6A4F;margin-bottom:.3rem;
-    }
-    #noteSubtitle{
-      font-size:1rem;color:#666;margin-bottom:.5rem;
-    }
-    .hero-meta{
-      display:flex;flex-wrap:wrap;gap:.4rem;
-      font-size:.78rem;color:#777;margin:.4rem 0 .8rem;
-    }
-    .badge{
-      padding:.25rem .6rem;border-radius:999px;
-      border:1px solid #E9C46A;background:#FFFBF3;
-      font-size:.7rem;color:#8A6B2F;
-    }
-    #noteSummary{
-      font-size:.9rem;color:#555;max-width:640px;line-height:1.7;
+    .nav-toggle:hover { background: #E9C46A22; }
+    .nav-toggle.open {
+      background: var(--green);
+      color: #F7F5F2;
+      border-color: var(--green);
     }
 
-    .hero-cover{
-      border-radius:14px;overflow:hidden;
-      box-shadow:0 6px 20px rgba(45,106,79,.16);
-      background:#F7F5F2;
-      min-height:180px;
-    }
-    .hero-cover img{
-      width:100%;height:100%;object-fit:cover;
-    }
-
-    /* 內文區塊 */
-    .content-wrap{
-      max-width:1200px;margin:0 auto;
-      padding:0 1.5rem 3rem;
-    }
-    .doc-card{
-      margin-top:1.6rem;
-      background:#fff;
-      border-radius:16px;
-      border:2px solid #E9C46A;
-      box-shadow:0 4px 16px rgba(233,196,106,.16);
-      padding:1.8rem 1.6rem;
-    }
-    .doc-card h2.title{
-      font-size:1.3rem;
-      font-weight:800;
-      color:#2D6A4F;
-      margin-bottom:.8rem;
-      border-bottom:2px solid #E9C46A;
-      padding-bottom:.4rem;
-    }
-
-    .doc-inner{
-      max-width:840px;
-      margin:0 auto;
-      font-size:.96rem;
-      color:#2f2f2f;
-      line-height:1.9;
-    }
-    .doc-inner h1,
-    .doc-inner h2,
-    .doc-inner h3,
-    .doc-inner h4{
-      margin:1.4rem 0 .5rem;
-      font-weight:800;
-      color:#1f4d39;
-      line-height:1.4;
-    }
-    .doc-inner p{
-      margin:.6rem 0;
-    }
-    .doc-inner strong{font-weight:800}
-    .doc-inner ul,
-    .doc-inner ol{
-      margin:.5rem 0 .5rem 1.2rem;
-    }
-    .doc-inner li{margin:.25rem 0}
-    .doc-inner blockquote{
-      margin:.8rem 0;
-      padding:.7rem 1rem;
-      border-left:4px solid #E9C46A;
-      background:#FFF9E6;
-      border-radius:8px;
-      color:#444;
-    }
-
-    /* 關鍵：圖片固定在卡片寬度內，不多餘空白、不爆版 */
-    .doc-inner img{
-      max-width:100% !important;
-      height:auto !important;
-      display:block;
-      margin:.75rem auto;
-      border-radius:8px;
-      box-shadow:0 2px 10px rgba(0,0,0,.05);
-    }
-    .doc-inner figure{
-      max-width:100%;
-      margin:.75rem 0;
-    }
-
-    /* 表格用橫向捲動 */
-    .doc-inner table{
-      border-collapse:collapse;
-      margin:.8rem 0;
-      width:100%;
-      display:block;
-      overflow-x:auto;
-    }
-    .doc-inner th,
-    .doc-inner td{
-      border:1px solid #e3e3e3;
-      padding:.4rem .55rem;
-      font-size:.9rem;
-      vertical-align:top;
-      white-space:normal;
-    }
-    .doc-inner thead th{
-      background:#f7f7f7;
-      font-weight:700;
-    }
-
-    .doc-inner iframe{
-      max-width:100% !important;
-      width:100% !important;
-      border:0;
-      border-radius:8px;
-      min-height:260px;
-      box-shadow:0 2px 10px rgba(0,0,0,.06);
-      margin:.8rem 0;
-    }
-
-    .loading{
-      text-align:center;
-      padding:3rem 1.5rem;
-      font-size:1rem;
-      color:#2D6A4F;
-      font-weight:700;
-    }
-
-    .footer{
-      background:linear-gradient(135deg,#2D6A4F,#40916C);
-      color:#fff;
-      text-align:center;
-      padding:2.5rem 2rem;
-      font-size:.9rem;
-    }
-    .footer a{
-      color:#fff;
-      text-decoration:none;
-      font-weight:bold;
-    }
-    .footer a:hover{text-decoration:underline}
-
-    @keyframes fadeInLeft{
-      from{opacity:0;transform:translate(-50px,-50%);}
-      to{opacity:1;transform:translate(0,-50%);}
-    }
-    @keyframes fadeInUp{
-      from{opacity:0;transform:translateY(20px);}
-      to{opacity:1;transform:translateY(0);}
-    }
-
-    @media(max-width:768px){
-      .floating-nav{
-        left:10px;padding:.5rem;
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 0 1rem;
+        height: var(--header-height);
       }
-      .floating-nav a{
-        width:38px;height:38px;font-size:1.1rem;margin:.25rem 0;
+      .brand-en,
+      .brand-zh { font-size: 0.74rem; }
+
+      .main-nav {
+        position: fixed;
+        top: var(--header-height);
+        left: 0; right: 0;
+        padding: 0.45rem 0.85rem 0.55rem;
+        background: rgba(247, 245, 242, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(45,106,79,0.08);
+        display: none;
+        flex-wrap: nowrap;
+        gap: 0.45rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        z-index: 1090;
       }
-      .top-bar-inner{
-        padding:.5rem .9rem;
-        flex-wrap:wrap;
-        gap:.3rem .6rem;
+      .main-nav.open { display: flex; }
+      .main-nav::-webkit-scrollbar { height: 3px; }
+      .main-nav::-webkit-scrollbar-thumb {
+        background: rgba(233,196,106,0.9);
+        border-radius: 999px;
       }
-      .hero{
-        padding:2rem 1.2rem 1.4rem;
+      .main-nav a {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.8rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
       }
-      .hero-inner{
-        grid-template-columns:1fr;
+
+      .nav-toggle { display: inline-flex; }
+    }
+
+    /* 回頂按鈕 */
+    .back-to-top {
+      position: fixed;
+      right: 30px;
+      bottom: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #F4845F, #F4A261);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(244,132,95,0.4);
+      display: none;
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+    .back-to-top:hover { transform: translateY(-5px); }
+    .back-to-top.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    /* Hero */
+    .hero {
+      padding: calc(var(--header-height) + 2.6rem) 1.5rem 1.6rem;
+      background: linear-gradient(
+        135deg,
+        rgba(45,106,79,0.98),
+        rgba(64,145,108,0.96)
+      );
+      color: #fff;
+    }
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .hero-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.9;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+    }
+    .hero-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+    .hero-sub {
+      font-size: 0.98rem;
+      opacity: 0.96;
+      max-width: 720px;
+    }
+
+    /* Tabs / Filters row */
+    .tabs-bar {
+      max-width: var(--max-width);
+      margin: 0.9rem auto 0;
+      padding: 0.45rem 0 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #fdfdfd;
+    }
+    .tab-label {
+      font-weight: 700;
+      margin-right: 0.2rem;
+    }
+    .tab-pill {
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .tab-pill:hover {
+      background: rgba(255,255,255,0.22);
+    }
+    .tab-pill.active {
+      background: #fff;
+      color: var(--green);
+      border-color: var(--accent-soft);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
+    }
+    .search-input {
+      margin-left: auto;
+      padding: 0.28rem 0.75rem;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      font-size: 0.78rem;
+      outline: none;
+      min-width: 140px;
+    }
+    .search-input::placeholder {
+      color: rgba(255,255,255,0.82);
+    }
+
+    /* Content layout */
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.8rem 1.5rem 3rem;
+    }
+
+    .section-intro {
+      font-size: 0.92rem;
+      color: #4f6f5b;
+      margin-bottom: 1.4rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .note-card {
+      position: relative;
+      background: #fff;
+      border-radius: 14px;
+      border: 1.5px solid #E5DECF;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.22s;
+      text-decoration: none;
+      color: var(--green);
+    }
+    .note-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(45,106,79,0.14);
+      border-color: var(--accent-soft);
+    }
+
+    .note-thumb-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56%;
+      overflow: hidden;
+      background: #e5e2da;
+    }
+    .note-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s;
+    }
+    .note-card:hover .note-thumb {
+      transform: scale(1.04);
+    }
+    .note-tag-top {
+      position: absolute;
+      left: 0.7rem;
+      bottom: 0.55rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.64);
+      color: #fff;
+      font-size: 0.7rem;
+      display: inline-flex;
+      gap: 0.22rem;
+      align-items: center;
+    }
+
+    .note-body {
+      padding: 0.85rem 0.95rem 0.95rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.22rem;
+    }
+    .note-title-en {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1.35;
+    }
+    .note-title-zh {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4a7b60;
+      line-height: 1.3;
+    }
+    .note-meta {
+      font-size: 0.7rem;
+      color: #8a8a8a;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.1rem;
+    }
+    .note-excerpt {
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 0.2rem;
+      line-height: 1.6;
+    }
+    .note-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.22rem;
+      margin-top: 0.3rem;
+    }
+    .note-tag {
+      padding: 0.16rem 0.46rem;
+      border-radius: 999px;
+      background: #F7F5F2;
+      border: 1px solid #E9C46A;
+      font-size: 0.65rem;
+      color: #566;
+    }
+    .note-more {
+      margin-top: auto;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.18rem;
+    }
+
+    .empty {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #777;
+      text-align: center;
+    }
+
+    .footer {
+      background: linear-gradient(135deg,#2D6A4F,#40916C);
+      color: #fff;
+      text-align: center;
+      padding: 2.4rem 2rem;
+    }
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: calc(var(--header-height) + 1.6rem) 1rem 1.2rem;
       }
-      #noteTitle{
-        font-size:1.6rem;
+      .hero-title {
+        font-size: 1.7rem;
       }
-      .hero-cover{
-        order:-1;
-        max-height:220px;
+      .hero-sub {
+        font-size: 0.9rem;
       }
-      .content-wrap{
-        padding:0 1.2rem 2.4rem;
+      .tabs-bar {
+        padding: 0.35rem 0 0.7rem;
+        gap: 0.35rem;
+        font-size: 0.78rem;
       }
-      .doc-card{
-        padding:1.4rem 1.1rem;
+      .tab-pill {
+        padding: 0.24rem 0.65rem;
+        font-size: 0.74rem;
+      }
+      .search-input {
+        font-size: 0.74rem;
+        padding: 0.24rem 0.65rem;
+        min-width: 120px;
+      }
+      .page {
+        padding: 1.6rem 1rem 2.4rem;
+      }
+      .back-to-top {
+        right: 16px;
+        bottom: 16px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 浮動導覽 -->
-  <nav class="floating-nav">
-    <a href="index.html" title="首頁">🏠</a>
-    <a href="experiences.html" title="體驗列表">🌟</a>
-    <a href="notes.html" title="探路筆記">📒</a>
-    <a href="contact.html" title="聯繫我們">✉️</a>
-  </nav>
-
-  <button class="back-to-top" onclick="scrollToTop()">↑</button>
-
-  <!-- 頂部小品牌列 -->
-  <header class="top-bar">
-    <div class="top-bar-inner">
-      <div class="brand-small">
-        LOCAL FRIENDS TAIWAN
-        <span>Trail Notes 探路筆記</span>
-      </div>
-      <nav class="top-nav-links">
-        <a href="index.html">Home</a>
-        <a href="experiences.html">Experiences</a>
-        <a href="about.html">About</a>
-        <a href="faq.html">FAQ</a>
-        <a href="hosts.html">Hosts</a>
-        <a href="notes.html" class="active">Trail Notes</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="brand">
+      <a href="index.html">
+        <div class="brand-en">LOCAL FRIENDS TAIWAN</div>
+        <div class="brand-zh">台灣在地連線</div>
+      </a>
     </div>
+    <nav class="main-nav" id="mainNav">
+      <a href="experiences.html"><span class="en">Experiences</span><span class="zh">體驗列表</span></a>
+      <a href="about.html"><span class="en">About</span><span class="zh">關於我們</span></a>
+      <a href="faq.html"><span class="en">FAQ</span><span class="zh">常見問題</span></a>
+      <a href="hosts.html"><span class="en">For Hosts</span><span class="zh">成為在地朋友</span></a>
+      <a href="notes.html" class="active"><span class="en">Trail Notes</span><span class="zh">探路筆記</span></a>
+      <a href="contact.html"><span class="en">Contact</span><span class="zh">聯繫我們</span></a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="切換導覽選單">☰</button>
   </header>
 
-  <div id="loading" class="loading">載入筆記中... Loading trail note...</div>
+  <!-- Back to top -->
+  <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
-  <main id="mainContent" style="display:none;">
-    <section class="hero">
-      <div class="hero-inner">
-        <div>
-          <div class="note-label">TRAIL NOTE ・ 探路紀錄</div>
-          <h1 id="noteTitle"></h1>
-          <div id="noteSubtitle"></div>
-          <div class="hero-meta" id="noteMeta"></div>
-          <div id="noteSummary"></div>
-        </div>
-        <div class="hero-cover" id="noteCover"></div>
-      </div>
-    </section>
+  <!-- Hero + Tabs -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-kicker">TRAIL NOTES · 探路筆記</div>
+      <h1 class="hero-title">Stories from the road & behind the scenes</h1>
+      <p class="hero-sub">
+        Field notes from visits, stories of how we met our hosts, reflections on respectful travel,
+        and updates from communities across Taiwan. All to help you connect more thoughtfully.
+      </p>
+    </div>
+    <div class="tabs-bar">
+      <span class="tab-label">Browse by：</span>
+      <button class="tab-pill active" data-category="">All 全部</button>
+      <button class="tab-pill" data-category="Field Notes">Field Notes 探訪紀錄</button>
+      <button class="tab-pill" data-category="Behind the Hosts">Behind the Hosts 幕後故事</button>
+      <button class="tab-pill" data-category="Good Travel">Good Travel Guides 好好旅行</button>
+      <button class="tab-pill" data-category="News">News / Updates 新消息</button>
+      <input id="searchInput" class="search-input" type="search"
+             placeholder="Search notes 搜尋關鍵字">
+    </div>
+  </section>
 
-    <section class="content-wrap">
-      <div class="doc-card">
-        <h2 class="title">筆記內容 Trail Note Details</h2>
-        <div class="doc-inner" id="docInner">
-          <!-- Google Doc 內容載入於此 -->
-        </div>
-      </div>
-    </section>
+  <!-- Content -->
+  <main class="page">
+    <p class="section-intro">
+      每一篇探路筆記，都是實際走訪、對話與觀察的紀錄。<br>
+      No paid placements, no advertorials — just transparent notes to help you understand the stories,
+      values, and communities behind each experience.
+    </p>
+
+    <div id="notesGrid" class="cards-grid"></div>
+    <div id="emptyState" class="empty" style="display:none;">
+      暫時沒有符合條件的文章。<br>
+      No notes match your current filters.
+    </div>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
-    <p><strong>Local Friends Taiwan 台灣在地連線</strong></p>
-    <p style="margin-top:.4rem;">Your local friend in Taiwan | 你在台灣的在地朋友</p>
-    <p style="margin-top:.4rem;">
+    <p style="font-size:1.2rem;margin-bottom:0.6rem;"><strong>Local Friends Taiwan 台灣在地連線</strong></p>
+    <p>Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
+    <p style="margin-top:0.8rem;">
       <a href="https://github.com/PN0929/meet-taiwan" target="_blank">📂 GitHub Project</a>
     </p>
-    <p style="margin-top:.6rem;opacity:.9;">
-      © 2025 Local Friends Taiwan. Independent information platform.
+    <p style="margin-top:1.2rem;opacity:0.9;font-size:0.95rem;">
+      © 2025 Local Friends Taiwan. Independent Information Platform.
     </p>
   </footer>
 
   <script>
-    // 與 notes.html 共用同一份 Sheet
-    const SHEET_ID = 'YOUR_NOTES_SHEET_ID';
-    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+    // === CONFIG ===
+    // TODO: 換成你真正的 Trail Notes 專用 Google Sheet ID
+    const NOTES_SHEET_ID = 'PASTE_YOUR_NOTES_SHEET_ID_HERE';
+    const NOTES_SHEET_URL = `https://docs.google.com/spreadsheets/d/${NOTES_SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-    document.addEventListener('DOMContentLoaded', loadNote);
-
-    async function loadNote(){
-      const params = new URLSearchParams(window.location.search);
-      const id = (params.get('id') || '').trim();
-      const loading = document.getElementById('loading');
-      const main = document.getElementById('mainContent');
-
-      if(!id){
-        loading.textContent = '找不到筆記 ID。請從探路筆記列表進入。';
-        return;
+    // Nav toggle (mobile)
+    document.addEventListener('DOMContentLoaded', () => {
+      const navToggle = document.getElementById('navToggle');
+      const mainNav = document.getElementById('mainNav');
+      if (navToggle && mainNav) {
+        navToggle.addEventListener('click', () => {
+          const isOpen = mainNav.classList.toggle('open');
+          navToggle.classList.toggle('open', isOpen);
+        });
+        mainNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            if (mainNav.classList.contains('open')) {
+              mainNav.classList.remove('open');
+              navToggle.classList.remove('open');
+            }
+          });
+        });
       }
 
-      try{
-        const res = await fetch(SHEET_URL);
-        const text = await res.text();
-        const rows = parseCSV(text);
+      loadNotes();
+    });
+
+    let notes = [];
+
+    async function loadNotes() {
+      try {
+        const resp = await fetch(NOTES_SHEET_URL);
+        const txt = await resp.text();
+        const rows = parseCSV(txt);
         const headers = rows[0];
         const data = rows.slice(1);
-        const note = data.map(r => {
-          const o={};
-          headers.forEach((h,i)=>o[h.trim()] = (r[i]||'').trim());
+
+        // 建議欄位（可依你實際 sheet 欄位名稱調整）：
+        // ID, Title EN, Title ZH, Category, Type, Image, Doc Link, Summary, Tags, Date, Publish
+        notes = data.map(r => {
+          const o = {};
+          headers.forEach((h, i) => o[h] = r[i] || '');
           return o;
-        }).find(o => (o['ID'] || '').toLowerCase() === id.toLowerCase());
+        }).filter(o => {
+          const flag = (o['Publish'] || o['顯示'] || '').toString().trim().toLowerCase();
+          return flag !== 'no' && flag !== 'hide' && flag !== '0';
+        });
 
-        if(!note){
-          loading.textContent = '找不到這篇探路筆記。請返回列表。';
-          return;
-        }
-
-        // 填 Hero
-        renderHero(note);
-        // 載入 Doc
-        await renderDoc(note);
-
-        loading.style.display = 'none';
-        main.style.display = 'block';
-      }catch(e){
-        console.error(e);
-        loading.textContent = '載入發生錯誤，請稍後再試。';
+        renderNotes();
+      } catch (err) {
+        console.error(err);
+        const grid = document.getElementById('notesGrid');
+        grid.innerHTML = `<div class="empty">⚠️ 無法載入探路筆記列表 Error loading notes.</div>`;
       }
+
+      // 綁定 tab / search
+      document.querySelectorAll('.tab-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderNotes();
+        });
+      });
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('input', renderNotes);
     }
 
-    function parseCSV(csv){
-      const lines = csv.split('\n').filter(l=>l.trim().length>0);
-      return lines.map(line=>{
-        const values=[];let cur='';let inQ=false;
-        for(let i=0;i<line.length;i++){
-          const ch=line[i];
-          if(ch === '"'){
-            if(inQ && line[i+1] === '"'){cur+='"';i++;}
-            else inQ=!inQ;
-          }else if(ch === ',' && !inQ){
-            values.push(cur);cur='';
-          }else{
-            cur+=ch;
+    function parseCSV(csv) {
+      const lines = csv.split('\n');
+      return lines.map(line => {
+        const values = [];
+        let cur = '';
+        let inQ = false;
+        for (const ch of line) {
+          if (ch === '"') inQ = !inQ;
+          else if (ch === ',' && !inQ) {
+            values.push(cur.trim());
+            cur = '';
+          } else {
+            cur += ch;
           }
         }
-        values.push(cur);
+        values.push(cur.trim());
         return values;
       });
     }
 
-    function renderHero(note){
-      document.title = `${note['Title'] || 'Trail Note'} - Local Friends Taiwan`;
-
-      const titleEl = document.getElementById('noteTitle');
-      const subtitleEl = document.getElementById('noteSubtitle');
-      const metaEl = document.getElementById('noteMeta');
-      const summaryEl = document.getElementById('noteSummary');
-      const coverEl = document.getElementById('noteCover');
-
-      const title = note['Title'] || 'Untitled Trail Note';
-      const subtitle = note['Subtitle'] || '';
-      const cat = note['Category'] || '';
-      const loc = note['Location'] || '';
-      const host = note['Host'] || '';
-      const date = note['Date'] || '';
-      const summary = note['Summary'] || '';
-      const cover = note['Cover'] || '';
-
-      titleEl.textContent = title;
-      subtitleEl.textContent = subtitle;
-
-      let metaHtml = '';
-      if(cat) metaHtml += `<span class="badge">${cat}</span>`;
-      if(loc) metaHtml += `<span>📍 ${loc}</span>`;
-      if(host) metaHtml += `<span>👥 ${host}</span>`;
-      if(date) metaHtml += `<span>🗓️ ${date}</span>`;
-      metaEl.innerHTML = metaHtml;
-
-      summaryEl.textContent = summary;
-
-      if(cover){
-        coverEl.innerHTML = `<img src="${cover}" alt="${title}" loading="lazy"
-          onerror="this.style.display='none';">`;
-      }else{
-        coverEl.style.display = 'none';
-      }
+    function getCover(note) {
+      const raw = (note['Image'] || note['封面圖'] || '').replace(/，/g, ',');
+      const links = raw.split(/[,\s]+/).map(s => s.trim()).filter(Boolean);
+      return links[0] || '';
     }
 
-    async function renderDoc(note){
-      const container = document.getElementById('docInner');
-      container.innerHTML = '載入內容中... Loading content...';
+    function getCategory(note) {
+      return (note['Category'] || note['類別'] || '').trim();
+    }
 
-      const raw = (note['DocLink'] || '').trim();
-      if(!raw){
-        container.innerHTML = '<p>此筆記尚未提供詳細內容。</p>';
+    function getLink(note) {
+      // 若未來改成內頁，可改：`trail-note-detail.html?id=...`
+      const doc = (note['Doc Link'] || note['連結'] || '').trim();
+      return doc || '#';
+    }
+
+    function renderNotes() {
+      const grid = document.getElementById('notesGrid');
+      const empty = document.getElementById('emptyState');
+      grid.innerHTML = '';
+
+      const activeTab = document.querySelector('.tab-pill.active');
+      const catFilter = activeTab ? (activeTab.dataset.category || '') : '';
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+
+      const filtered = notes.filter(note => {
+        const cat = getCategory(note);
+
+        if (catFilter) {
+          if (!cat || !cat.toLowerCase().includes(catFilter.toLowerCase())) {
+            return false;
+          }
+        }
+
+        if (q) {
+          const blob = [
+            note['Title EN'], note['Title ZH'],
+            note['Summary'], note['Tags'], cat,
+            note['內容'], note['Notes']
+          ].join(' ').toLowerCase();
+          if (!blob.includes(q)) return false;
+        }
+
+        return true;
+      });
+
+      if (!filtered.length) {
+        empty.style.display = 'block';
         return;
       }
-      const fetchURL = toFetchableDocURL(raw);
+      empty.style.display = 'none';
 
-      try{
-        const resp = await fetch(fetchURL, {mode:'cors'});
-        const html = await resp.text();
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
+      filtered.forEach(note => {
+        const cover = getCover(note);
+        const cat = getCategory(note);
+        const url = getLink(note);
 
-        let main = tmp.querySelector('#contents') || tmp.querySelector('body') || tmp;
-        main.querySelectorAll('script,style,header,nav,link').forEach(el => el.remove());
+        const titleEn = (note['Title EN'] || '').trim();
+        const titleZh = (note['Title ZH'] || '').trim();
+        const summary = (note['Summary'] || '').trim();
+        const tags = (note['Tags'] || '').split(/[,\s、]+/).filter(Boolean).slice(0, 4);
+        const date = (note['Date'] || note['日期'] || '').trim();
 
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = main.innerHTML;
+        const card = document.createElement('a');
+        card.className = 'note-card';
+        card.href = url || 'javascript:void(0)';
+        card.target = url && url.startsWith('http') ? '_blank' : '_self';
+        card.rel = url && url.startsWith('http') ? 'noopener' : '';
 
-        // 清除尾端完全空白段落，避免多餘大空白
-        wrapper.querySelectorAll('p').forEach(p=>{
-          if(!p.textContent.trim() && !p.querySelector('img,table,iframe')){
-            p.remove();
-          }
-        });
-
-        // 圖片樣式已在 CSS 控制，這裡只補上 lazy 與錯誤處理
-        wrapper.querySelectorAll('img').forEach(img=>{
-          img.loading = 'lazy';
-          img.removeAttribute('width');
-          img.removeAttribute('height');
-          img.onerror = () => {
-            img.replaceWith(Object.assign(document.createElement('div'),{
-              textContent:'📷 圖片無法載入',
-              style:'text-align:center;color:#888;padding:0.5rem 0;font-size:.85rem;'
-            }));
-          };
-        });
-
-        // 表格包一層 overflow 容器（雖然 CSS 已處理，這裡保險）
-        wrapper.querySelectorAll('table').forEach(t=>{
-          const w = document.createElement('div');
-          w.style.overflowX = 'auto';
-          w.style.margin = '.6rem 0';
-          t.parentNode.insertBefore(w,t);
-          w.appendChild(t);
-        });
-
-        // Iframe 寬度修正
-        wrapper.querySelectorAll('iframe').forEach(f=>{
-          f.removeAttribute('width');
-          f.style.width = '100%';
-          f.style.maxWidth = '100%';
-        });
-
-        container.innerHTML = '';
-        container.appendChild(wrapper);
-      }catch(e){
-        console.warn('Doc fetch blocked, fallback iframe', e);
-        container.innerHTML = `
-          <iframe src="${toEmbeddableIframeURL(raw)}"
-            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        card.innerHTML = `
+          <div class="note-thumb-wrap">
+            ${cover
+              ? `<img src="${cover}" alt="${titleEn || titleZh || 'Trail note'}"
+                       class="note-thumb"
+                       loading="lazy"
+                       onerror="this.style.display='none';this.parentElement.style.background='#e5e5e5';">`
+              : ``
+            }
+            ${cat
+              ? `<div class="note-tag-top">
+                    <span>✍️ ${cat}</span>
+                 </div>`
+              : ``}
+          </div>
+          <div class="note-body">
+            <div class="note-title-en">${titleEn || 'Untitled Trail Note'}</div>
+            ${titleZh ? `<div class="note-title-zh">${titleZh}</div>` : ``}
+            <div class="note-meta">
+              ${date ? `<span>📅 ${date}</span>` : ``}
+              ${note['Host'] ? `<span>🤝 Host：${note['Host']}</span>` : ``}
+              ${note['Location'] ? `<span>📍 ${note['Location']}</span>` : ``}
+            </div>
+            ${summary
+              ? `<div class="note-excerpt">${summary}</div>`
+              : ``}
+            <div class="note-tags">
+              ${tags.map(t => `<span class="note-tag">${t}</span>`).join('')}
+            </div>
+            <div class="note-more">
+              Read more 了解更多 →
+            </div>
+          </div>
         `;
-      }
+
+        grid.appendChild(card);
+      });
     }
 
-    function toFetchableDocURL(url){
-      if(/\/document\/d\/e\/[^/]+\/pub/.test(url)){
-        return url.includes('?') ? url : url + '?embedded=true';
-      }
-      const m = url.match(/\/document\/d\/([^/]+)/);
-      if(m){
-        const id = m[1];
-        return `https://docs.google.com/document/d/${id}/export?format=html`;
-      }
-      return url;
-    }
-    function toEmbeddableIframeURL(url){
-      if(/\/document\/d\/e\/[^/]+\/pub/.test(url)){
-        return url.includes('?') ? url + '&embedded=true' : url + '?embedded=true';
-      }
-      const m = url.match(/\/document\/d\/([^/]+)/);
-      if(m){
-        const id = m[1];
-        return `https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`;
-      }
-      return url;
-    }
-
-    // 回頂
-    function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
-    window.addEventListener('scroll',()=>{
-      const b=document.querySelector('.back-to-top');
-      if(window.pageYOffset>300) b.classList.add('show');
+    // Back to top
+    window.addEventListener('scroll', () => {
+      const b = document.querySelector('.back-to-top');
+      if (!b) return;
+      if (window.pageYOffset > 300) b.classList.add('show');
       else b.classList.remove('show');
     });
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
