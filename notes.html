@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trail Notes 探路筆記 - Local Friends Taiwan | 台灣在地連線</title>
-  <meta name="description" content="Trail Notes 探路筆記：實地走訪紀錄、幕後故事、旅人觀念文與最新合作更新，帶你看見真實台灣的在地網絡。">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trail Notes 探路筆記 - Local Friends Taiwan</title>
+  <meta name="description" content="Trail Notes is Local Friends Taiwan’s field notebook — on-site visits, behind-the-scenes stories, travel mindset, and updates on new hosts and experiences.">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,7 +15,6 @@
       --bg: #F7F5F2;
       --accent: #F4845F;
       --accent-soft: #E9C46A;
-      --note-tag: #40916C;
     }
 
     html, body { overflow-x: hidden; }
@@ -41,9 +40,9 @@
       display: flex;
       align-items: center;
       gap: 1.25rem;
-      background: rgba(247, 245, 242, 0.98);
+      background: rgba(247,245,242,0.98);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(45, 106, 79, 0.06);
+      border-bottom: 1px solid rgba(45,106,79,0.06);
       z-index: 1100;
     }
     .brand {
@@ -118,9 +117,13 @@
     }
 
     @media (max-width: 768px) {
-      .site-header { padding: 0 1rem; }
+      .site-header {
+        padding: 0 1rem;
+      }
       .brand-en,
-      .brand-zh { font-size: 0.74rem; }
+      .brand-zh {
+        font-size: 0.74rem;
+      }
 
       .main-nav {
         position: fixed;
@@ -180,13 +183,9 @@
 
     /* Hero */
     .hero {
-      padding: calc(var(--header-height) + 2.6rem) 1.5rem 2.2rem;
-      background: linear-gradient(
-        135deg,
-        rgba(45,106,79,0.98),
-        rgba(64,145,108,0.96)
-      );
-      color: #fff;
+      padding: calc(var(--header-height) + 2.6rem) 1.5rem 1.4rem;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
     }
     .hero-inner {
       max-width: var(--max-width);
@@ -194,184 +193,185 @@
     }
     .hero-kicker {
       font-size: 0.78rem;
-      text-transform: uppercase;
       letter-spacing: 0.16em;
-      opacity: 0.9;
-      margin-bottom: 0.25rem;
-      font-weight: 600;
+      text-transform: uppercase;
+      color: #8d8d8d;
+      margin-bottom: 0.3rem;
     }
     .hero-title {
       font-size: 2.1rem;
       font-weight: 800;
-      margin-bottom: 0.35rem;
+      color: var(--green);
+      margin-bottom: 0.3rem;
     }
-    .hero-sub {
-      font-size: 0.97rem;
-      opacity: 0.97;
+    .hero-sub-en {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 0.2rem;
+      max-width: 760px;
+    }
+    .hero-sub-zh {
+      font-size: 0.9rem;
+      color: #888;
       max-width: 760px;
     }
 
-    /* Page wrapper */
+    /* Filter bar */
+    .filter-bar {
+      max-width: var(--max-width);
+      margin: 0.2rem auto 0;
+      padding: 0.8rem 1.5rem 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .filter-label {
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+    .filter-select,
+    .search-input {
+      border-radius: 999px;
+      border: 1px solid rgba(45,106,79,0.18);
+      padding: 0.32rem 0.9rem;
+      font-size: 0.86rem;
+      outline: none;
+      background: #fff;
+      color: #333;
+      min-width: 120px;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 180px;
+    }
+    .search-input::placeholder {
+      color: #aaa;
+    }
+
+    /* Cards layout */
     .page {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 2rem 1.5rem 3rem;
+      padding: 0 1.5rem 3rem;
     }
-
-    /* Intro block */
-    .intro {
-      margin-bottom: 1.8rem;
-      font-size: 0.93rem;
-      color: #445;
-    }
-    .intro p {
-      margin-bottom: 0.35rem;
-    }
-    .intro strong { color: var(--green); }
-
-    /* Filter row */
-    .filter-bar {
-      margin-bottom: 1.2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      align-items: center;
-    }
-    .filter-label {
-      font-size: 0.8rem;
-      color: #667;
-      margin-right: 0.2rem;
-    }
-    .filter-pill {
-      padding: 0.25rem 0.8rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      border: 1px solid #E0D8C7;
-      background: #fff;
-      color: #556;
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .filter-pill.active {
-      background: #FFF7EB;
-      color: #2D6A4F;
-      border-color: var(--accent);
-      box-shadow: 0 2px 8px rgba(244,132,95,0.28);
-    }
-    .filter-pill:hover {
-      border-color: #E9C46A;
-      background: #FFFAF2;
-    }
-
-    /* Notes grid */
-    .notes-grid {
+    .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem;
+      margin-top: 0.6rem;
     }
+
     .note-card {
-      position: relative;
-      background: #fff;
-      border-radius: 14px;
-      padding: 0.9rem 0.9rem 0.95rem;
-      border: 1px solid #E5DECF;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #E5DECF;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--green);
       transition: all 0.22s;
-      cursor: pointer;
     }
     .note-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 8px 22px rgba(45,106,79,0.14);
       border-color: var(--accent-soft);
     }
-    .note-cover {
+
+    .note-thumb-wrap {
+      position: relative;
       width: 100%;
-      height: 140px;
-      margin-bottom: 0.45rem;
-      border-radius: 10px;
+      padding-top: 55%;
+      background: #EDE7DA;
       overflow: hidden;
-      background: #E9C46A22;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.78rem;
-      color: #8a7;
     }
-    .note-cover img {
+    .note-thumb {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      transition: transform 0.3s;
     }
-    .note-tag {
+    .note-card:hover .note-thumb {
+      transform: scale(1.04);
+    }
+
+    .note-type-pill {
+      position: absolute;
+      left: 0.7rem;
+      bottom: 0.6rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.68);
+      color: #fff;
+      font-size: 0.7rem;
       display: inline-flex;
       align-items: center;
-      padding: 0.14rem 0.55rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      background: #E9F5EE;
-      color: var(--note-tag);
-      margin-right: 0.25rem;
+      gap: 0.25rem;
     }
-    .note-type {
-      display: inline-flex;
-      padding: 0.14rem 0.5rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      background: #FFF3E6;
-      color: #C96A30;
+
+    .note-body {
+      padding: 0.85rem 0.95rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.22rem;
+      flex: 1;
     }
-    .note-title {
-      font-size: 0.98rem;
+    .note-date {
+      font-size: 0.76rem;
+      color: #8a8a8a;
+    }
+    .note-title-en {
+      font-size: 1rem;
       font-weight: 800;
       color: var(--green);
-      line-height: 1.45;
+      line-height: 1.4;
     }
-    .note-subtitle {
-      font-size: 0.78rem;
-      color: #6a7b71;
+    .note-title-zh {
+      font-size: 0.86rem;
+      color: #777;
+      line-height: 1.4;
     }
-    .note-meta {
-      font-size: 0.7rem;
-      color: #9aa19a;
-      display: flex;
-      justify-content: space-between;
-      gap: 0.3rem;
-    }
-    .note-summary {
-      font-size: 0.8rem;
-      color: #4f5d55;
+    .note-intro {
+      font-size: 0.82rem;
+      color: #555;
       margin-top: 0.1rem;
-      flex-grow: 1;
+      line-height: 1.6;
     }
-    .note-link {
-      margin-top: 0.4rem;
-      font-size: 0.78rem;
-      color: var(--accent);
+    .note-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.22rem;
+      margin-top: 0.3rem;
+    }
+    .note-tag {
+      padding: 0.14rem 0.5rem;
+      border-radius: 999px;
+      background: #F7F5F2;
+      border: 1px solid #E9C46A;
+      font-size: 0.7rem;
+      color: #566;
+    }
+    .note-more {
+      margin-top: auto;
+      font-size: 0.8rem;
       font-weight: 700;
-      text-decoration: none;
+      color: var(--accent);
       display: inline-flex;
       align-items: center;
-      gap: 0.2rem;
-    }
-    .note-link:hover {
-      text-decoration: underline;
+      gap: 0.22rem;
     }
 
-    .empty-state {
+    .empty {
+      margin-top: 2rem;
       text-align: center;
-      font-size: 0.86rem;
-      color: #7c857b;
-      padding: 1.8rem 0.5rem 0;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+      font-size: 0.95rem;
+      color: #777;
     }
 
     .footer {
@@ -387,37 +387,42 @@
     }
     .footer a:hover { text-decoration: underline; }
 
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 768px) {
       .hero {
-        padding: calc(var(--header-height) + 1.8rem) 1rem 1.6rem;
+        padding: calc(var(--header-height) + 1.8rem) 1.25rem 1.2rem;
       }
       .hero-title {
-        font-size: 1.7rem;
+        font-size: 1.8rem;
       }
-      .hero-sub {
-        font-size: 0.9rem;
+      .hero-sub-en {
+        font-size: 0.95rem;
       }
-      .page {
-        padding: 1.6rem 1rem 2.4rem;
+      .hero-sub-zh {
+        font-size: 0.84rem;
       }
       .filter-bar {
-        gap: 0.3rem;
+        padding: 0.6rem 1.25rem 0.6rem;
+        gap: 0.45rem;
       }
-      .filter-pill {
-        padding: 0.22rem 0.7rem;
-        font-size: 0.76rem;
+      .filter-label {
+        font-size: 0.88rem;
       }
-      .notes-grid {
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-        gap: 0.9rem;
+      .filter-select,
+      .search-input {
+        font-size: 0.8rem;
+        padding: 0.26rem 0.75rem;
       }
-      .note-card {
-        padding: 0.78rem 0.78rem 0.85rem;
+      .page {
+        padding: 0 1.25rem 2.4rem;
       }
-      .note-cover {
-        height: 120px;
+      .cards-grid {
+        gap: 1rem;
       }
-
       .back-to-top {
         right: 16px;
         bottom: 16px;
@@ -454,61 +459,35 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-inner">
-      <div class="hero-kicker">TRAIL NOTES · 探路筆記</div>
-      <h1 class="hero-title">Field notes from real Taiwan, one visit at a time</h1>
-      <p class="hero-sub">
-        實地走訪、與在地人長談後留下的紀錄：<strong>探訪紀錄</strong>、<strong>幕後故事</strong>、
-        <strong>旅人觀念</strong>、<strong>最新更新</strong>。這是我們走進社區空間後，真誠與您分享的觀察與對話。
+      <div class="hero-kicker">TRAIL NOTES · FIELD NOTEBOOK</div>
+      <h1 class="hero-title">Trail Notes 探路筆記</h1>
+      <p class="hero-sub-en">
+        Trail Notes is Local Friends Taiwan’s field notebook: on-the-ground visits, slow conversations,
+        trust-building, and reflections with communities across Taiwan.
+      </p>
+      <p class="hero-sub-zh">
+        Trail Notes 是 Local Friends Taiwan 的「實地筆記本」：每一篇都來自我們親自拜訪、對話、慢慢建立信任後的紀錄與思考。
+        你會在這裡看到探訪紀錄、Behind the Hosts、Travel Mindset，以及新合作更新。
       </p>
     </div>
   </section>
 
-  <!-- Content -->
+  <!-- Filter -->
+  <section class="filter-bar">
+    <span class="filter-label">Filter / Search：</span>
+    <select id="typeFilter" class="filter-select">
+      <option value="">All Types</option>
+    </select>
+    <input id="searchInput" class="search-input" type="search"
+           placeholder="Search by title / tag / keyword 搜尋標題與關鍵字">
+  </section>
+
+  <!-- Cards -->
   <main class="page">
-    <!-- Intro -->
-    <section class="intro">
-      <p>
-        Trail Notes is our "field journal"—personal records and reflections from visits, 
-        conversations, and trust built over time.
-        Inside: Visit Records (community/organization spotlights), 
-        Behind the Hosts (how we met locals), Travel Mindset (thoughtful travel tips), and Updates (new listings and news).
-      </p>
-      <p>
-        Here you'll discover:
-        <strong>Field Notes</strong>（in-depth introductions to communities, organizations, or spaces）、
-        <strong>Behind the Hosts</strong>（how we met our local friends）、
-        <strong>Travel Mindset</strong>（how to be a more thoughtful traveler）、
-        以及 <strong>Updates</strong>（newly listed experiences and collaboration news）。
-      </p>
-    </section>
-
-    <!-- Filter Bar -->
-    <div class="filter-bar">
-      <div class="filter-label">Filter 類型：</div>
-      <button class="filter-pill active" data-filter="all">All 全部</button>
-      <button class="filter-pill" data-filter="field">Field Notes 探訪紀錄</button>
-      <button class="filter-pill" data-filter="behind">Behind the Hosts 幕後故事</button>
-      <button class="filter-pill" data-filter="mindset">Travel Mindset 旅人觀念</button>
-      <button class="filter-pill" data-filter="updates">News / Updates 最新消息</button>
-    </div>
-
-    <!-- Notes grid -->
-    <section id="notesGrid" class="notes-grid">
-      <!-- 初始 loading skeleton（載入後會被替換） -->
-      <div class="note-card">
-        <div class="note-cover">Loading Trail Notes...</div>
-        <div>
-          <span class="note-tag">Loading</span>
-        </div>
-        <div class="note-title">Please wait while we fetch the latest field notes.</div>
-        <p class="note-summary">正在載入探路筆記與實地走訪紀錄...</p>
-      </div>
-    </section>
-
-    <!-- 空狀態（透過 JS 控制顯示） -->
-    <div id="emptyState" class="empty-state" style="display:none;">
-      尚未有符合篩選條件的探路筆記。<br>
-      Try another filter, or check back soon for new field notes.
+    <div id="cards" class="cards-grid"></div>
+    <div id="emptyState" class="empty" style="display:none;">
+      目前沒有符合條件的筆記。<br>
+      No notes match your current filters.
     </div>
   </main>
 
@@ -516,15 +495,18 @@
   <footer class="footer">
     <p style="font-size:1.2rem;margin-bottom:0.6rem;"><strong>Local Friends Taiwan 台灣在地連線</strong></p>
     <p>Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
-    <p style="margin-top:0.8rem;">
-    </p>
     <p style="margin-top:1.2rem;opacity:0.9;font-size:0.95rem;">
       © 2025 Local Friends Taiwan. Independent Information Platform.
     </p>
   </footer>
 
   <script>
-    // ===== Mobile nav toggle =====
+    const SHEET_ID  = '1icnZhegrhiUdaWz_BgQK0CQ_oueDhPhZgnl3opy9PJs';
+    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+
+    let notes = [];
+
+    // Nav toggle
     document.addEventListener('DOMContentLoaded', () => {
       const navToggle = document.getElementById('navToggle');
       const mainNav = document.getElementById('mainNav');
@@ -542,95 +524,54 @@
           });
         });
       }
+
+      loadNotes();
     });
 
-    // ===== Back to top =====
-    window.addEventListener('scroll', () => {
-      const b = document.querySelector('.back-to-top');
-      if (!b) return;
-      if (window.pageYOffset > 300) b.classList.add('show');
-      else b.classList.remove('show');
-    });
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // ===== Trail Notes from Google Sheet =====
-    // 請將 SHEET_ID 替換成你實際的「探路筆記」試算表 ID
-    const SHEET_ID = 'YOUR_TRAIL_NOTES_SHEET_ID_HERE';
-    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
-
-    document.addEventListener('DOMContentLoaded', () => {
-      loadTrailNotes();
-      setupFilters();
-    });
-
-    async function loadTrailNotes() {
-      const grid = document.getElementById('notesGrid');
-      const emptyState = document.getElementById('emptyState');
-
-      if (!SHEET_ID || SHEET_ID === 'YOUR_TRAIL_NOTES_SHEET_ID_HERE') {
-        // 若尚未設定 Sheet，僅顯示靜態提示
-        grid.innerHTML = `
-          <div class="note-card">
-            <div class="note-cover">Trail Notes setup</div>
-            <div><span class="note-tag">Setup</span></div>
-            <div class="note-title">Connect your Trail Notes sheet</div>
-            <p class="note-summary">
-              請在 notes.html 中設定正確的 SHEET_ID，讓這裡自動顯示探路筆記卡片。
-            </p>
-          </div>`;
-        emptyState.style.display = 'none';
-        return;
-      }
-
-      try {
+    async function loadNotes(){
+      try{
         const resp = await fetch(SHEET_URL);
-        const text = await resp.text();
-        const rows = parseCSV(text);
-        if (!rows || rows.length <= 1) {
-          grid.innerHTML = '';
-          emptyState.style.display = 'block';
-          return;
-        }
-
+        const txt = await resp.text();
+        const rows = parseCSV(txt);
         const headers = rows[0];
-        const data = rows.slice(1)
-          .map(r => {
-            const o = {};
-            headers.forEach((h, i) => o[h.trim()] = (r[i] || '').trim());
-            return o;
-          })
-          .filter(o => o['Title EN'] || o['Title ZH'] || o['標題']);
+        const data = rows.slice(1);
 
-        const cards = data.map(buildNoteCardHTML).join('');
-        grid.innerHTML = cards || '';
-        applyFilter(getCurrentFilter());
-      } catch (err) {
-        console.error('Error loading Trail Notes:', err);
-        grid.innerHTML = `
-          <div class="note-card">
-            <div class="note-cover">Error</div>
-            <div><span class="note-tag">Error</span></div>
-            <div class="note-title">無法載入探路筆記</div>
-            <p class="note-summary">請稍後重新整理頁面，或檢查試算表分享權限設定。</p>
-          </div>`;
-        emptyState.style.display = 'none';
+        notes = data.map(r => {
+          const o = {};
+          headers.forEach((h,i)=>{ o[h.trim()] = (r[i] || '').trim(); });
+          return o;
+        }).filter(o => {
+          const status = (o['Status'] || o['status'] || o['狀態'] || '').trim();
+          return status === '已發佈';
+        });
+
+        // sort by Date desc if exists
+        notes.sort((a,b)=>{
+          const da = new Date(a['Date'] || a['date'] || 0);
+          const db = new Date(b['Date'] || b['date'] || 0);
+          return db - da;
+        });
+
+        buildFilters(notes);
+        renderCards();
+      }catch(err){
+        console.error(err);
+        document.getElementById('cards').innerHTML =
+          `<div class="empty">⚠️ 無法載入 Trail Notes。Error loading notes.</div>`;
       }
     }
 
-    function parseCSV(csv) {
-      const lines = csv.split('\n').filter(l => l.trim() !== '');
+    function parseCSV(csv){
+      const lines = csv.split('\n').filter(l => l.trim().length > 0);
       return lines.map(line => {
         const values = [];
         let cur = '';
         let inQ = false;
-        for (let i = 0; i < line.length; i++) {
+        for (let i=0;i<line.length;i++){
           const ch = line[i];
           if (ch === '"') {
-            if (inQ && line[i+1] === '"') {
-              cur += '"';
-              i++;
+            if (inQ && line[i+1] === '"'){ // escaped "
+              cur += '"'; i++;
             } else {
               inQ = !inQ;
             }
@@ -642,123 +583,129 @@
           }
         }
         values.push(cur);
-        return values.map(v => v.trim());
+        return values;
       });
     }
 
-    function buildNoteCardHTML(o) {
-      // 預期欄位（可依你的 Sheet 命名對應）：
-      // Category: Field / Behind / Mindset / Updates
-      // Type: optional sub-label
-      // Title EN, Title ZH
-      // Summary
-      // Cover: image url
-      // Link: Google Doc / note-detail.html?id=...
-      // Date: YYYY-MM-DD
-      const categoryRaw = (o['Category'] || o['類別'] || '').toLowerCase();
-      let categoryKey = 'field';
-      if (categoryRaw.includes('behind')) categoryKey = 'behind';
-      else if (categoryRaw.includes('mindset') || categoryRaw.includes('觀念')) categoryKey = 'mindset';
-      else if (categoryRaw.includes('update') || categoryRaw.includes('news')) categoryKey = 'updates';
-
-      const categoryLabel =
-        categoryKey === 'field' ? 'Field Notes 探訪紀錄' :
-        categoryKey === 'behind' ? 'Behind the Hosts 幕後故事' :
-        categoryKey === 'mindset' ? 'Travel Mindset 旅人觀念' :
-        'News / Updates 最新消息';
-
-      const typeLabel = o['Type'] || o['標籤'] || '';
-      const titleEn = o['Title EN'] || o['標題EN'] || '';
-      const titleZh = o['Title ZH'] || o['標題'] || '';
-      const summary = o['Summary'] || o['摘要'] || '';
-      const cover = o['Cover'] || o['封面'] || '';
-      const link = o['Link'] || o['連結'] || '';
-      const date = o['Date'] || o['日期'] || '';
-      const place = o['Place'] || o['地點'] || '';
-
-      const safeLink = link ? link : '';
-      const linkLabel = link && link.indexOf('docs.google.com') !== -1
-        ? 'Read full note on Google Docs'
-        : 'Read full story';
-
-      return `
-        <article class="note-card" data-category="${categoryKey}">
-          ${cover ? `
-            <div class="note-cover">
-              <img src="${cover}" alt="${escapeHtml(titleEn || titleZh || 'Trail Note')}"
-                   loading="lazy"
-                   onerror="this.parentElement.textContent='Image not available';">
-            </div>` : `
-            <div class="note-cover">
-              Trail Notes · ${categoryLabel}
-            </div>`}
-          <div>
-            <span class="note-tag">${categoryLabel}</span>
-            ${typeLabel ? `<span class="note-type">${escapeHtml(typeLabel)}</span>` : ``}
-          </div>
-          <div class="note-title">
-            ${escapeHtml(titleEn || '')}
-            ${titleZh ? `<span class="note-subtitle">｜${escapeHtml(titleZh)}</span>` : ``}
-          </div>
-          ${summary ? `<p class="note-summary">${escapeHtml(summary)}</p>` : ``}
-          <div class="note-meta">
-            <span>${place ? `📍 ${escapeHtml(place)}` : ''}</span>
-            <span>${date ? `🗓 ${escapeHtml(date)}` : ''}</span>
-          </div>
-          ${safeLink ? `
-            <a class="note-link" href="${safeLink}" target="_blank" rel="noopener">
-              <span>Open full note</span><span>↗</span>
-            </a>` : ``}
-        </article>
-      `;
-    }
-
-    function escapeHtml(str) {
-      return String(str || '')
-        .replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;')
-        .replace(/'/g,'&#39;');
-    }
-
-    // ===== Filters =====
-    function setupFilters() {
-      const pills = document.querySelectorAll('.filter-pill');
-      pills.forEach(pill => {
-        pill.addEventListener('click', () => {
-          pills.forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-          const filter = pill.getAttribute('data-filter') || 'all';
-          applyFilter(filter);
-        });
+    function buildFilters(list){
+      const typeSet = new Set();
+      list.forEach(n => {
+        const type = (n['Type'] || n['type'] || '').trim();
+        if (type) typeSet.add(type);
       });
+      const typeSel = document.getElementById('typeFilter');
+      typeSet.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        typeSel.appendChild(opt);
+      });
+      typeSel.addEventListener('change', renderCards);
+      document.getElementById('searchInput').addEventListener('input', renderCards);
     }
 
-    function getCurrentFilter() {
-      const active = document.querySelector('.filter-pill.active');
-      return active ? (active.getAttribute('data-filter') || 'all') : 'all';
+    function mapTypeLabel(type){
+      const map = {
+        'Field Report': 'Field Report 探訪紀錄',
+        'Behind the Hosts': 'Behind the Hosts 幕後故事',
+        'Travel Mindset': 'Travel Mindset 旅人心態',
+        'Updates': 'Updates 新消息'
+      };
+      return map[type] || type || '';
     }
 
-    function applyFilter(filter) {
-      const cards = document.querySelectorAll('.note-card');
-      const emptyState = document.getElementById('emptyState');
-      if (!cards.length) {
-        if (emptyState) emptyState.style.display = 'block';
+    function renderCards(){
+      const cards = document.getElementById('cards');
+      const empty = document.getElementById('emptyState');
+      cards.innerHTML = '';
+
+      const typeFilter = document.getElementById('typeFilter').value;
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+
+      const filtered = notes.filter(n => {
+        if (typeFilter && (n['Type']||'').trim() !== typeFilter) return false;
+
+        if (q) {
+          const text = [
+            n['Title_en'], n['Title_zh'],
+            n['Intro_en'], n['Intro_zh'],
+            n['Tags']
+          ].join(' ').toLowerCase();
+          if (!text.includes(q)) return false;
+        }
+        return true;
+      });
+
+      if (!filtered.length){
+        empty.style.display = 'block';
         return;
       }
+      empty.style.display = 'none';
 
-      let visibleCount = 0;
-      cards.forEach(card => {
-        const cat = card.getAttribute('data-category') || 'field';
-        const show = (filter === 'all') || (cat === filter);
-        card.style.display = show ? 'flex' : 'none';
-        if (show) visibleCount++;
+      filtered.forEach(n => {
+        const id = (n['ID'] || n['Id'] || '').trim();
+        if (!id) return;
+        const href = `notes-detail.html?id=${encodeURIComponent(id)}`;
+
+        const titleEn = n['Title_en'] || '';
+        const titleZh = n['Title_zh'] || '';
+        const introEn = n['Intro_en'] || '';
+        const introZh = n['Intro_zh'] || '';
+        const type = n['Type'] || '';
+        const date = n['Date'] || '';
+        const cover = n['CoverImage'] || n['Cover'] || '';
+        const tags = (n['Tags'] || '').split(/[,\s、]+/).filter(Boolean).slice(0,4);
+
+        const a = document.createElement('a');
+        a.className = 'note-card';
+        a.href = href;
+
+        a.innerHTML = `
+          <div class="note-thumb-wrap">
+            ${cover
+              ? `<img src="${cover}" alt="${titleEn || titleZh || 'Trail Note'}"
+                     class="note-thumb"
+                     loading="lazy"
+                     onerror="this.style.display='none';this.parentElement.style.background='#EDE7DA';">`
+              : ``
+            }
+            ${type
+              ? `<div class="note-type-pill">${mapTypeLabel(type)}</div>`
+              : ``
+            }
+          </div>
+          <div class="note-body">
+            ${date ? `<div class="note-date">${date}</div>` : ``}
+            <div class="note-title-en">${titleEn || 'Untitled Trail Note'}</div>
+            ${titleZh ? `<div class="note-title-zh">${titleZh}</div>` : ``}
+            ${introEn
+              ? `<div class="note-intro">${introEn}</div>`
+              : introZh
+                ? `<div class="note-intro" style="color:#777;">${introZh}</div>`
+                : ``
+            }
+            ${tags.length
+              ? `<div class="note-tags">
+                   ${tags.map(t=>`<span class="note-tag">${t}</span>`).join('')}
+                 </div>`
+              : ``
+            }
+            <div class="note-more">Read note 讀取全文 →</div>
+          </div>
+        `;
+        cards.appendChild(a);
       });
+    }
 
-      if (emptyState) {
-        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
-      }
+    // Back to top
+    window.addEventListener('scroll', () => {
+      const b = document.querySelector('.back-to-top');
+      if (!b) return;
+      if (window.pageYOffset > 300) b.classList.add('show');
+      else b.classList.remove('show');
+    });
+    function scrollToTop(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 </body>
