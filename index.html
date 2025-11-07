@@ -8,7 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html, body { overflow-x: hidden; } /* 防右側白邊 */
+        html, body { overflow-x: hidden; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
             line-height: 1.6;
@@ -16,8 +16,8 @@
             background: #F7F5F2;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
-            word-break: keep-all;          /* 中英文盡量不亂斷 */
-            overflow-wrap: anywhere;       /* 超長字/網址必要時才斷行 */
+            word-break: keep-all;
+            overflow-wrap: anywhere;
         }
         h1, h2 { text-wrap: balance; }
 
@@ -94,7 +94,6 @@
             justify-content: center;
             text-align: center;
             padding: 4rem 1.5rem 6rem;
-
             background: linear-gradient(
                 rgba(45, 106, 79, 0.6),
                 rgba(45, 106, 79, 0.6)
@@ -102,7 +101,6 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-
             color: white;
             will-change: transform, opacity;
         }
@@ -129,7 +127,7 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
-        .hero .tagline { display: none !important; } /* 已不使用 */
+        .hero .tagline { display: none !important; }
 
         .hero .cta-button {
             display: inline-block;
@@ -199,11 +197,63 @@
             color: #F4845F;
             font-weight: bold;
         }
-        /* 統一 intro 裡文字字級（含原本 inline） */
         .intro-section .uniform-text h2,
         .intro-section .uniform-text p {
             font-size: 1.25rem !important;
             line-height: 1.9;
+        }
+
+        /* 導覽入口區塊（Explore Local Friends Taiwan） */
+        .nav-entry-section {
+            padding: 3.5rem 2rem 4rem;
+            background: #FFFFFF;
+        }
+        .nav-entry-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .nav-entry-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #2D6A4F;
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        .nav-entry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.9rem;
+        }
+        .nav-pill {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.12rem;
+            padding: 0.8rem 1rem;
+            border-radius: 14px;                    /* 更像小卡片 */
+            background: #F7F5F2;
+            border: 2px solid #E9C46A;              /* 與 Why Choose 卡片同粗細 */
+            text-decoration: none;
+            color: #2D6A4F;
+            font-size: 0.9rem;
+            transition: all 0.22s;
+            box-shadow: 0 2px 8px rgba(233,196,106,.16);
+            cursor: pointer;
+        }
+        .nav-pill span.label {
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .nav-pill span.sub {
+            font-size: 0.78rem;
+            opacity: 0.9;
+            line-height: 1.35;
+        }
+        .nav-pill:hover {
+            background: #FFF7EB;
+            border-color: #F4845F;
+            box-shadow: 0 4px 16px rgba(244,132,95,.18);
+            transform: translateY(-2px);
         }
 
         /* 價值主張卡片 */
@@ -261,56 +311,6 @@
             color: #555;
             font-size: 1rem;
             line-height: 1.65;
-        }
-
-        /* 導覽入口區塊：首頁導向各主頁 */
-        .nav-entry-section {
-            padding: 3.5rem 2rem 4rem;
-            background: #FFFFFF;
-        }
-        .nav-entry-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .nav-entry-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #2D6A4F;
-            margin-bottom: 1.2rem;
-            text-align: left;
-        }
-        .nav-entry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 0.9rem;
-        }
-        .nav-pill {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 0.15rem;
-            padding: 0.85rem 1rem;
-            border-radius: 999px;
-            background: #F7F5F2;
-            border: 1px solid #E9C46A;
-            text-decoration: none;
-            color: #2D6A4F;
-            font-size: 0.92rem;
-            transition: all 0.22s;
-            box-shadow: 0 2px 8px rgba(233,196,106,.16);
-        }
-        .nav-pill span.label {
-            font-weight: 700;
-        }
-        .nav-pill span.sub {
-            font-size: 0.8rem;
-            opacity: 0.85;
-        }
-        .nav-pill:hover {
-            background: #FFF7EB;
-            border-color: #F4845F;
-            box-shadow: 0 4px 16px rgba(244,132,95,.18);
-            transform: translateY(-2px);
         }
 
         /* CTA 區塊 */
@@ -481,7 +481,7 @@
             }
             .nav-pill {
                 padding: 0.75rem 0.9rem;
-                font-size: 0.88rem;
+                font-size: 0.86rem;
             }
 
             .cta-section {
@@ -504,7 +504,7 @@
     </style>
 </head>
 <body>
-    <!-- 浮動導覽：精簡為 Home / Experiences / Contact -->
+    <!-- 浮動導覽 -->
     <nav class="floating-nav">
         <a href="#home" title="首頁">🏠</a>
         <a href="experiences.html" title="體驗列表">🌟</a>
@@ -532,54 +532,29 @@
     <!-- 開場文案 -->
     <section class="intro-section">
         <div class="intro-content">
-          <div class="uniform-text">
-            <h2>Tired of tourist traps and scripted tours?</h2>
-            <h2>厭倦觀光客路線和制式導覽嗎？</h2>
-            <p>
-                We connect you with real Taiwanese locals for authentic experiences you won't find in any guidebook.
-            </p>
-            <p>
-                連結你與台灣在地朋友來一場難忘體驗，<br>
-                這是旅遊書上找不到的真實台灣。
-            </p>
-            <p>
-                Cook with neighborhood aunties. Learn traditional crafts from artisans. Join community gatherings.
-                <span class="highlight">Experience Taiwan like a local, not a tourist.</span>
-            </p>
-            <p>
-                和社區阿姨一起做菜；跟傳統工藝師傅學手藝，<br>
-                晚上參加一場社區聚會，<span class="highlight">像台灣人一樣生活，而不是走馬看花的觀光客。</span>
-            </p>
-          </div>
-        </div>
-    </section>
-
-    <!-- 價值主張 -->
-    <section class="values">
-        <h2>Why Choose Local Friends?</h2>
-        <div class="values-grid">
-            <div class="value-card">
-                <span class="emoji">👥</span>
-                <h3>Real People</h3>
-                <p>真實的人</p>
-                <p>Not tour guides—your local friends<br>不是導遊，是你的在地朋友</p>
-            </div>
-            <div class="value-card">
-                <span class="emoji">🤝</span>
-                <h3>Meaningful Connections</h3>
-                <p>有意義的連結</p>
-                <p>Deep connections, not just sightseeing<br>深度連結，而非走馬看花</p>
-            </div>
-            <div class="value-card">
-                <span class="emoji">💙</span>
-                <h3>Support Communities</h3>
-                <p>支持在地社群</p>
-                <p>Directly support local communities<br>你的參與直接支持在地社群</p>
+            <div class="uniform-text">
+                <h2>Tired of tourist traps and scripted tours?</h2>
+                <h2>厭倦觀光客路線和制式導覽嗎？</h2>
+                <p>
+                    We connect you with real Taiwanese locals for authentic experiences you won't find in any guidebook.
+                </p>
+                <p>
+                    連結你與台灣在地朋友來一場難忘體驗，<br>
+                    這是旅遊書上找不到的真實台灣。
+                </p>
+                <p>
+                    Cook with neighborhood aunties. Learn traditional crafts from artisans. Join community gatherings.
+                    <span class="highlight">Experience Taiwan like a local, not a tourist.</span>
+                </p>
+                <p>
+                    和社區阿姨一起做菜；跟傳統工藝師傅學手藝，<br>
+                    晚上參加一場社區聚會，<span class="highlight">像台灣人一樣生活，而不是走馬看花的觀光客。</span>
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- 導覽入口：從首頁指向所有主頁 -->
+    <!-- Explore Local Friends Taiwan（導覽入口，已移到價值主張前） -->
     <section class="nav-entry-section">
         <div class="nav-entry-inner">
             <h2 class="nav-entry-title">Explore Local Friends Taiwan</h2>
@@ -604,6 +579,31 @@
                     <span class="label">Contact 聯繫我們</span>
                     <span class="sub">需要建議或媒合？寫信給我們</span>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 價值主張 -->
+    <section class="values">
+        <h2>Why Choose Local Friends?</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <span class="emoji">👥</span>
+                <h3>Real People</h3>
+                <p>真實的人</p>
+                <p>Not tour guides—your local friends<br>不是導遊，是你的在地朋友</p>
+            </div>
+            <div class="value-card">
+                <span class="emoji">🤝</span>
+                <h3>Meaningful Connections</h3>
+                <p>有意義的連結</p>
+                <p>Deep connections, not just sightseeing<br>深度連結，而非走馬看花</p>
+            </div>
+            <div class="value-card">
+                <span class="emoji">💙</span>
+                <h3>Support Communities</h3>
+                <p>支持在地社群</p>
+                <p>Directly support local communities<br>你的參與直接支持在地社群</p>
             </div>
         </div>
     </section>
@@ -652,7 +652,7 @@
         });
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        // 平滑滾動（僅處理頁內錨點）
+        // 平滑滾動（頁內錨點）
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const target = document.querySelector(this.getAttribute('href'));
