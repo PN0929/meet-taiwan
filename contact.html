@@ -3,305 +3,764 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>聯繫我們 - Local Friends Taiwan | 台灣在地連線</title>
-  <meta name="description" content="Contact Local Friends Taiwan to plan your visit, ask questions, or explore collaboration.">
+  <title>Contact | Local Friends Taiwan 台灣在地連線</title>
+  <meta name="description" content="Contact Local Friends Taiwan. Share your interests and questions, and we’ll help you connect with local friends, communities, and experiences in Taiwan.">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{overflow-x:hidden}
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",sans-serif;
-      line-height:1.6;
-      color:#2D6A4F;
-      background:#F7F5F2;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-      word-break:keep-all;
-      overflow-wrap:anywhere;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --header-height: 56px;
+      --page-max-width: 1100px;
+      --green: #2D6A4F;
+      --light-bg: #F7F5F2;
+      --accent: #F4845F;
+      --accent-soft: #E9C46A;
     }
 
-    .floating-nav{
-      position:fixed;left:20px;top:50%;transform:translateY(-50%);
-      z-index:1000;background:#fff;padding:1rem;border-radius:30px;
-      box-shadow:0 4px 20px rgba(45,106,79,.2);border:2px solid #2D6A4F;
+    html, body { overflow-x: hidden; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+      line-height: 1.7;
+      color: var(--green);
+      background: var(--light-bg);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
     }
-    .floating-nav a{
-      display:block;width:50px;height:50px;margin:.5rem 0;border-radius:50%;
-      background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;
-      text-decoration:none;display:flex;align-items:center;justify-content:center;
-      font-size:1.5rem;transition:.3s;
-    }
-    .floating-nav a:hover{
-      transform:scale(1.15);
-      background:linear-gradient(135deg,#40916C,#52B788);
+    h1, h2, h3 { text-wrap: balance; }
+
+    /* ===== 共用 Header ===== */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      background: rgba(247,245,242,0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(45,106,79,0.06);
+      z-index: 1100;
     }
 
-    .hero{
-      padding:5.5rem 1.5rem 3rem;
-      text-align:center;
-      background:linear-gradient(135deg,#2D6A4F,#40916C);
-      color:#fff;
+    .brand {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.2;
     }
-    .hero h1{
-      font-size:2.6rem;
-      font-weight:800;
-      margin-bottom:.4rem;
+    .brand a {
+      text-decoration: none;
+      color: var(--green);
     }
-    .hero p{
-      font-size:1.05rem;
-      opacity:.95;
-      max-width:700px;
-      margin:0 auto;
+    .brand-en {
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      font-size: 0.78rem;
     }
-
-    .container{
-      max-width:900px;
-      margin:0 auto;
-      padding:3rem 1.8rem 4rem;
+    .brand-zh {
+      opacity: 0.9;
+      font-size: 0.78rem;
     }
 
-    .card{
-      background:#fff;
-      border-radius:16px;
-      border:2px solid #E9C46A;
-      box-shadow:0 4px 18px rgba(233,196,106,.16);
-      padding:2rem 1.8rem;
+    .main-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .main-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1.4px solid transparent;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .main-nav a span.en {
+      margin-right: 0.18rem;
+    }
+    .main-nav a:hover,
+    .main-nav a.active {
+      border-color: var(--accent-soft);
+      background: #FFF7EB;
+      box-shadow: 0 2px 8px rgba(233,196,106,.25);
+      transform: translateY(-1px);
     }
 
-    .card h2{
-      font-size:1.7rem;
-      font-weight:800;
-      margin-bottom:1.2rem;
-      color:#2D6A4F;
+    .nav-toggle {
+      display: none;
+      margin-left: auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1.4px solid var(--green);
+      background: transparent;
+      color: var(--green);
+      font-size: 1.2rem;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .nav-toggle:hover {
+      background: #E9C46A22;
+    }
+    .nav-toggle.open {
+      background: var(--green);
+      color: #F7F5F2;
+      border-color: var(--green);
     }
 
-    .field-group{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-      gap:1rem 1.5rem;
-      margin-bottom:1rem;
-    }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:.3rem;
-      margin-bottom:.8rem;
-    }
-    label{
-      font-size:.9rem;
-      font-weight:600;
-      color:#2D6A4F;
-    }
-    input,select,textarea{
-      padding:.65rem .7rem;
-      border-radius:9px;
-      border:1px solid #D9D9D9;
-      font-size:.95rem;
-      font-family:inherit;
-      transition:border-color .2s, box-shadow .2s;
-      background:#FDFBF6;
-    }
-    input:focus,select:focus,textarea:focus{
-      outline:none;
-      border-color:#2D6A4F;
-      box-shadow:0 0 0 2px rgba(45,106,79,.12);
-      background:#fff;
-    }
-    textarea{
-      min-height:110px;
-      resize:vertical;
-    }
-
-    .hint{
-      font-size:.8rem;
-      color:#888;
-    }
-
-    .submit-row{
-      margin-top:1.5rem;
-      text-align:right;
-    }
-    button{
-      padding:.85rem 1.7rem;
-      border-radius:999px;
-      border:none;
-      background:linear-gradient(135deg,#F4845F,#F4A261);
-      color:#fff;
-      font-weight:700;
-      font-size:.98rem;
-      cursor:pointer;
-      box-shadow:0 4px 14px rgba(244,132,95,.45);
-      transition:.25s;
-    }
-    button:hover{
-      transform:translateY(-2px);
-      box-shadow:0 7px 22px rgba(244,132,95,.6);
-    }
-
-    .note{
-      margin-top:1rem;
-      font-size:.85rem;
-      color:#777;
-    }
-
-    .footer{
-      background:linear-gradient(135deg,#2D6A4F,#40916C);
-      color:#fff;
-      text-align:center;
-      padding:2.2rem 1.5rem;
-      font-size:.95rem;
-      margin-top:2rem;
-    }
-
-    @media(max-width:768px){
-      .floating-nav{
-        left:10px;
-        padding:.5rem;
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 0 1rem;
+        height: var(--header-height);
       }
-      .floating-nav a{
-        width:40px;height:40px;font-size:1.2rem;margin:.3rem 0;
+      .brand-en,
+      .brand-zh {
+        font-size: 0.74rem;
       }
-      .hero{
-        padding:4.2rem 1.4rem 2.4rem;
+
+      .main-nav {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        padding: 0.45rem 0.85rem 0.55rem;
+        background: rgba(247,245,242,0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(45,106,79,0.08);
+        display: none;
+        flex-wrap: nowrap;
+        gap: 0.45rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        z-index: 1090;
       }
-      .hero h1{
-        font-size:2.1rem;
+      .main-nav.open {
+        display: flex;
       }
-      .hero p{
-        font-size:.98rem;
+
+      .main-nav::-webkit-scrollbar {
+        height: 3px;
       }
-      .container{
-        padding:2.5rem 1.2rem 3rem;
+      .main-nav::-webkit-scrollbar-thumb {
+        background: rgba(233,196,106,0.9);
+        border-radius: 999px;
       }
-      .card{
-        padding:1.6rem 1.3rem;
+
+      .main-nav a {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.8rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+    }
+
+    /* 回頂按鈕 */
+    .back-to-top {
+      position: fixed;
+      right: 30px;
+      bottom: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #F4845F, #F4A261);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(244, 132, 95, 0.4);
+      display: none;
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+    .back-to-top:hover { transform: translateY(-5px); }
+    .back-to-top.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    /* Hero Contact */
+    .hero-contact {
+      padding: calc(3.2rem + var(--header-height)) 1.5rem 1.8rem;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+    .hero-inner {
+      max-width: var(--page-max-width);
+      margin: 0 auto;
+    }
+    .hero-kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8d8d8d;
+      margin-bottom: 0.4rem;
+    }
+    .hero-contact h1 {
+      font-size: 2.3rem;
+      color: var(--green);
+      margin-bottom: 0.3rem;
+      font-weight: 800;
+    }
+    .hero-subtitle {
+      font-size: 1.02rem;
+      color: #555;
+      max-width: 640px;
+    }
+
+    /* Layout */
+    .contact-layout {
+      max-width: var(--page-max-width);
+      margin: 0 auto;
+      padding: 2.2rem 1.5rem 3.2rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.6fr);
+      gap: 2rem;
+    }
+
+    .contact-info {
+      font-size: 0.96rem;
+      color: #444;
+    }
+    .contact-info h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      color: var(--green);
+      font-weight: 800;
+    }
+    .contact-info p {
+      margin-bottom: 0.5rem;
+    }
+    .contact-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: #F7F5F2;
+      border: 1px solid rgba(233,196,106,0.9);
+      font-size: 0.8rem;
+      margin: 0.12rem 0.25rem 0 0;
+      color: #555;
+    }
+    .contact-email-link {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .contact-email-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Form */
+    .contact-form-wrap {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 1.6rem 1.6rem 1.9rem;
+      border: 1px solid rgba(233,196,106,0.9);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+      font-size: 0.94rem;
+    }
+    .contact-form-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+      color: var(--green);
+    }
+    .contact-form-subtitle {
+      font-size: 0.86rem;
+      color: #777;
+      margin-bottom: 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+      margin-bottom: 0.55rem;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #395b47;
+    }
+    label span.req {
+      color: #e67c73;
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+      padding: 0.5rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.12);
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: #333;
+      background: #fff;
+      transition: all 0.18s;
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-soft);
+      box-shadow: 0 0 0 3px rgba(233,196,106,0.25);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .inline-row {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .inline-row select,
+    .inline-row input {
+      flex: 1;
+    }
+
+    .gender-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.9rem;
+      font-size: 0.82rem;
+    }
+    .gender-options label {
+      font-weight: 500;
+      color: #444;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      margin: 0.4rem 0 0.8rem;
+      font-size: 0.8rem;
+      color: #666;
+    }
+    .checkbox-row input[type="checkbox"] {
+      margin-top: 2px;
+    }
+
+    .submit-row {
+      margin-top: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.6rem;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #F4845F, #F4A261);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(244,132,95,0.35);
+      transition: all 0.22s;
+      align-self: flex-start;
+    }
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(244,132,95,0.48);
+    }
+    .submit-hint {
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    /* 動畫 */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: all 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #2D6A4F, #40916C);
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* 手機調整 */
+    @media (max-width: 768px) {
+      .hero-contact {
+        padding: calc(2.6rem + var(--header-height)) 1.25rem 1.4rem;
+      }
+      .hero-contact h1 {
+        font-size: 1.9rem;
+      }
+      .hero-subtitle {
+        font-size: 0.96rem;
+      }
+
+      .contact-layout {
+        padding: 1.8rem 1.25rem 2.5rem;
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form-wrap {
+        padding: 1.4rem 1.2rem 1.7rem;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+      }
+
+      .btn-submit {
+        width: auto;
       }
     }
   </style>
 </head>
 <body>
-  <nav class="floating-nav">
-    <a href="index.html" title="首頁">🏠</a>
-    <a href="experiences.html" title="體驗">🌟</a>
-    <a href="about.html" title="關於我們">ℹ️</a>
-    <a href="faq.html" title="常見問題">❓</a>
-    <a href="hosts.html" title="成為在地朋友">👥</a>
-    <a href="contact.html" title="聯繫我們">✉️</a>
-  </nav>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="brand">
+      <a href="index.html">
+        <div class="brand-en">LOCAL FRIENDS TAIWAN</div>
+        <div class="brand-zh">台灣在地連線</div>
+      </a>
+    </div>
+    <nav class="main-nav" id="mainNav">
+      <a href="experiences.html"><span class="en">Experiences</span><span class="zh">體驗列表</span></a>
+      <a href="about.html"><span class="en">About</span><span class="zh">關於我們</span></a>
+      <a href="faq.html"><span class="en">FAQ</span><span class="zh">常見問題</span></a>
+      <a href="hosts.html"><span class="en">For Hosts</span><span class="zh">成為在地朋友</span></a>
+      <a href="notes.html"><span class="en">Trail Notes</span><span class="zh">探路筆記</span></a>
+      <a href="contact.html" class="active"><span class="en">Contact</span><span class="zh">聯繫我們</span></a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="切換導覽選單">☰</button>
+  </header>
 
-  <section class="hero">
-    <h1>聯繫 Local Friends Taiwan</h1>
-    <p>Tell us who you are, what you’re curious about in Taiwan, and we’ll help you找到合適的在地朋友與體驗方向。</p>
+  <!-- 回頂按鈕 -->
+  <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+  <!-- Hero -->
+  <section class="hero-contact">
+    <div class="hero-inner fade-in">
+      <div class="hero-kicker">CONTACT ・ SAY HELLO</div>
+      <h1>Contact Local Friends Taiwan <span style="font-size:1.05rem;font-weight:500;color:#3b7a5c;">聯繫我們</span></h1>
+      <p class="hero-subtitle">
+        Tell us who you are, what kind of experience you’re looking for, or how you’d like to collaborate.
+        We’ll read every message carefully — like a real friend would.
+      </p>
+    </div>
   </section>
 
-  <main class="container">
-    <div class="card">
-      <h2>預約 / 問詢表單</h2>
+  <!-- Content -->
+  <main class="contact-layout">
+    <!-- Left: Info -->
+    <section class="contact-info fade-in">
+      <h2>How we read your message<br>我們會怎麼看你的來信</h2>
+      <p>
+        We’re an <strong>independent information platform</strong>, not a travel agency.
+        That means:
+      </p>
+      <div>
+        <span class="contact-pill">No forced packages 不推銷套裝行程</span>
+        <span class="contact-pill">Direct connection 直接與在地對話</span>
+        <span class="contact-pill">Respect first 尊重在地優先</span>
+      </div>
+      <p style="margin-top:0.6rem;">
+        If you already have a specific host or experience in mind, let us know in the form.
+        If you’re not sure yet, just describe your travel style and values — we’ll suggest directions, not scripts.
+      </p>
+      <p>
+        若你是社區組織、工作室、職人或創作者，也非常歡迎透過同一個表單與我們聯繫，或直接來信：
+      </p>
+      <p>
+        <a href="mailto:peienli.tw@gmail.com" class="contact-email-link">peienli.tw@gmail.com</a>
+      </p>
+      <p style="font-size:0.82rem;color:#777;margin-top:0.4rem;">
+        We reply in English 中文・English both ok. 回覆時間依實際工作量而定，請見諒。
+      </p>
+    </section>
+
+    <!-- Right: Form -->
+    <section class="contact-form-wrap fade-in">
+      <div class="contact-form-title">Tell us about you 填寫你的需求</div>
+      <div class="contact-form-subtitle">
+        This form will generate an email to our team. We use your answers only to understand your needs and suggest suitable directions.
+      </div>
+
       <form id="contactForm">
-        <div class="field-group">
-          <div class="field">
-            <label for="name">姓名 Name *</label>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Full Name / 全名<span class="req">*</span></label>
             <input type="text" id="name" name="name" required>
           </div>
-          <div class="field">
-            <label for="nationality">國籍 Nationality *</label>
+
+          <div class="form-group">
+            <label for="nationality">Nationality / 國籍<span class="req">*</span></label>
             <input type="text" id="nationality" name="nationality" required>
           </div>
-        </div>
 
-        <div class="field-group">
-          <div class="field">
-            <label for="languages">使用語言 Languages *</label>
-            <input type="text" id="languages" name="languages" placeholder="e.g. English, 日本語, 한국어, 正體中文" required>
+          <div class="form-group">
+            <label for="languages">Preferred Language(s) / 使用語言<span class="req">*</span></label>
+            <input type="text" id="languages" name="languages" placeholder="e.g. English, 日本語, 中文" required>
           </div>
-          <div class="field">
-            <label for="gender">性別 Gender</label>
-            <select id="gender" name="gender">
-              <option value="">Prefer not to say / 不方便透露</option>
-              <option value="female">Female / 女性</option>
-              <option value="male">Male / 男性</option>
-              <option value="non-binary">Non-binary / 非二元性別</option>
-              <option value="self-described">Self-described / 自我描述</option>
+
+          <div class="form-group">
+            <label>Gender / 性別（選填）</label>
+            <div class="gender-options">
+              <label><input type="radio" name="gender" value="Female">Female</label>
+              <label><input type="radio" name="gender" value="Male">Male</label>
+              <label><input type="radio" name="gender" value="Non-binary">Non-binary</label>
+              <label><input type="radio" name="gender" value="Prefer not to say">Prefer not to say</label>
+            </div>
+            <input type="text" name="gender_other" placeholder="Self-describe / 自我描述（選填）">
+          </div>
+
+          <div class="form-group full">
+            <label>Date of Birth / 出生年月日（西元, 選填）</label>
+            <div class="inline-row">
+              <input type="number" name="dob_year" placeholder="YYYY" min="1900" max="2100">
+              <input type="number" name="dob_month" placeholder="MM" min="1" max="12">
+              <input type="number" name="dob_day" placeholder="DD" min="1" max="31">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact_method">Contact Method / 聯絡方式<span class="req">*</span></label>
+            <select id="contact_method" name="contact_method" required>
+              <option value="">Please select</option>
+              <option value="Email">Email</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Line">LINE</option>
+              <option value="Instagram">Instagram</option>
+              <option value="WeChat">WeChat</option>
+              <option value="Other">Other</option>
             </select>
           </div>
-        </div>
 
-        <div class="field-group">
-          <div class="field">
-            <label for="birth">出生日期 Date of Birth (YYYY-MM-DD)</label>
-            <input type="date" id="birth" name="birth">
+          <div class="form-group">
+            <label for="contact_id">Account / 帳號或連結<span class="req">*</span></label>
+            <input type="text" id="contact_id" name="contact_id" placeholder="Your handle, ID or email" required>
           </div>
-          <div class="field">
-            <label for="contactMethod">聯絡方式 Contact</label>
-            <input type="text" id="contactMethod" name="contactMethod" placeholder="WhatsApp / Line / WeChat / Email...">
-            <div class="hint">請留下帳號或聯絡方式，我們只會用於回覆此次詢問。</div>
+
+          <div class="form-group">
+            <label for="travel_time">Travel Dates / 來台時間（選填）</label>
+            <input type="text" id="travel_time" name="travel_time" placeholder="e.g. 2025/04/10 - 2025/04/18">
+          </div>
+
+          <div class="form-group full">
+            <label>What are you interested in? / 有興趣的方向（可複選）</label>
+            <div class="gender-options">
+              <label><input type="checkbox" name="interest" value="Food & Markets">Food & Markets</label>
+              <label><input type="checkbox" name="interest" value="Crafts & Workshops">Crafts & Workshops</label>
+              <label><input type="checkbox" name="interest" value="Community & Social Impact">Community & Social Impact</label>
+              <label><input type="checkbox" name="interest" value="Nature & Outdoors">Nature & Outdoors</label>
+              <label><input type="checkbox" name="interest" value="History & Culture">History & Culture</label>
+              <label><input type="checkbox" name="interest" value="Other">Other</label>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label for="diet">Dietary Restrictions / 飲食禁忌（選填）</label>
+            <textarea id="diet" name="diet" placeholder="e.g. vegetarian, vegan, halal, allergies / 素食、全素、清真、過敏等"></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label for="message">Notes / 期待與備註<span class="req">*</span></label>
+            <textarea id="message" name="message" required placeholder="Tell us about your travel style, expectations, or specific hosts/regions you’re curious about."></textarea>
           </div>
         </div>
 
-        <div class="field">
-          <label for="diet">飲食禁忌 Dietary Restrictions</label>
-          <input type="text" id="diet" name="diet" placeholder="e.g. 素食, 不吃牛, 不能吃堅果...">
-        </div>
-
-        <div class="field">
-          <label for="message">備註 / 想像中的體驗 Notes *</label>
-          <textarea id="message" name="message" required placeholder="請簡單描述你對台灣的期待、想參與的體驗類型、預計日期與人數等。"></textarea>
+        <div class="checkbox-row">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent">
+            I understand Local Friends Taiwan is an independent information platform, not a travel agency, and I will confirm all details directly with hosts.<br>
+            我理解 Local Friends Taiwan 為獨立資訊平台，非旅行社，實際預約與金流由我與在地合作方直接確認。
+          </label>
         </div>
 
         <div class="submit-row">
-          <button type="submit">送出表單 Send</button>
-        </div>
-
-        <div class="note">
-          填寫此表單不代表完成預約，我們將以人工回信或訊息與你聯繫，協助媒合合適的在地單位與體驗。
+          <button type="submit" class="btn-submit">Send via Email 寄出</button>
+          <div class="submit-hint">
+            This will open your default email app with all details filled in and sent to <strong>peienli.tw@gmail.com</strong>.
+          </div>
         </div>
       </form>
-    </div>
+    </section>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
-    <p><strong>Local Friends Taiwan 台灣在地連線</strong></p>
-    <p style="margin-top:.4rem;">Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
-    <p style="margin-top:.8rem;opacity:.9;">© 2025 Local Friends Taiwan. Independent Information Platform.</p>
+    <p style="font-size: 1.3rem; margin-bottom: 1rem;"><strong>Local Friends Taiwan 台灣在地連線</strong></p>
+    <p>Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
+    <p style="margin-top: 1rem;">
+      <a href="https://github.com/PN0929/meet-taiwan" target="_blank">📂 GitHub Project</a>
+    </p>
+    <p style="margin-top: 1.5rem; opacity: 0.9; font-size: 1rem;">
+      © 2025 Local Friends Taiwan. Independent Information Platform.
+    </p>
   </footer>
 
   <script>
-    // 目前先用 mailto 寄出內容，如需真正自動寄出，之後可改為呼叫後端 API
-    document.getElementById('contactForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const to = 'peienli.tw@gmail.com';
+    // 導覽收合（手機）
+    document.addEventListener('DOMContentLoaded', () => {
+      const navToggle = document.getElementById('navToggle');
+      const mainNav = document.getElementById('mainNav');
 
-      const name = document.getElementById('name').value.trim();
-      const nationality = document.getElementById('nationality').value.trim();
-      const languages = document.getElementById('languages').value.trim();
-      const gender = document.getElementById('gender').value;
-      const birth = document.getElementById('birth').value;
-      const contact = document.getElementById('contactMethod').value.trim();
-      const diet = document.getElementById('diet').value.trim();
-      const message = document.getElementById('message').value.trim();
+      if (navToggle && mainNav) {
+        navToggle.addEventListener('click', () => {
+          const isOpen = mainNav.classList.toggle('open');
+          navToggle.classList.toggle('open', isOpen);
+        });
 
-      if(!name || !nationality || !languages || !message){
-        alert('請填寫必填欄位 / Please fill in required fields.');
-        return;
+        mainNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            if (mainNav.classList.contains('open')) {
+              mainNav.classList.remove('open');
+              navToggle.classList.remove('open');
+            }
+          });
+        });
       }
 
-      const subject = encodeURIComponent(`[Local Friends Taiwan] New Inquiry from ${name}`);
-      const bodyLines = [
-        `Name 姓名: ${name}`,
-        `Nationality 國籍: ${nationality}`,
-        `Languages 語言: ${languages}`,
-        `Gender 性別: ${gender || 'N/A'}`,
-        `Date of Birth 出生日期: ${birth || 'N/A'}`,
-        `Contact 聯絡方式: ${contact || 'N/A'}`,
-        `Dietary Restrictions 飲食禁忌: ${diet || 'N/A'}`,
-        '',
-        `Notes / 想像中的體驗:`,
-        message
-      ];
-      const body = encodeURIComponent(bodyLines.join('\n'));
+      // 區塊淡入
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.14, rootMargin: '0px 0px -60px 0px' });
 
-      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      document.querySelectorAll('.fade-in').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.05}s`;
+        observer.observe(el);
+      });
+
+      // 表單 -> mailto
+      const form = document.getElementById('contactForm');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          if (!form.reportValidity()) return;
+
+          const fd = new FormData(form);
+
+          // Collect interests
+          const interests = [];
+          form.querySelectorAll('input[name="interest"]:checked').forEach(ch => {
+            interests.push(ch.value);
+          });
+
+          // Gender handling
+          let gender = fd.get('gender') || '';
+          const genderOther = (fd.get('gender_other') || '').trim();
+          if (genderOther) {
+            gender = gender ? `${gender} / ${genderOther}` : genderOther;
+          }
+
+          // DOB
+          let dob = '';
+          const y = fd.get('dob_year'), m = fd.get('dob_month'), d = fd.get('dob_day');
+          if (y || m || d) {
+            dob = [y || 'YYYY', m || 'MM', d || 'DD'].join('-');
+          }
+
+          const bodyLines = [
+            'New contact from Local Friends Taiwan',
+            '----------------------------------------',
+            `Name / 全名: ${fd.get('name') || ''}`,
+            `Nationality / 國籍: ${fd.get('nationality') || ''}`,
+            `Preferred Language(s) / 使用語言: ${fd.get('languages') || ''}`,
+            `Gender / 性別: ${gender || 'N/A'}`,
+            `Date of Birth / 出生: ${dob || 'N/A'}`,
+            '',
+            `Contact Method / 聯絡方式: ${fd.get('contact_method') || ''}`,
+            `Account / 帳號: ${fd.get('contact_id') || ''}`,
+            `Travel Dates / 來台時間: ${fd.get('travel_time') || 'N/A'}`,
+            '',
+            `Interests / 有興趣的方向: ${interests.join(', ') || 'N/A'}`,
+            `Dietary Restrictions / 飲食禁忌: ${fd.get('diet') || 'N/A'}`,
+            '',
+            'Notes / 期待與備註:',
+            (fd.get('message') || ''),
+            '',
+            'I understand Local Friends Taiwan is an independent information platform, not a travel agency.',
+          ];
+
+          const subject = 'New contact from Local Friends Taiwan';
+          const body = encodeURIComponent(bodyLines.join('\n'));
+
+          window.location.href = `mailto:peienli.tw@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+        });
+      }
     });
+
+    // 回頂按鈕
+    window.addEventListener('scroll', () => {
+      const backToTop = document.querySelector('.back-to-top');
+      if (!backToTop) return;
+      if (window.pageYOffset > 300) backToTop.classList.add('show');
+      else backToTop.classList.remove('show');
+    });
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
