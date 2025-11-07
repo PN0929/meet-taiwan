@@ -31,7 +31,7 @@
     h1,h2,h3{text-wrap:balance}
     img,video{max-width:100%;height:auto;display:block}
 
-    /* ===== 共用 Header ===== */
+    /* Header */
     .site-header{
       position:fixed;
       top:0;left:0;right:0;
@@ -148,7 +148,7 @@
       .nav-toggle{display:inline-flex;}
     }
 
-    /* 回頂按鈕 */
+    /* Back to top */
     .back-to-top{
       position:fixed;
       right:30px;bottom:30px;
@@ -166,17 +166,11 @@
       animation:fadeInUp .5s ease;
     }
 
-    /* Hero 使用體驗封面圖作為整體背景 */
+    /* Hero with cover image background */
     .hero{
       position:relative;
       padding:calc(var(--header-height) + 2.4rem) 1.5rem 2.4rem;
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(0,0,0,0.60),
-          rgba(0,0,0,0.42),
-          rgba(0,0,0,0.78)
-        );
+      background:linear-gradient(135deg,#2D6A4F,#40916C);
       background-size:cover;
       background-position:center;
       background-repeat:no-repeat;
@@ -184,7 +178,6 @@
       overflow:hidden;
     }
     .hero::after{
-      /* 底部再加一層深綠，避免文字浮不住 */
       content:'';
       position:absolute;
       inset:auto 0 0 0;
@@ -245,14 +238,12 @@
       .hero-text h1{
         font-size:1.6rem;
       }
-      .hero-text .en-title{
-        font-size:.82rem;
-      }
-      .hero-text .one-line{
-        font-size:.86rem;
-      }
-      .hero-tags{
-        font-size:.7rem;
+      .hero-text .en-title{font-size:.82rem;}
+      .hero-text .one-line{font-size:.86rem;}
+      .hero-tags{font-size:.7rem;}
+      .back-to-top{
+        right:16px;bottom:16px;
+        width:48px;height:48px;font-size:1.2rem;
       }
     }
 
@@ -264,10 +255,6 @@
     }
     @media (max-width:768px){
       .page{padding:1.4rem 1rem 2.4rem;}
-      .back-to-top{
-        right:16px;bottom:16px;
-        width:48px;height:48px;font-size:1.2rem;
-      }
     }
 
     .section{
@@ -303,13 +290,9 @@
       font-weight:700;
       color:#234;
     }
-    .doc-render-inner p{
-      margin:.35rem 0;
-    }
+    .doc-render-inner p{margin:.35rem 0;}
     .doc-render-inner ul,
-    .doc-render-inner ol{
-      margin:.4rem 0 .4rem 1.1rem;
-    }
+    .doc-render-inner ol{margin:.4rem 0 .4rem 1.1rem;}
     .doc-render-inner li{margin:.18rem 0;}
 
     .doc-render-inner img{
@@ -342,7 +325,6 @@
       font-weight:700;
     }
 
-    /* 表格外層橫向捲動 */
     .doc-table-wrap{
       width:100%;
       overflow-x:auto;
@@ -528,7 +510,7 @@
 
     <!-- 聯絡資訊 -->
     <section class="section" id="contactSection" style="display:none;">
-      <h2>📞 Contact 聯絡資訊</h2>
+      <h2>📞 Contact 聯繫資訊</h2>
       <div class="info-grid" id="contactGrid"></div>
     </section>
 
@@ -561,9 +543,9 @@
   <script>
     const SHEET_ID  = '1GD4gg3sGIfX7KGrJkYCL10wzvwZh5FMWQPGd9NVTQyc';
     const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
-    const FALLBACK_DOC_URL = 'https://docs.google.com/document/d/e/2PACX-1vQj1gYlRDbgpH-IupwfkeS8kSMIvGb9TadFFwGpzj9TJXLYv3kzvhu9BqcpUetG-y7Dpt2M8qJLFkoV/pub';
+    const DOC_COLS = ['詳細內容Doc','詳細說明連結','Google Doc','Google Doc 連結'];
 
-    // Mobile nav toggle
+    // Mobile nav
     document.addEventListener('DOMContentLoaded', () => {
       const navToggle = document.getElementById('navToggle');
       const mainNav = document.getElementById('mainNav');
@@ -625,14 +607,14 @@
 
         let exp = null;
 
-        // 1) 若有 row 參數且有效，優先用 row 精準對應
+        // 1) 優先用 row 精準抓同一列
         if(!isNaN(rowIndexFromUrl) &&
            rowIndexFromUrl >= 0 &&
            rowIndexFromUrl < list.length){
           exp = list[rowIndexFromUrl];
         }
 
-        // 2) 若 exp 還沒找到，再用 id 搜尋
+        // 2) 若沒取到，再用 id 搜尋
         if(!exp && idParam){
           const idLower = idParam.toLowerCase();
           exp = list.find(o => (o['ID']||'').trim().toLowerCase() === idLower);
@@ -691,19 +673,16 @@
       const cat = (exp['主要分類'] || '').trim();
       const level = (exp['難度'] || '').trim();
 
-      // 設定文字
       document.getElementById('expTitleZh').textContent = nameZh || '未命名體驗 Untitled Experience';
       document.getElementById('expTitleEn').textContent = nameEn || '';
       document.getElementById('expOneLine').textContent = oneLine || '';
 
-      // 設定標籤
       const tagsEl = document.getElementById('heroTags');
       tagsEl.innerHTML = '';
       if(region) tagsEl.innerHTML += `<div class="hero-tag">📍 ${region}</div>`;
       if(cat) tagsEl.innerHTML += `<div class="hero-tag">${cat}</div>`;
       if(level) tagsEl.innerHTML += `<div class="hero-tag">⭐ ${level}</div>`;
 
-      // 背景圖：用第一張照片，外加漸層（上面 CSS 已有漸層，這裡疊圖）
       const links = getPhotoLinks(exp);
       if(links.length){
         const url = links[0].replace(/"/g,'&quot;');
@@ -723,9 +702,22 @@
         <div class="loading-line" style="width:50%"></div>
       `;
 
-      const raw = (exp['詳細說明連結'] || exp['Google Doc'] || exp['Google Doc 連結'] || '').trim();
-      const url = raw || FALLBACK_DOC_URL;
-      const fetchURL = toFetchableDocURL(url);
+      // ✅ 每一列用自己的 Doc 欄位，不再共用 fallback
+      let raw = '';
+      for(const key of DOC_COLS){
+        if(exp[key] && String(exp[key]).trim()){
+          raw = String(exp[key]).trim();
+          break;
+        }
+      }
+
+      if(!raw){
+        inner.innerHTML =
+          '<p>此體驗目前尚未提供線上詳細說明文件。<br>This experience does not have a detailed document yet.</p>';
+        return;
+      }
+
+      const fetchURL = toFetchableDocURL(raw);
 
       try{
         const resp = await fetch(fetchURL,{mode:'cors'});
@@ -776,9 +768,9 @@
         inner.innerHTML = '';
         inner.appendChild(wrapper);
       }catch(err){
-        console.warn('Doc fetch blocked, fallback iframe', err);
+        console.warn('Doc fetch blocked, use embed iframe', err);
         inner.innerHTML = `
-          <iframe src="${toEmbeddableIframeURL(url)}"
+          <iframe src="${toEmbeddableIframeURL(raw)}"
                   style="width:100%;height:900px;border:0;border-radius:10px;background:#fff"
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -842,11 +834,9 @@
       const addr = (exp['地址']||'').trim();
       if(!addr) return;
       const mapSection = document.getElementById('mapSection');
-      const addrEl = document.getElementById('mapAddress');
-      const frame = document.getElementById('mapFrame');
-
-      addrEl.textContent = '📍 ' + addr;
-      frame.src = `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed`;
+      document.getElementById('mapAddress').textContent = '📍 ' + addr;
+      document.getElementById('mapFrame').src =
+        `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed`;
       mapSection.style.display = 'block';
     }
   </script>
