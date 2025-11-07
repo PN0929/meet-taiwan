@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>For Hosts 成為在地朋友 - Local Friends Taiwan | 台灣在地連線</title>
-  <meta name="description" content="加入 Local Friends Taiwan 成為在地朋友，一起為旅人提供真實、尊重、社群友善的台灣體驗。">
+  <meta name="description" content="加入 Local Friends Taiwan，一起以真實、友善的方式接待國際旅人。">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -40,9 +40,9 @@
       display: flex;
       align-items: center;
       gap: 1.25rem;
-      background: rgba(247, 245, 242, 0.98);
+      background: rgba(247,245,242,0.98);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(45, 106, 79, 0.06);
+      border-bottom: 1px solid rgba(45,106,79,0.06);
       z-index: 1100;
     }
     .brand {
@@ -181,46 +181,42 @@
       animation: fadeInUp 0.5s ease;
     }
 
-    /* Hero（比照 about.html：白底＋綠字） */
-    .hero-hosts {
-      padding: calc(3.2rem + var(--header-height)) 1.5rem 2.4rem;
+    /* Hero（改成白底綠字，對齊 about.html 氛圍） */
+    .hero {
+      padding: calc(3.2rem + var(--header-height)) 1.5rem 2.2rem;
       background: #ffffff;
       border-bottom: 1px solid rgba(0,0,0,0.04);
+      color: var(--green);
     }
     .hero-inner {
       max-width: var(--max-width);
       margin: 0 auto;
     }
     .hero-kicker {
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #8d8d8d;
-      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      opacity: 0.9;
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+      color: #7b8f84;
     }
     .hero-title {
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 800;
+      margin-bottom: 0.4rem;
       color: var(--green);
-      margin-bottom: 0.35rem;
     }
     .hero-sub {
-      font-size: 1rem;
-      color: #444;
+      font-size: 0.98rem;
       max-width: 760px;
-    }
-    .hero-sub-zh {
-      font-size: 0.9rem;
-      color: #7a857d;
-      margin-top: 0.25rem;
-      max-width: 760px;
+      color: #455;
     }
 
     /* Page layout */
     .page {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 2.2rem 1.5rem 3rem;
+      padding: 2rem 1.5rem 3rem;
     }
 
     .section {
@@ -233,25 +229,14 @@
     }
     .section h2 {
       font-size: 1.4rem;
-      margin-bottom: 0.55rem;
+      margin-bottom: 0.6rem;
       color: var(--green);
       font-weight: 800;
-    }
-    .section h2 span.zh {
-      margin-left: 0.35rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #3b7a5c;
     }
     .section p {
       font-size: 0.95rem;
       color: #455;
       margin-bottom: 0.4rem;
-    }
-    .section p.zh-soft {
-      font-size: 0.86rem;
-      color: #7b857d;
-      margin-top: 0.1rem;
     }
     .section ul {
       list-style: none;
@@ -276,7 +261,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.35rem;
-      margin-top: 0.35rem;
+      margin-top: 0.4rem;
     }
     .pill {
       padding: 0.16rem 0.6rem;
@@ -314,38 +299,38 @@
     .step strong {
       display: block;
       font-size: 0.8rem;
-      text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--accent);
-      margin-bottom: 0.12rem;
+      margin-bottom: 0.1rem;
     }
 
     .cta-center {
       text-align: center;
-      margin-top: 0.9rem;
+      margin-top: 0.8rem;
     }
     .cta-note {
       font-size: 0.85rem;
       color: #667;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
     }
     .cta-note a {
       color: var(--green);
       font-weight: 600;
       text-decoration: none;
-      border-bottom: 1px solid rgba(45,106,79,0.25);
+      border-bottom: 1px solid rgba(45,106,79,0.3);
       padding-bottom: 1px;
     }
     .cta-note a:hover {
       color: var(--accent);
       border-color: var(--accent);
     }
+
     .cta-btn {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 0.75rem 1.8rem;
+      padding: 0.85rem 1.8rem;
       border-radius: 999px;
       border: none;
       background: linear-gradient(135deg, var(--accent), #F4A261);
@@ -356,16 +341,10 @@
       box-shadow: 0 4px 14px rgba(244,132,95,0.4);
       transition: all 0.22s;
       cursor: pointer;
-      gap: 0.1rem;
-      margin-top: 0.4rem; /* 與上方文字空一行 */
+      gap: 0.15rem;
+      margin-top: 0.4rem; /* 跟上方文字空一行 */
     }
-    .cta-btn span.en {
-      font-size: 0.92rem;
-    }
-    .cta-btn span.zh {
-      font-size: 0.8rem;
-      opacity: 0.96;
-    }
+    .cta-btn span { display: block; }
     .cta-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(244,132,95,0.55);
@@ -384,7 +363,7 @@
     }
     .footer a:hover { text-decoration: underline; }
 
-    /* 動畫：與 about.html 一致 */
+    /* 進場動畫（與 about.html 一致邏輯） */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -400,18 +379,17 @@
     }
 
     @media (max-width: 768px) {
-      .hero-hosts {
+      .hero {
         padding: calc(2.6rem + var(--header-height)) 1.25rem 2rem;
       }
       .hero-title {
-        font-size: 1.85rem;
+        font-size: 1.8rem;
       }
-      .hero-sub,
-      .hero-sub-zh {
+      .hero-sub {
         font-size: 0.9rem;
       }
       .page {
-        padding: 2rem 1.25rem 2.4rem;
+        padding: 1.8rem 1.25rem 2.4rem;
       }
       .section {
         padding: 1.25rem 1.05rem 1.3rem;
@@ -419,9 +397,6 @@
       }
       .section h2 {
         font-size: 1.2rem;
-      }
-      .section h2 span.zh {
-        font-size: 0.95rem;
       }
       .section p,
       .section ul li {
@@ -461,17 +436,13 @@
   <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
   <!-- Hero -->
-  <section class="hero-hosts">
-    <div class="hero-inner fade-in">
-      <div class="hero-kicker">FOR HOSTS · 成為在地朋友</div>
-      <h1 class="hero-title">Share your real Taiwan with respectful travelers</h1>
+  <section class="hero fade-in">
+    <div class="hero-inner">
+      <div class="hero-kicker">你是最棒的在地新朋友嗎？</div>
+      <h1 class="hero-title">和國際旅人分享你真實的台灣日常</h1>
       <p class="hero-sub">
-        Local Friends Taiwan is an independent information platform that connects travelers with communities,
-        artisans, cultural workers, and spaces who care about authenticity, respect, and long-term impact.
-      </p>
-      <p class="hero-sub-zh">
-        如果你相信真實款待、重視在地關係、希望遇見懂得尊重的旅人，
-        歡迎成為 Local Friends Taiwan 的「在地朋友」。
+        Local Friends Taiwan 是獨立資訊平台，蒐集台灣在地社群、場域，
+        讓願意用尊重與好奇走進台灣的旅人，有機會遇見正在做美好事情的你們。
       </p>
     </div>
   </section>
@@ -480,123 +451,95 @@
   <main class="page">
     <!-- 我們在找誰 -->
     <section class="section fade-in">
-      <h2>Who we look for<span class="zh">我們在找怎樣的在地朋友</span></h2>
+      <h2>我們在找怎樣的「在地朋友」</h2>
       <p>
-        We highlight people and groups who are genuinely rooted in their place — not just selling a checklist,
-        but sharing living stories.
-      </p>
-      <p class="zh-soft">
-        我們想一起合作的，是長期耕耘地方的人：社區組織、職人、文化工作者、返鄉青年、小店、友善空間等。
+        你可能是社區組織、返鄉團隊、地方文化工作者、社區空間經營者，
+        或是一個很認真對待自己生活土地的人，願意在安全與尊重的前提下，打開一點點生活日常。
       </p>
       <div class="pill-row">
-        <div class="pill">🌾 Community groups 社區組織</div>
-        <div class="pill">🧑‍🏭 Artisans 工藝 / 職人</div>
-        <div class="pill">🍜 Local food & markets 在地飲食</div>
-        <div class="pill">🏡 Guesthouses & spaces 友善空間</div>
-        <div class="pill">🌱 Social impact 社企 / NGO</div>
-        <div class="pill">🎭 Cultural projects 文化行動</div>
+        <div class="pill">🌾 社區組織 / 返鄉團隊</div>
+        <div class="pill">🧑‍🏭 地方文史 / 傳統技藝</div>
+        <div class="pill">🍜 在地飲食 / 市場導覽</div>
+        <div class="pill">🏡 社區空間 / 公共場域</div>
+        <div class="pill">🌱 NGO / 社會企業 / 公益行動</div>
       </div>
       <div class="highlight-box">
-        No pay-to-play feature, no forced upselling.
-        我們不販售「版位」，也不要求你對旅人過度推銷，只希望資訊真實、清楚、尊重彼此。
+        我們不收「曝光費」、「上架費」，也不保證大量人潮；
+        想和你一起經營的是「對地方有益、對旅人誠實的互動關係」。
       </div>
     </section>
 
-    <!-- 合作方式 -->
+    <!-- 我們怎麼合作 -->
     <section class="section fade-in">
-      <h2>How collaboration works<span class="zh">合作方式</span></h2>
-      <p>
-        We keep the process simple and human-centered. Our focus is on clarity, trust, and the right match.
-      </p>
+      <h2>我們怎麼合作</h2>
+      <p>流程簡單，重點放在彼此理解與資訊透明：</p>
       <div class="steps">
         <div class="step">
-          <strong>STEP 1 · Reach out</strong>
-          Tell us who you are, where you're based, and what you’d like to share with travelers.
-          <div class="zh-soft">簡單介紹你／你們是誰、在哪裡、希望對旅人打開哪些體驗或空間。</div>
+          <strong>STEP 1</strong>
+          填寫表單或來信，簡單介紹你／你們是誰、在哪裡、正在做什麼，以及「想跟旅人分享什麼」。
         </div>
         <div class="step">
-          <strong>STEP 2 · Conversation & review</strong>
-          We talk about your values, capacity, safety, pricing, and community impact. When possible, we visit in person.
-          <div class="zh-soft">聊理念、實際操作、安全與收費方式，必要時實地探訪確認脈絡。</div>
+          <strong>STEP 2</strong>
+          一起確認理念是否相近、執行方式是否安全可行、費用結構是否清楚，必要時我們會實際拜訪。
         </div>
         <div class="step">
-          <strong>STEP 3 · Listing</strong>
-          We help shape a clear bilingual profile so travelers can contact you directly.
-          <div class="zh-soft">協助整理中英介紹與聯絡方式，讓適合的旅人直接找到你。</div>
+          <strong>STEP 3</strong>
+          若彼此覺得合適，我們會替你整理一頁介紹，清楚寫出故事、收費方式與聯絡資訊，
+          讓旅人可以直接找到你。
         </div>
       </div>
       <div class="highlight-box">
-        All details — pricing, limits, languages, booking process — are presented transparently.
-        資訊保持可更新，你也可以隨時暫停或調整合作。
+        你隨時可以調整內容或暫停合作；所有資訊以「誠實、不誤導、不過度包裝」為原則。
       </div>
     </section>
 
-    <!-- 我們在意的事 -->
+    <!-- 原則 -->
     <section class="section fade-in">
-      <h2>What matters to us<span class="zh">我們對合作夥伴的期待</span></h2>
+      <h2>我們對在地朋友的期待</h2>
       <ul>
-        <li>
-          <strong>Authenticity 真實分享：</strong>
-          You open your real practice or community, not a staged performance only for social media.
-          <span class="zh-soft">分享日常與專業，而非為觀光刻意製造的情境。</span>
-        </li>
-        <li>
-          <strong>Respect & fairness 尊重與公平：</strong>
-          No exploitation of people, culture, or environment.
-          <span class="zh-soft">尊重工作者與社區，不壓低成本、不消耗脆弱族群。</span>
-        </li>
-        <li>
-          <strong>Transparency 資訊透明：</strong>
-          Clear pricing, conditions, and boundaries.
-          <span class="zh-soft">價格、內容、限制與聯絡窗口清楚公開。</span>
-        </li>
-        <li>
-          <strong>Safe & welcoming 安全與友善：</strong>
-          Awareness of safety, consent, and inclusion.
-          <span class="zh-soft">願意接納多元背景旅人，並清楚說明安全考量。</span>
-        </li>
+        <li><strong>真實：</strong> 分享的是真正在做、真心相信的事，而不是為了觀光客設計的表演。</li>
+        <li><strong>不硬推銷：</strong> 可以有收費與產品，但價格公開、說明清楚，不用話術逼人買單。</li>
+        <li><strong>尊重在地：</strong> 活動不打擾鄰居、不傷害環境、不消費脆弱族群，願意一起討論界線。</li>
+        <li><strong>安全與照顧：</strong> 對人身安全、場域風險、保險與緊急聯絡方式有基本準備與意識。</li>
+        <li><strong>多元友善：</strong> 願意尊重不同國籍、性別認同、身分背景與身體條件的旅人。</li>
       </ul>
-      <p class="zh-soft">
-        若你還在摸索接待方式，也沒關係，我們可以一起討論出對你們社群舒適的節奏。
+      <p style="margin-top:0.4rem;">
+        如果你也在意這些事，我們很樂意把你介紹給同樣尊重這趟旅程的旅人。
       </p>
     </section>
 
     <!-- 適合 / 不適合 -->
     <section class="section fade-in">
-      <h2>Is this for you?<span class="zh">誰適合 & 不適合加入</span></h2>
-      <p><strong>Good fit 適合：</strong></p>
+      <h2>誰適合，誰可能不那麼適合？</h2>
+      <p><strong>適合加入的你：</strong></p>
       <ul>
-        <li>Already doing meaningful work locally and希望遇到懂得尊重的旅人。</li>
-        <li>Willing to spend time with guests, not just sell tickets.</li>
-        <li>Care about how tourism affects neighbors, culture, and environment.</li>
+        <li>已在做有內容的事情：社區導覽、工藝教學、議題倡議、文化分享、空間經營等。</li>
+        <li>希望來的人是「真的想了解」，而不是只來拍照打卡或趕行程。</li>
+        <li>願意一起檢視接待方式，兼顧旅人感受與在地關係。</li>
       </ul>
-      <p style="margin-top:0.6rem;"><strong>Not a fit 可能不適合：</strong></p>
+      <p style="margin-top:0.6rem;"><strong>可能不適合目前的你：</strong></p>
       <ul>
-        <li>Only looking for fast traffic, mass tourism, or superficial exposure.</li>
-        <li>Unwilling to share clear information on pricing or responsibilities.</li>
-        <li>Not open to discussing safety, ethics, or community impact.</li>
+        <li>只想要快速導流、人數越多越好，不考慮在地承載與品質。</li>
+        <li>不願意公開清楚收費方式與負責窗口。</li>
+        <li>對「安全」「尊重」「在地社群感受」沒有耐心討論。</li>
       </ul>
     </section>
 
     <!-- CTA -->
     <section class="section fade-in">
-      <h2>Ready to talk?<span class="zh">想成為在地朋友</span></h2>
+      <h2>想成為在地朋友嗎？</h2>
       <p>
-        If this resonates with you, we’d love to hear your story.
-        You don’t need a perfect “product” — we care more about your values, care for people, and connection to place.
-      </p>
-      <p class="zh-soft">
-        如果以上描述有讓你點頭，歡迎跟我們聯絡。你不需要包裝成觀光產品，
-        只要真誠面對旅人與在地，就是很好的開始。
+        不需要有完美企劃，也不一定要會寫文案。
+        只要你正在做的事，對人是友善的、對地方是負責任的，我們都很願意先聽你說說。
       </p>
       <div class="cta-center">
         <p class="cta-note">
-          Please use the <strong>Contact</strong> form (「For Hosts / 合作洽談」選項)，或來信：
+          請至 Contact 頁面選擇「For Hosts / 合作洽談」，或直接來信：
           <a href="mailto:peienli.tw@gmail.com">peienli.tw@gmail.com</a>
         </p>
         <a href="contact.html#hosts" class="cta-btn">
-          <span class="en">Become a Local Friend</span>
-          <span class="zh">成為在地朋友 →</span>
+          <span>Become a Local Friend</span>
+          <span>成為在地朋友 →</span>
         </a>
       </div>
     </section>
@@ -631,7 +574,7 @@
         });
       }
 
-      // 滾動淡入
+      // 進場淡入
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) entry.target.classList.add('visible');
