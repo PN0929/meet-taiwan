@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trail Note - Local Friends Taiwan</title>
-  <meta name="description" content="Trail Notes detail from Local Friends Taiwan — field visits, host stories, and reflections from real on-the-ground exploration.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trail Notes 探路筆記 - Local Friends Taiwan</title>
+  <meta name="description" content="Trail Notes - field notes from Local Friends Taiwan: visits, stories behind hosts, travel mindset, and updates.">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,12 +15,13 @@
       --bg: #F7F5F2;
       --accent: #F4845F;
       --accent-soft: #E9C46A;
+      --border-soft: #E5DECF;
     }
 
     html, body { overflow-x: hidden; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
-      line-height: 1.7;
+      line-height: 1.8;
       color: var(--green);
       background: var(--bg);
       text-rendering: optimizeLegibility;
@@ -31,7 +32,7 @@
     h1, h2, h3 { text-wrap: balance; }
     img, video { max-width: 100%; height: auto; display: block; }
 
-    /* Header */
+    /* ===== 共用 Header ===== */
     .site-header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -120,9 +121,11 @@
       .site-header {
         padding: 0 1rem;
       }
-      .brand-en, .brand-zh {
+      .brand-en,
+      .brand-zh {
         font-size: 0.74rem;
       }
+
       .main-nav {
         position: fixed;
         top: var(--header-height);
@@ -149,244 +152,202 @@
         font-size: 0.8rem;
         box-shadow: 0 1px 4px rgba(0,0,0,0.04);
       }
+
       .nav-toggle { display: inline-flex; }
     }
 
-    /* Back to top */
+    /* 回頂按鈕 */
     .back-to-top {
       position: fixed;
       right: 30px;
       bottom: 30px;
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg,#F4845F,#F4A261);
-      color:#fff;
-      border:none;
-      border-radius:50%;
-      font-size:1.5rem;
-      cursor:pointer;
-      box-shadow:0 4px 20px rgba(244,132,95,0.4);
-      display:none;
-      z-index:1000;
-      transition:transform 0.3s;
+      background: linear-gradient(135deg, #F4845F, #F4A261);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(244,132,95,0.4);
+      display: none;
+      z-index: 1000;
+      transition: transform 0.3s;
     }
-    .back-to-top:hover { transform:translateY(-5px); }
+    .back-to-top:hover { transform: translateY(-5px); }
     .back-to-top.show {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      animation:fadeInUp 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInUp 0.5s ease;
     }
 
-    /* Hero / cover */
-    .hero-cover {
-      margin-top: var(--header-height);
-      position: relative;
-      width: 100%;
-      height: 220px;
-      background: linear-gradient(135deg,#2D6A4F,#40916C);
-      overflow: hidden;
-    }
-    .hero-cover-img {
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      filter:brightness(0.7);
-    }
-    .hero-cover-overlay {
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to bottom,
-        rgba(0,0,0,0.45),
-        rgba(0,0,0,0.5),
-        rgba(0,0,0,0.75)
-      );
-    }
-
-    .hero-meta {
-      position: relative;
-      max-width: var(--max-width);
-      margin: -80px auto 0;
-      padding: 1.2rem 1.4rem 1.3rem;
+    /* Hero for Note Detail - 對齊 notes.html 與 about.html 的風格 */
+    .hero-note {
+      padding: calc(3.2rem + var(--header-height)) 1.5rem 1.8rem;
       background: #ffffff;
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.14);
-      border: 1px solid #E5DECF;
-    }
-    .note-type-label {
-      font-size: 0.72rem;
-      padding: 0.18rem 0.6rem;
-      border-radius: 999px;
-      background: #FFF7EB;
-      border: 1px solid #E9C46A;
-      color: #8a6230;
-      display:inline-flex;
-      align-items:center;
-      gap:0.22rem;
-      margin-bottom:0.3rem;
-    }
-    .note-title-en {
-      font-size: 1.6rem;
-      font-weight: 800;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
       color: var(--green);
-      margin-bottom: 0.15rem;
     }
-    .note-title-zh {
-      font-size: 0.92rem;
-      color: #777;
-      margin-bottom: 0.45rem;
-    }
-    .note-meta-line {
-      display:flex;
-      flex-wrap:wrap;
-      gap:0.8rem;
-      font-size:0.78rem;
-      color:#888;
-      margin-bottom:0.2rem;
-    }
-    .note-tags-line {
-      display:flex;
-      flex-wrap:wrap;
-      gap:0.25rem;
-      margin-top:0.15rem;
-    }
-    .note-tag-pill {
-      padding:0.14rem 0.55rem;
-      border-radius:999px;
-      background:#F7F5F2;
-      border:1px solid #E9C46A;
-      font-size:0.7rem;
-      color:#566;
-    }
-
-    /* Content */
-    .content-wrap {
+    .hero-inner {
       max-width: var(--max-width);
-      margin: 1.2rem auto 3rem;
-      padding: 0 1.5rem 0.5rem;
+      margin: 0 auto;
     }
-    .content-inner {
-      background:#fff;
-      padding:1.6rem 1.5rem 1.8rem;
-      border-radius:16px;
-      border:1px solid #E5DECF;
-      box-shadow:0 4px 16px rgba(0,0,0,0.03);
-      font-size:0.98rem;
-      color:#333;
+    .hero-kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8d8d8d;
+      margin-bottom: 0.35rem;
     }
-
-    .content-inner h1,
-    .content-inner h2,
-    .content-inner h3,
-    .content-inner h4 {
-      margin:1.2rem 0 0.6rem;
-      color:#1f4d39;
-      font-weight:700;
-      line-height:1.35;
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+      line-height: 1.35;
     }
-    .content-inner p {
-      margin:0.6rem 0;
-      line-height:1.8;
-      color:#333;
-      font-size:0.98rem;
+    .hero-meta {
+      font-size: 0.9rem;
+      color: #7a8b80;
+      margin-bottom: 0.5rem;
     }
-    .content-inner strong { font-weight:700; }
-    .content-inner ul,
-    .content-inner ol {
-      margin:0.6rem 0 0.6rem 1.25rem;
-      padding-left:0.2rem;
+    .hero-back {
+      font-size: 0.86rem;
+      margin-top: 0.2rem;
     }
-    .content-inner li {
-      margin:0.25rem 0;
-      line-height:1.7;
+    .hero-back a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(244,132,95,0.4);
+      padding-bottom: 1px;
     }
-    .content-inner blockquote {
-      border-left:4px solid var(--accent-soft);
-      background:#FFF9EE;
-      padding:0.7rem 1rem;
-      border-radius:8px;
-      margin:0.8rem 0;
-      font-size:0.94rem;
-      color:#555;
-    }
-    .content-inner img {
-      max-width:100% !important;
-      height:auto !important;
-      display:block;
-      margin:1rem auto;
-      border-radius:10px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.06);
-    }
-    .content-inner table {
-      width:100%;
-      border-collapse:collapse;
-      margin:1rem 0;
-      display:block;
-      overflow-x:auto;
-    }
-    .content-inner th,
-    .content-inner td {
-      border:1px solid #e6e6e6;
-      padding:0.5rem 0.6rem;
-      font-size:0.9rem;
-      text-align:left;
-      vertical-align:top;
-    }
-    .content-inner thead th {
-      background:#f7f7f7;
-      font-weight:700;
-    }
-    .content-inner iframe {
-      max-width:100%;
-      width:100% !important;
-      border:0;
-      border-radius:10px;
-      min-height:260px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.04);
-      margin:0.8rem 0;
+    .hero-back a:hover {
+      color: var(--green);
+      border-color: var(--green);
     }
 
-    .loading {
-      text-align:center;
-      padding:3rem 1rem;
-      font-size:0.98rem;
-      color:#666;
+    /* Note content wrapper - 卡片風格對齊 notes.html */
+    .note-wrapper {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+    }
+    .note-card {
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+      padding: 1.6rem 1.5rem 1.8rem;
     }
 
-    .footer {
-      background: linear-gradient(135deg,#2D6A4F,#40916C);
-      color:#fff;
-      text-align:center;
-      padding:2.4rem 2rem;
-      margin-top:2rem;
+    .note-cover {
+      margin: -1.6rem -1.5rem 1.2rem;
+      border-radius: 14px 14px 0 0;
+      overflow: hidden;
+      max-height: 340px;
+    }
+    .note-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
+    .note-content {
+      font-size: 0.98rem;
+      color: #444;
+    }
+
+    /* Google Doc 內容樣式微調，讓它貼合本站 */
+    .note-content h1,
+    .note-content h2,
+    .note-content h3,
+    .note-content h4 {
+      color: var(--green);
+      margin: 1.1rem 0 0.4rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .note-content p {
+      margin: 0.5rem 0;
+      color: #444;
+    }
+    .note-content a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(244,132,95,0.4);
+      padding-bottom: 1px;
+    }
+    .note-content a:hover {
+      color: var(--green);
+      border-color: var(--green);
+    }
+    .note-content ul,
+    .note-content ol {
+      margin: 0.5rem 0 0.5rem 1.4rem;
+      color: #444;
+    }
+    .note-content li {
+      margin: 0.25rem 0;
+    }
+    .note-content img {
+      margin: 0.6rem auto;
+      border-radius: 10px;
+    }
+
+    .note-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+    .note-badge {
+      padding: 0.16rem 0.6rem;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      background: #F7F5F2;
+      border: 1px solid #E9C46A;
+      color: #566;
+    }
+
+    .note-error {
+      font-size: 0.95rem;
+      color: #777;
+      text-align: center;
+      padding: 2rem 0 0;
+    }
+
+    /* 進場動畫（與 about / hosts / notes 對齊） */
     @keyframes fadeInUp {
-      from { opacity:0; transform:translateY(18px); }
-      to   { opacity:1; transform:translateY(0); }
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: all 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     @media (max-width: 768px) {
-      .hero-cover { height: 180px; }
-      .hero-meta {
-        margin: -70px auto 0;
-        padding: 1rem 1.1rem 1.2rem;
-        border-radius: 14px;
+      .hero-note {
+        padding: calc(2.6rem + var(--header-height)) 1.25rem 1.6rem;
       }
-      .note-title-en {
-        font-size: 1.3rem;
+      .hero-title {
+        font-size: 1.7rem;
       }
-      .note-title-zh {
-        font-size: 0.86rem;
+      .note-wrapper {
+        padding: 1.6rem 1.25rem 2.4rem;
       }
-      .content-wrap {
-        padding: 0 1.1rem 0.5rem;
+      .note-card {
+        padding: 1.3rem 1.1rem 1.6rem;
       }
-      .content-inner {
-        padding: 1.1rem 1rem 1.4rem;
-        font-size: 0.94rem;
+      .note-cover {
+        margin: -1.3rem -1.1rem 1rem;
+        max-height: 260px;
       }
       .back-to-top {
         right: 16px;
@@ -421,30 +382,37 @@
   <!-- Back to top -->
   <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
-  <!-- Hero cover -->
-  <section class="hero-cover">
-    <img id="coverImg" class="hero-cover-img" src="" alt="" style="display:none;">
-    <div class="hero-cover-overlay"></div>
-  </section>
-
-  <!-- Meta card -->
-  <section class="hero-meta" id="heroMeta">
-    <div class="note-type-label" id="typeLabel" style="display:none;"></div>
-    <div class="note-title-en" id="titleEn">Loading Trail Note...</div>
-    <div class="note-title-zh" id="titleZh"></div>
-    <div class="note-meta-line" id="metaLine"></div>
-    <div class="note-tags-line" id="tagsLine"></div>
-  </section>
-
-  <!-- Content -->
-  <main class="content-wrap">
-    <div id="contentInner" class="content-inner">
-      <div class="loading">Loading note content... Trail Notes 內容載入中...</div>
+  <!-- Hero -->
+  <section class="hero-note fade-in">
+    <div class="hero-inner">
+      <div class="hero-kicker">TRAIL NOTES · 探路筆記</div>
+      <h1 id="noteTitle" class="hero-title">Loading…</h1>
+      <div id="noteMeta" class="hero-meta"></div>
+      <div class="hero-back">
+        <a href="notes.html">← Back to Trail Notes 返回探路筆記列表</a>
+      </div>
     </div>
+  </section>
+
+  <!-- Note Content -->
+  <main class="note-wrapper">
+    <section class="note-card fade-in">
+      <div id="coverWrap" class="note-cover" style="display:none;">
+        <img id="noteCover" src="" alt="">
+      </div>
+
+      <div class="note-badge-row" id="badgeRow" style="display:none;"></div>
+
+      <article id="noteContent" class="note-content">
+        Loading content…
+      </article>
+
+      <div id="noteError" class="note-error" style="display:none;"></div>
+    </section>
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer" style="background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;text-align:center;padding:2.4rem 2rem;">
     <p style="font-size:1.2rem;margin-bottom:0.6rem;"><strong>Local Friends Taiwan 台灣在地連線</strong></p>
     <p>Your local friend in Taiwan | 當你需要一位台灣在地的朋友</p>
     <p style="margin-top:1.2rem;opacity:0.9;font-size:0.95rem;">
@@ -453,11 +421,11 @@
   </footer>
 
   <script>
-    const SHEET_ID  = '1icnZhegrhiUdaWz_BgQK0CQ_oueDhPhZgnl3opy9PJs';
+    const SHEET_ID = '1icnZhegrhiUdaWz_BgQK0CQ_oueDhPhZgnl3opy9PJs';
     const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
+    // Nav toggle (mobile)
     document.addEventListener('DOMContentLoaded', () => {
-      // Nav toggle
       const navToggle = document.getElementById('navToggle');
       const mainNav = document.getElementById('mainNav');
       if (navToggle && mainNav) {
@@ -475,77 +443,145 @@
         });
       }
 
-      loadNoteDetail();
+      setupFadeIn();
+      initNoteDetail();
     });
 
-    async function loadNoteDetail(){
+    function setupFadeIn() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.fade-in').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.06}s`;
+        observer.observe(el);
+      });
+    }
+
+    async function initNoteDetail() {
       const params = new URLSearchParams(window.location.search);
       const id = (params.get('id') || '').trim();
-      const contentInner = document.getElementById('contentInner');
 
-      if (!id){
-        document.getElementById('titleEn').textContent = 'Note not found';
-        document.getElementById('titleZh').textContent = '找不到對應的筆記 ID。';
-        contentInner.innerHTML = `
-          <div class="loading">
-            Unable to find this Trail Note.<br>
-            請從 Trail Notes 探路筆記頁面重新點選。
-          </div>`;
+      const noteTitleEl = document.getElementById('noteTitle');
+      const noteMetaEl = document.getElementById('noteMeta');
+      const noteContentEl = document.getElementById('noteContent');
+      const noteErrorEl = document.getElementById('noteError');
+      const coverWrap = document.getElementById('coverWrap');
+      const coverImg = document.getElementById('noteCover');
+      const badgeRow = document.getElementById('badgeRow');
+
+      if (!id) {
+        noteTitleEl.textContent = 'Note not found';
+        noteContentEl.textContent = 'Missing note ID. Please go back to Trail Notes.';
         return;
       }
 
-      try{
+      try {
         const resp = await fetch(SHEET_URL);
-        const txt = await resp.text();
-        const rows = parseCSV(txt);
+        const csv = await resp.text();
+        const rows = parseCSV(csv);
         const headers = rows[0];
         const data = rows.slice(1);
 
-        const list = data.map(r=>{
-          const o={};
-          headers.forEach((h,i)=>{ o[h.trim()] = (r[i]||'').trim(); });
+        const notes = data.map(r => {
+          const o = {};
+          headers.forEach((h, i) => o[h.trim()] = (r[i] || '').trim());
           return o;
         });
 
-        const note = list.find(o=>{
-          const nid = (o['ID'] || o['Id'] || '').trim();
-          return nid && nid.toLowerCase() === id.toLowerCase();
+        const note = notes.find(n => {
+          const nid = (n['ID'] || n['id'] || '').trim();
+          return nid && nid === id;
         });
 
-        if (!note){
-          document.getElementById('titleEn').textContent = 'Note not found';
-          document.getElementById('titleZh').textContent = '找不到這篇探路筆記';
-          contentInner.innerHTML = `
-            <div class="loading">
-              We couldn’t locate this Trail Note in the sheet.<br>
-              請返回 Trail Notes 探路筆記重新選擇。
-            </div>`;
+        if (!note) {
+          noteTitleEl.textContent = 'Note not found';
+          noteContentEl.textContent = '找不到這篇探路筆記，請回到列表頁重新選擇。';
           return;
         }
 
-        renderMeta(note);
-        await renderDoc(note);
-      }catch(err){
+        // 僅顯示 Status 已發佈/已發布/published
+        if (!isPublished(note)) {
+          noteTitleEl.textContent = 'Note not available';
+          noteContentEl.textContent = '這篇探路筆記目前尚未公開或已下架。';
+          return;
+        }
+
+        const titleEn = note['Title EN'] || note['Title'] || '';
+        const titleZh = note['Title ZH'] || note['標題'] || '';
+        const type = note['Type'] || note['類型'] || '';
+        const date = note['Date'] || note['日期'] || '';
+        const cover = (note['Cover'] || note['Cover Image'] || '').trim();
+        const docUrlRaw = (note['Doc URL'] || note['DocUrl'] || note['Doc'] || '').trim();
+
+        // Hero title & meta
+        noteTitleEl.textContent = titleEn || titleZh || 'Trail Note';
+        let metaParts = [];
+        if (type) metaParts.push(type);
+        if (date) metaParts.push(date);
+        if (titleZh && titleEn) metaParts.push(`「${titleZh}」`);
+        noteMetaEl.textContent = metaParts.join(' ・ ');
+
+        // Badges
+        if (type) {
+          badgeRow.style.display = 'flex';
+          badgeRow.innerHTML = `<div class="note-badge">${type}</div>`;
+        }
+
+        // Cover image
+        if (cover) {
+          coverWrap.style.display = 'block';
+          coverImg.src = cover;
+          coverImg.alt = titleEn || titleZh || 'Trail Notes cover';
+          coverImg.onerror = () => {
+            coverWrap.style.display = 'none';
+          };
+        }
+
+        // 載入 Google Doc 內容
+        if (docUrlRaw) {
+          const docUrl = buildDocEmbedUrl(docUrlRaw);
+          try {
+            const docResp = await fetch(docUrl);
+            const docHtml = await docResp.text();
+            const cleaned = extractDocBody(docHtml);
+            noteContentEl.innerHTML = cleaned || '（目前尚無詳細內容）';
+          } catch (e) {
+            console.error(e);
+            noteContentEl.textContent = '無法載入詳細內容，請稍後再試，或直接查看原始連結。';
+            noteErrorEl.style.display = 'block';
+            noteErrorEl.innerHTML = `<a href="${docUrlRaw}" target="_blank" rel="noopener">開啟原始筆記（Google Doc）</a>`;
+          }
+        } else {
+          noteContentEl.textContent = '（此筆記尚未連結完整內容）';
+        }
+
+      } catch (err) {
         console.error(err);
-        contentInner.innerHTML = `
-          <div class="loading">
-            ⚠️ Unable to load this Trail Note.<br>
-            無法載入內容，請稍後再試。
-          </div>`;
+        noteTitleEl.textContent = 'Error loading note';
+        noteContentEl.textContent = '';
+        noteErrorEl.style.display = 'block';
+        noteErrorEl.textContent = '⚠️ 無法載入探路筆記，請稍後再試或返回列表頁。';
       }
     }
 
-    function parseCSV(csv){
+    function parseCSV(csv) {
       const lines = csv.split('\n').filter(l => l.trim().length > 0);
       return lines.map(line => {
         const values = [];
         let cur = '';
         let inQ = false;
-        for (let i=0;i<line.length;i++){
+        for (let i = 0; i < line.length; i++) {
           const ch = line[i];
           if (ch === '"') {
-            if (inQ && line[i+1] === '"') { cur += '"'; i++; }
-            else { inQ = !inQ; }
+            if (inQ && line[i+1] === '"') {
+              cur += '"';
+              i++;
+            } else {
+              inQ = !inQ;
+            }
           } else if (ch === ',' && !inQ) {
             values.push(cur);
             cur = '';
@@ -554,161 +590,57 @@
           }
         }
         values.push(cur);
-        return values;
+        return values.map(v => v.trim());
       });
     }
 
-    function mapTypeLabel(type){
-      const map = {
-        'Field Report': 'Field Report · 探訪紀錄',
-        'Behind the Hosts': 'Behind the Hosts · 幕後故事',
-        'Travel Mindset': 'Travel Mindset · 旅人心態',
-        'Updates': 'Updates · 最新消息'
-      };
-      return map[type] || type || '';
+    function isPublished(note) {
+      const raw = (note['Status'] || note['status'] || '').trim().toLowerCase();
+      if (!raw) return false;
+      return (
+        raw === '已發佈' ||
+        raw === '已發布' ||
+        raw === 'published' ||
+        raw === 'publish'
+      );
     }
 
-    function renderMeta(n){
-      const titleEn = n['Title_en'] || '';
-      const titleZh = n['Title_zh'] || '';
-      const type = n['Type'] || '';
-      const date = n['Date'] || '';
-      const author = n['Author'] || '';
-      const tags = (n['Tags'] || '').split(/[,\s、]+/).filter(Boolean);
-      const cover = n['CoverImage'] || n['Cover'] || '';
+    function buildDocEmbedUrl(url) {
+      // 已是 /pub 或 ?embedded=1 之類就直接用
+      if (/\/pub(\?|$)/.test(url) || /embedded=true/.test(url)) return url;
 
-      if (titleEn) {
-        document.title = `${titleEn} - Trail Notes | Local Friends Taiwan`;
-      }
-
-      document.getElementById('titleEn').textContent = titleEn || 'Trail Note';
-      document.getElementById('titleZh').textContent = titleZh ? titleZh : '';
-
-      const typeLabel = document.getElementById('typeLabel');
-      if (type) {
-        typeLabel.style.display = 'inline-flex';
-        typeLabel.textContent = mapTypeLabel(type);
-      }
-
-      const metaLine = document.getElementById('metaLine');
-      const metaParts = [];
-      if (date) metaParts.push(`📅 ${date}`);
-      if (author) metaParts.push(`✍️ ${author}`);
-      if (type) metaParts.push(`📂 ${type}`);
-      metaLine.textContent = metaParts.join(' · ');
-
-      const tagsLine = document.getElementById('tagsLine');
-      if (tags.length) {
-        tags.forEach(t => {
-          const span = document.createElement('span');
-          span.className = 'note-tag-pill';
-          span.textContent = t;
-          tagsLine.appendChild(span);
-        });
-      }
-
-      const cov = document.getElementById('coverImg');
-      if (cover) {
-        cov.src = cover;
-        cov.style.display = 'block';
-        cov.onerror = () => { cov.style.display = 'none'; };
-      }
-    }
-
-    async function renderDoc(n){
-      const contentInner = document.getElementById('contentInner');
-      const urlRaw = (n['DocURL'] || n['DocUrl'] || n['doc'] || '').trim();
-
-      if (!urlRaw){
-        contentInner.innerHTML = `
-          <p>目前尚未提供完整內文。</p>
-          <p style="color:#777;font-size:0.9rem;">
-            The host or editor hasn’t added detailed notes yet. 內容更新後，我們會在這裡同步。</p>`;
-        return;
-      }
-
-      const fetchURL = toFetchableDocURL(urlRaw);
-
-      try{
-        const resp = await fetch(fetchURL, { mode: 'cors' });
-        const html = await resp.text();
-
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
-
-        let main = tmp.querySelector('#contents') || tmp.querySelector('body') || tmp;
-
-        // 移除雜訊
-        main.querySelectorAll('script,style,header,nav,footer,link,meta').forEach(el=>el.remove());
-
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = main.innerHTML;
-
-        // 清理圖片
-        wrapper.querySelectorAll('img').forEach(img => {
-          img.removeAttribute('width');
-          img.removeAttribute('height');
-          img.loading = 'lazy';
-          img.style.maxWidth = '100%';
-          img.style.height = 'auto';
-          img.style.display = 'block';
-          img.style.margin = '1rem auto';
-          img.style.borderRadius = '10px';
-          img.style.boxShadow = '0 2px 10px rgba(0,0,0,0.06)';
-        });
-
-        // 表格橫向卷軸
-        wrapper.querySelectorAll('table').forEach(t => {
-          const w = document.createElement('div');
-          w.style.overflowX = 'auto';
-          w.style.margin = '1rem 0';
-          t.parentNode.insertBefore(w, t);
-          w.appendChild(t);
-        });
-
-        // iframe 寬度調整
-        wrapper.querySelectorAll('iframe').forEach(f => {
-          f.removeAttribute('width');
-          f.style.width = '100%';
-          f.style.maxWidth = '100%';
-        });
-
-        contentInner.innerHTML = '';
-        contentInner.appendChild(wrapper);
-      }catch(err){
-        console.error('Doc fetch failed, fallback iframe', err);
-        contentInner.innerHTML = `
-          <iframe src="${toEmbeddableIframeURL(urlRaw)}"
-                  loading="lazy"
-                  style="width:100%;height:800px;border:0;border-radius:12px;background:#fff;"></iframe>
-          <p style="margin-top:0.6rem;font-size:0.85rem;color:#777;">
-            若無法正常顯示，請確認網路或重新整理頁面。
-          </p>`;
-      }
-    }
-
-    function toFetchableDocURL(url){
-      if (/\/document\/d\/e\/[^/]+\/pub/.test(url)) {
-        return url.includes('?') ? url : url + '?embedded=true';
-      }
-      const m = url.match(/\/document\/d\/([^/]+)/);
-      if (m) {
-        const id = m[1];
-        return `https://docs.google.com/document/d/${id}/export?format=html`;
+      const m = url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/);
+      if (m && m[1]) {
+        return `https://docs.google.com/document/d/${m[1]}/pub?embedded=true`;
       }
       return url;
     }
 
-    function toEmbeddableIframeURL(url){
-      if (/\/document\/d\/e\/[^/]+\/pub/.test(url)) {
-        return url.includes('?') ? url + '&embedded=true' : url + '?embedded=true';
+    function extractDocBody(html) {
+      try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        let node = doc.querySelector('body');
+
+        // Google Docs publish 內容通常在 <div id="contents"> 或 <div class="doc-content"> 等
+        const specific = doc.querySelector('#contents') || doc.querySelector('.doc-content');
+        if (specific) node = specific;
+
+        // 移除 script / style
+        node.querySelectorAll('script,style').forEach(el => el.remove());
+
+        // 移除過度 inline 樣式，保留基本結構
+        node.querySelectorAll('*').forEach(el => {
+          el.removeAttribute('style');
+          el.removeAttribute('id');
+          el.removeAttribute('class');
+        });
+
+        return node.innerHTML.trim();
+      } catch (e) {
+        console.error(e);
+        return '';
       }
-      const m = url.match(/\/document\/d\/([^/]+)/);
-      if (m) {
-        const id = m[1];
-        return `https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`;
-      }
-      return url;
     }
 
     // Back to top
@@ -718,7 +650,7 @@
       if (window.pageYOffset > 300) b.classList.add('show');
       else b.classList.remove('show');
     });
-    function scrollToTop(){
+    function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
