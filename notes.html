@@ -387,9 +387,20 @@
     }
     .footer a:hover { text-decoration: underline; }
 
+    /* 動畫 */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: all 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     @media (max-width: 768px) {
@@ -458,7 +469,7 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-inner">
+    <div class="hero-inner fade-in">
       <div class="hero-kicker">TRAIL NOTES · FIELD NOTEBOOK</div>
       <h1 class="hero-title">Trail Notes 探路筆記</h1>
       <p class="hero-sub-en">
@@ -467,13 +478,13 @@
       </p>
       <p class="hero-sub-zh">
         Trail Notes 是 Local Friends Taiwan 的「實地筆記本」：每一篇都來自我們親自拜訪、對話、慢慢建立信任後的紀錄與思考。
-        你會在這裡看到探訪紀錄、Behind the Hosts、Travel Mindset，以及新合作更新。
+        在這裡你會看到 Field Reports 探訪紀錄、Behind the Hosts 幕後故事、Travel Mindset 旅人心態，以及 Updates 新上架與調整。
       </p>
     </div>
   </section>
 
   <!-- Filter -->
-  <section class="filter-bar">
+  <section class="filter-bar fade-in">
     <span class="filter-label">Filter / Search：</span>
     <select id="typeFilter" class="filter-select">
       <option value="">All Types</option>
@@ -483,7 +494,7 @@
   </section>
 
   <!-- Cards -->
-  <main class="page">
+  <main class="page fade-in">
     <div id="cards" class="cards-grid"></div>
     <div id="emptyState" class="empty" style="display:none;">
       目前沒有符合條件的筆記。<br>
@@ -506,8 +517,8 @@
 
     let notes = [];
 
-    // Nav toggle
     document.addEventListener('DOMContentLoaded', () => {
+      // Nav toggle
       const navToggle = document.getElementById('navToggle');
       const mainNav = document.getElementById('mainNav');
       if (navToggle && mainNav) {
@@ -524,6 +535,18 @@
           });
         });
       }
+
+      // 淡入動畫（跟 about.html 同邏輯）
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.fade-in').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.06}s`;
+        observer.observe(el);
+      });
 
       loadNotes();
     });
@@ -570,11 +593,8 @@
         for (let i=0;i<line.length;i++){
           const ch = line[i];
           if (ch === '"') {
-            if (inQ && line[i+1] === '"'){ // escaped "
-              cur += '"'; i++;
-            } else {
-              inQ = !inQ;
-            }
+            if (inQ && line[i+1] === '"'){ cur += '"'; i++; }
+            else { inQ = !inQ; }
           } else if (ch === ',' && !inQ) {
             values.push(cur);
             cur = '';
